@@ -1,0 +1,100 @@
+<div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"> </li>
+        </ol>
+    </nav>  -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title">&nbsp;&nbsp; DiningArea</h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search DiningArea.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/creatediningarea',0]">
+                    <button class="btn btn-success btn-sm mx-10 w-20">
+                        <span class="btn-text"> + Add DiningArea</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <form>
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-sm">
+                                        <thead>
+                                            <tr   style ="background-color:rgb(217, 226, 250);">
+                                                <!-- <th> <strong><span  class="fas fa-sort" (click)="sortsettings('OrderedDate')"></span><a style="color:#22af47">Order Date</a></strong> </th> -->
+                                                <th (click)="sortsettings('StoreName')"><strong><a class ="font-12"
+                                                           >Store Name</a></strong> <i
+                                                        *ngIf="sortfield == 'StoreName' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'StoreName' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i></th>
+                                                <th (click)="sortsettings('DiningArea')"><strong><a class ="font-12"
+                                                           >Dining Area</a></strong> <i
+                                                        *ngIf="sortfield == 'DiningArea' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'DiningArea' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i></th>
+                                                <th (click)="sortsettings('DiningTable')" class ="text-center"><strong><a class ="font-12"
+                                                           >Dining Table</a></strong> <i
+                                                        *ngIf="sortfield == 'DiningTable' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'DiningTable' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i></th>
+                                                <!-- <th> <strong class ="font-12">Action</strong></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                                <td class ="font-12"><strong><a href="javascript:void(0)"
+                                                    [routerLink]="['/creatediningarea',item.Id]" class="text-info">{{item.StoreName}}</a></strong></td>
+                                                <td class ="font-12">{{item.DiningArea}}</td>
+                                                <td class ="font-12">{{item.DiningTable}}</td>
+                                                <!-- <td > -->
+                                                    <!-- <a [routerLink]="['/creatediningarea',item.Id]" class="mr-25"
+                                                        data-toggle="tooltip"title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentdetail);deleteId=item.Id"
+                                                        data-toggle="tooltip"title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a> -->
+                                                <!-- </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete Dining Area? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="DeleteTable(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

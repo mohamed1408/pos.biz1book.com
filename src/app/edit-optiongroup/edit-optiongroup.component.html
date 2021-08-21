@@ -1,0 +1,49 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Edit Option</li>
+      </ol>
+    </nav>
+  
+    <div class="container">
+  
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Edit Option </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">
+              <form [formGroup]="OptionForm">
+                <div class="form-group">
+                  <span>Option Group</span>
+                  <input type="text" style="width: 20em" class="form-control" formControlName="Name" />
+                </div>
+  
+                <span>Option</span>
+                <div formArrayName="Options">
+                  <div *ngFor="let comp of OptionForm.get('Options'); let i=index">
+                    <div class="form-group row" [formGroupName]="i">
+  
+                      <input type="text" style="width: 20em;margin-left: 19px" formControlName="Name"
+                        class="form-control"> &nbsp;&nbsp;&nbsp;
+                      <span class="glyphicon glyphicon-trash" (click)="deleteVariant(i)"></span>
+                    </div>
+                  </div>
+                </div>
+  
+                <button type="button" class="btn btn-link sp-nav-button" (click)="addVar()"> + Add Option</button>
+                <br>
+  
+                <button type="button" (click)=" Update()" class="btn-primary">Update</button>
+                <br>
+                <br>
+                <a style="float: right" [routerLink]="['/options']">GoBack</a>
+               <!-- <pre>{{OptionForm.value | json}}</pre>  -->
+              </form>
+  </div>
+  </div>
+  </section>
+  </div>
+  </div>
+  </div>

@@ -1,0 +1,104 @@
+<div *ngIf="showloading" class="preloader-it">
+    <div class="loader-pendulums"></div>
+  </div>
+<div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+        </ol>
+    </nav> -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title">&nbsp;&nbsp;Options</h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search Options.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/modifyoption',0]">
+                    <button class="btn btn-success btn-sm mx-10 w-20">
+                        <span class="btn-text">+ Add OptionGroup</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <!-- <form> -->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-sm">
+                                    <thead>
+                                        <tr style="background-color:rgb(217, 226, 250);">
+                                            <th (click)="sortsettings('OptionGroup')"><strong><a class="font-12">Option
+                                                        Group</a></strong><i
+                                                    *ngIf="sortfield == 'OptionGroup' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'OptionGroup' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i> </th>
+                                            <th (click)="sortsettings('Options')"><strong><a
+                                                        class="font-12">Options</a></strong> <i
+                                                    *ngIf="sortfield == 'Options' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'Options' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th><strong class="font-12">Active</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                            <td class="font-12"><strong><a href="javascript:void(0)"
+                                                        [routerLink]="['/modifyoption',item.Id]"
+                                                        class="text-info">{{item.OptionGroup}}</a></strong></td>
+                                            <td class="font-12 mw-600p">{{item.Options}}</td>
+                                            <td>
+                                                <a class="px-10">
+                                                    <input type="checkbox" [(ngModel)]="item.isactive"
+                                                        (click)="active(item.Id,!item.isactive)">
+                                                </a>
+
+                                                <!-- <a [routerLink]="['/modifyoption',item.Id]" class="mr-20"
+                                                        data-toggle="tooltip"title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentdetail);deleteId=item.Id"
+                                                        data-toggle="tooltip"title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a> -->
+
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete OptionGroup? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="Delete(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

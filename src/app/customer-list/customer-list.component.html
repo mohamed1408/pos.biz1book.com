@@ -1,0 +1,75 @@
+<div  *ngIf="route.children.length === 0" class="hk-pg-wrapper">
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title">Users Details</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search Customer.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/createcustomer',0]">
+                    <!-- <button class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg">
+                        <span class="icon-label"><span class="feather-icon"><i data-feather="plus"></i></span></span>
+                        <span class="btn-text">Add Customers</span>
+                    </button> -->
+                </a>
+                    <input class ="mr-10" type="checkbox">
+                    <label class = "font-16">Show InActive</label>
+            </div>
+
+        </div>
+        <br>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="text-right">
+                    <button class="btn btn-success btn-sm mx-5 w-10" [routerLink]="['adduser']">
+                        Add User
+                    </button>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm">
+                        <form>
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <thead>
+                                            <tr style="background-color:rgb(217, 226, 250);">
+                                                <th> <strong><a class="font-12">User</a></strong></th>
+                                                <th> <strong><a class="font-12">Mobile Number</a></strong></th>
+                                                <th> <strong><a class="font-12">User Type</a></strong></th>
+                                                <th> <strong><a class="font-12">Status</a></strong></th>
+                                                <th> <strong><a class="font-12">Action</a></strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of customers | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                                <td class="font-12"><strong><a
+                                                    [routerLink]="['edituser',item.mobile]"
+                                                    class="text-info">{{item.name}}</a></strong></td>
+                                                <td class="font-12">{{item.mobile}}</td>
+                                                <td class="font-12">{{item.usertype}}</td>
+                                                <td class="font-12">{{(item.status == 1)? 'Active' : 'InActive'}}</td>
+                                                <!-- <td class ="font-12">{{item.LastSeen}}</td>                                                                                  -->
+                                                <td class= "row">
+                                                    <!-- <a [routerLink]="['/createcustomer',item.Id]" data-toggle="tooltip" class="py-10 pr-10"
+                                                        data-original-title="Edit"> <i class="icon-pencil"></i> </a> -->
+                                                    <button (click)="change_status(item.mobile,item.status)" class=" btn btn-link font-12" [class.text-danger]="item.status == 1" [class.text-success]="item.status == 0">{{(item.status == 1)? 'Deactivate' : 'Activate'}}</button>
+                                                </td>
+                                            </tr>
+                                            <br>
+                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div> 
+</div>
+<router-outlet></router-outlet>

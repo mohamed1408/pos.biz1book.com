@@ -1,0 +1,629 @@
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+    <!-- Container -->
+    <div class="container mt-xl-50 mt-sm-30 mt-15">
+        <!-- Title -->
+        <!-- /Title -->
+        <div class="card" hidden>
+            <!-- <div style="margin-left:120px;margin-top: 5px">
+                            <label for="username" >Sales Date</label>
+                            <input type="text"
+                            ngxDaterangepickerMd
+                            [(ngModel)]="selected"
+                            [showCustomRangeLabel]="true"
+                            [alwaysShowCalendars]="true"
+                            [ranges]="ranges"
+                            [linkedCalendars]="true"
+                            [showClearButton]="true"
+                            (change)="date($event)"
+                            placeholder="Select Date..."
+                            class="form-control"/>
+                          
+                          </div>
+                          
+                          <div class="row" style = "width:10em;margin-left:120px">
+                          <div *ngFor="let item of summaries.totExpense">
+                              <label>TotalSales</label>
+                              <label>{{item.Sales}}</label>
+                          </div>
+                          <div *ngFor="let item of summaries.totExpense">
+                              <label>TotalExpences</label>
+                              <label>{{item.Expences}}</label>
+                          </div> -->
+            <div class="card-header card-header-action">
+                <h6>Shift Summary</h6>
+                <div style="margin-left:120px;margin-top: 5px;width: 250px;">
+                    <label for="username">Sales Date</label>
+                    <input type="text" ngxDaterangepickerMd [(ngModel)]="selected"
+                        [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                        [linkedCalendars]="true" [showClearButton]="true" (change)="date1($event)"
+                        placeholder="Select Date..." class="form-control" />
+                </div>
+                <div class="d-flex align-items-center card-action-wrap">
+                    <a href="#" class="inline-block refresh mr-15">
+                        <i class="ion ion-md-arrow-down"></i>
+                    </a>
+                    <a href="#" class="inline-block full-screen mr-15">
+                        <i class="ion ion-md-expand"></i>
+                    </a>
+                    <!-- <a class="inline-block card-close" href="#" data-effect="fadeOut">
+                                                <i class="ion ion-md-close"></i>
+                                            </a> -->
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm">
+                    <div class="row">
+                        <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-10 mb-30">
+                            <a class="d-block" (click)="openDetailpopup(contentdetail)">
+                                <div class="card border-primary">
+                                    <div class="card-body text-primary">
+                                        <label><strong>TotalSales:</strong></label>
+                                        <label>{{Sales}}</label>
+                                        <br>
+                                        <label><strong>TotalExpences:</strong></label>
+                                        <label>{{Expense}}</label>
+                                    </div>
+                                </div>
+                            </a>
+                        </div> -->
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-30">
+                            <div class="card border-primary">
+                                <!-- <div class="card-header">Header</div> -->
+                                <div class="card-body text-primary">
+                                    <label>CashIn :</label>
+                                    <label>{{TotalSales.SalesCash}}</label>
+                                    <br>
+                                    <label>CashOut :</label>
+                                    <label>{{TotalSales.ExpencesCash}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body pa-0">
+                <!-- <div class="pa-20">
+                            <div class="col-xl-4 mb-20" *ngFor="let item of summaries.totExpense">
+                                <label><strong>TotalSales:</strong></label>
+                                <label>{{item.Sales}}</label>
+                            </div>
+                            <div class="col-xl-4 mb-20" *ngFor="let item of summaries.totExpense">
+                                <label
+                                ><strong>TotalExpences:</strong></label>
+                                <label>{{item.Expences}}</label>
+                            </div>
+                        </div> -->
+                <div class="table-wrap">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped mb-0" width="3000">
+                            <thead>
+                                <tr >
+                                    <th>Open Bal</th>
+                                    <th>CashIn</th>
+                                    <th>CashOut</th>
+                                    <th>Closing Bal</th>
+                                    <th>User</th>
+                                    <th>Shift Timing</th>
+                                    <th>Expected Bal</th>
+                                    <th>Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody (click)="openDetailpopup(contentdetail1)">
+                                <tr *ngFor="let item of summaries.cash | filter:term | paginate: { itemsPerPage: 5, currentPage: p } "
+                                    (click)="Payment(item)">
+                                    <th>{{item.OpeningBalance}}</th>
+                                    <th>{{item.CashIn}}</th>
+                                    <th>{{item.CashOut}}</th>
+                                    <th>{{item.ClosingBalance}}</th>
+                                    <th>{{item.Name}}</th>
+                                    <th>{{item.ShiftStartTime}}-{{item.ShiftEndTime}}</th>
+                                    <th>{{item.expbal}}</th>
+                                    <th>{{item.profit}}</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <section class="hk-sec-wrapper"> -->
+            <div class="form-group row">
+                <div style="margin-left:170px ">
+                    <label for="username">Store Location</label>
+                    <ng-autocomplete [data]="stores" style="width:10em;margin-left:30px;
+        border-color: #90a7a8;  " [searchKeyword]="key" (selected)='selectEvent($event)' placeHolder="Choose Location"
+                        [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1" [(ngModel)]="all">
+                    </ng-autocomplete>
+                    <ng-template #itemTemplate1 let-item>
+                        <a [innerHTML]="item.Name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate1 let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+                <!-- <div style="margin-left:120px;margin-top: 5px">
+            <label for="username"> Select Date</label>
+            <input type="text" ngxDaterangepickerMd [(ngModel)]="selected"
+            [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+            [showCustomRangeLabel]="true"  [alwaysShowCalendars]="true" [ranges]="ranges" 
+            [linkedCalendars]="true" [showClearButton]="true"
+            (change)="date($event);date1($event)" placeholder="Select Date..." class="form-control" />
+
+        </div> -->
+                <div style="margin-left:120px;margin-top: 5px;width: 250px;">
+                    <label for="username">Select Date</label>
+                    <input type="text" ngxDaterangepickerMd [(ngModel)]="selected"
+                        [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+                        [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                        (change)="date($event);date1($event)" placeholder="Select Date..." class="form-control" />
+                </div>
+            </div>
+        <!-- </section> -->
+        <!-- Row -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="hk-row">
+                    <div class="col-sm-12">
+                             <h6>SALES  SUMMARY</h6> 
+                        <div class="card-group hk-dash-type-2">
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <span class="d-block font-15 text-dark font-weight-500"><strong>Bills</strong></span>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-success font-14 font-weight-500">+10%</span>
+                                        </div> -->
+                                    </div>
+                                    <div *ngFor="let item of dash.TotalSales">
+                                        <span class="d-block display-4 text-dark mb-5"><span
+                                                class="counter-anim">&#8377;{{item.TotalBills | number: ".2"}}</span></span>
+                                        <!-- <small class="d-block">1,758 Target Orders</small> -->
+                                        <!-- <pre>{{item | json}}</pre>  -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <span class="d-block font-15 text-dark font-weight-500"><strong>Payments</strong></span>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-success font-14 font-weight-500">+12.5%</span>
+                                        </div> -->
+                                    </div>
+                                    <div *ngFor="let item of dash.TotalSales">
+                                        <span class="d-block display-4 text-dark mb-5"><span
+                                                class="counter-anim">&#8377;{{item.TotalSales | number:".2"}}</span></span>
+                                        <!-- <small class="d-block">2,458 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div *ngFor="let item of dash.TotalSales">
+                                            <span class="d-block font-15 text-dark font-weight-500"><strong>No Of Bills</strong></span>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-danger font-14 font-weight-500">-75%</span>
+                                        </div> -->
+                                    </div>
+                                    <div *ngFor="let item of dash.TotalSales">
+                                        <span class="d-block display-4 text-dark mb-5">{{item.NoOfBills}}</span>
+                                        <!-- <small class="d-block">42:32 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                           <strong>New Customers</strong>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-warning font-14 font-weight-500">-2.8%</span>
+                                        </div> -->
+                                    </div>
+                                    <div *ngFor="let item of dash.NewCustomers">
+                                        <span class="d-block display-4 text-dark mb-5">{{item.TotNewCustomers}}</span>
+                                        <!-- <small class="d-block">100 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+                <!-- </div> -->
+                <div class="hk-row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <!-- <div style="margin-left:120px;margin-top: 5px">
+                                            <label for="username" >Sales Date</label>
+                                            <input type="text"
+                                            ngxDaterangepickerMd
+                                            [(ngModel)]="selected"
+                                            [showCustomRangeLabel]="true"
+                                            [alwaysShowCalendars]="true"
+                                            [ranges]="ranges"
+                                            [linkedCalendars]="true"
+                                            [showClearButton]="true"
+                                            (change)="date($event)"
+                                            placeholder="Select Date..."
+                                            class="form-control"/>
+                                          
+                                          </div>
+                                          
+                                          <div class="row" style = "width:10em;margin-left:120px">
+                                          <div *ngFor="let item of summaries.totExpense">
+                                              <label>TotalSales</label>
+                                              <label>{{item.Sales}}</label>
+                                          </div>
+                                          <div *ngFor="let item of summaries.totExpense">
+                                              <label>TotalExpences</label>
+                                              <label>{{item.Expences}}</label>
+                                          </div> -->
+                            <div class="card-header card-header-action">
+                                <h6>Shift Summary</h6>
+                                <!-- <div style="margin-left:120px;margin-top: 5px;width: 250px;">
+                                    <label for="username">Sales Date</label>
+                                    <input type="text" ngxDaterangepickerMd [(ngModel)]="selected"
+                                        [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+                                        [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                                        [linkedCalendars]="true" [showClearButton]="true" (change)="date1($event)"
+                                        placeholder="Select Date..." class="form-control" />
+                                </div> -->
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-arrow-down"></i>
+                                    </a>
+                                    <a href="#" class="inline-block full-screen mr-15">
+                                        <i class="ion ion-md-expand"></i>
+                                    </a> -->
+                                    <!-- <a class="inline-block card-close" href="#" data-effect="fadeOut">
+                                                                <i class="ion ion-md-close"></i>
+                                                            </a> -->
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="row">
+                                        <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-10 mb-30">
+                                            <a class="d-block" (click)="openDetailpopup(contentdetail)">
+                                                <div class="card border-primary">
+                                                    <div class="card-body text-primary">
+                                                        <label><strong>TotalSales:</strong></label>
+                                                        <label>{{Sales}}</label>
+                                                        <br>
+                                                        <label><strong>TotalExpences:</strong></label>
+                                                        <label>{{Expense}}</label>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div> -->
+                                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-30">
+                                            <div class="card border-primary">
+                                                <!-- <div class="card-header">Header</div> -->
+                                                <div class="card-body text-primary">
+                                                    <label>CashIn :</label>
+                                                    <label>&#8377;{{TotalSales.SalesCash | number: ".2"}}</label>
+                                                    <br>
+                                                    <label>CashOut :</label>
+                                                    <label>&#8377;{{TotalSales.ExpencesCash | number: ".2"}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pa-0">
+                                <!-- <div class="pa-20">
+                                            <div class="col-xl-4 mb-20" *ngFor="let item of summaries.totExpense">
+                                                <label><strong>TotalSales:</strong></label>
+                                                <label>{{item.Sales}}</label>
+                                            </div>
+                                            <div class="col-xl-4 mb-20" *ngFor="let item of summaries.totExpense">
+                                                <label
+                                                ><strong>TotalExpences:</strong></label>
+                                                <label>{{item.Expences}}</label>
+                                            </div>
+                                        </div> -->
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped mb-0" width="3000">
+                                            <thead>
+                                                <tr>
+                                                    <th>Open Bal</th>
+                                                    <th>CashIn</th>
+                                                    <th>CashOut</th>
+                                                    <th>Closing Bal</th>
+                                                    <th>User</th>
+                                                    <th>Shift Timing</th>
+                                                    <th>Expected Bal</th>
+                                                    <th>Difference</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody (click)="openDetailpopup(contentdetail1)">
+                                                <tr *ngFor="let item of summaries.cash | filter:term | paginate: { itemsPerPage: 5, currentPage: p } "
+                                                    (click)="Payment(item)">
+                                                    <th>&#8377;{{item.OpeningBalance | number: ".2"}}</th>
+                                                    <th>&#8377;{{item.CashIn | number: ".2"}}</th>
+                                                    <th>&#8377;{{item.CashOut | number: ".2"}}</th>
+                                                    <th>&#8377;{{item.ClosingBalance | number: ".2"}}</th>
+                                                    <th>{{item.Name}}</th>
+                                                    <th>{{item.ShiftStartTime}}-{{item.ShiftEndTime}}</th>
+                                                    <th>{{item.expbal == "-"?"-":'&#8377;'+item.expbal+'.00'}}</th>
+                                                    <th>{{item.profit == "-"?"-":'&#8377;'+item.profit+'.00'}}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hk-row">
+                    <div class="col-lg-12">
+                        <div class="card card-refresh">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6>Sales</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a> -->
+                                    <div class="inline-block dropdown">
+                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#"
+                                            aria-expanded="false" role="button"><i class="ion ion-md-more"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Separated link</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+
+                                <div id="e_chart_1" style="height: 175px;"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="hk-row">
+                    <div class="col-lg-4">
+                        <div class="card card-refresh">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6>Sales by order type</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a> -->
+                                    <div class="inline-block dropdown">
+                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#"
+                                            aria-expanded="false" role="button"><i class="ion ion-md-more"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Separated link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="e_chart_2" style="height: 240px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card card-refresh">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6>Sales by Transaction</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a> -->
+                                    <div class="inline-block dropdown">
+                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#"
+                                            aria-expanded="false" role="button"><i class="ion ion-md-more"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Separated link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="e_chart_3" style="height: 240px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card card-refresh">
+                            <div class="refresh-container">
+                                <div class="loader-pendulums"></div>
+                            </div>
+                            <div class="card-header card-header-action">
+                                <h6>Sales by Customer</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-radio-button-off"></i>
+                                    </a> -->
+                                    <div class="inline-block dropdown">
+                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#"
+                                            aria-expanded="false" role="button"><i class="ion ion-md-more"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Separated link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="e_chart_4" style="height: 240px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="hk-row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header card-header-action">
+                                <h6>Top Sales Product</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <!-- <a href="#" class="inline-block refresh mr-15">
+                                        <i class="ion ion-md-arrow-down"></i>
+                                    </a>
+                                    <a href="#" class="inline-block full-screen mr-15">
+                                        <i class="ion ion-md-expand"></i>
+                                    </a>
+                                    <a class="inline-block card-close" href="#" data-effect="fadeOut">
+                                        <i class="ion ion-md-close"></i>
+                                    </a> -->
+                                </div>
+                            </div>
+                            <div class="card-body pa-0">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Quantity</th>
+                                                    <th>Free Quantity</th>
+                                                    <th>Sales</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of dash.Top5Sales">
+                                                    <td>{{item.Product}}</td>
+                                                    <td>{{item.Quantity}}</td>
+                                                    <td>{{item.ComplementryQty | number: ".2"}}</td>
+                                                    <td>&#8377;{{item.Price | number: ".2"}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+    </div>
+    <!-- /Container -->
+
+
+    <!-- /Footer -->
+</div>
+<!-- /Main Content -->
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sales and Expences </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12 pl-0">
+                        <div class="col-xl-6 mb-20">
+                            <label><strong>Sales</strong></label>
+                            <br>
+                            <label>Cash :</label>
+                            <label>{{TotalSales.SalesCash}}</label>
+                            <br>
+                            <label>Card :</label>
+                            <label>{{TotalSales.SalesCard}}</label>
+                        </div>
+                        <div class="col-xl-6 mb-20">
+                            <label><strong>Expences</strong></label>
+                            <br>
+                            <label>Cash :</label>
+                            <label>{{TotalSales.ExpencesCash}}</label>
+                            <br>
+                            <label>Card :</label>
+                            <label>{{TotalSales.ExpencesCard}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" (click)="modal.close()">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #contentdetail1 let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Payment Summary</h5>
+                </div>
+                <div class="modal-body">
+                    <label>Payment Total :</label>
+                    <label>&#8377;{{totpay | number: ".2"}}</label>
+                    <br>
+                    <label>Cash :</label>
+                    <label>&#8377;{{cash | number: ".2"}}</label>
+                    <br>
+                    <label>Card :</label>
+                    <label>&#8377;{{card | number: ".2"}}</label>
+                    <br>
+                    <label>Other :</label>
+                    <label>&#8377;{{other | number: ".2"}}</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" (click)="modal.close()">Close</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+

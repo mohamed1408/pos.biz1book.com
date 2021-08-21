@@ -1,0 +1,5 @@
+<app-header *ngIf="showHead"></app-header>
+<app-loader></app-loader>
+<div *ngIf="showloadingindiactor">Loading...</div>
+<router-outlet></router-outlet>
+<app-footer *ngIf="showHead"></app-footer>

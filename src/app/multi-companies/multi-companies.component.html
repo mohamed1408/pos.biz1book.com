@@ -1,0 +1,207 @@
+<div class="hk-pg-wrapper">
+    <!-- Breadcrumb -->
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Company Management</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Multi Companies</li>
+        </ol>
+    </nav>
+    <!-- /Breadcrumb -->
+
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+                            data-feather="archive"></i></span></span>Multi Companies</h4>
+        </div>
+        <!-- <section *ngIf="show == 1" class="hk-sec-wrapper">
+            <div class="row w-100">
+                <div class="col-sm">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr style="background-color:rgb(217, 226, 250);">
+                                        <th><strong>Name</strong></th>
+                                        <th><strong>Company Name</strong></th>
+                                        <th><strong>Address</strong></th>
+                                        <th><strong>Email</strong></th>
+                                        <th><strong>Action</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let uc of usercompanies ">
+                                        <td>{{uc.AccountName}}</td>
+                                        <td>{{uc.CompanyName}}</td>
+                                        <td>{{uc.Address}}</td>
+                                        <td>{{uc.Email}}</td>
+                                        <td>
+                                            <button mat-icon-button
+                                                aria-label="Example icon button with a vertical three dot icon"
+                                                class="antifocus text-success" (click)="fetchdata(uc.CompanyId);">
+                                                <mat-icon class="font-18">subdirectory_arrow_right</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <div>
+            <div class="container mt-xl-50 mt-sm-10 mt-10">
+                <div class="hk-pg-header align-items-top">
+                    <div>
+                        <h4 class="hk-pg-title">Sale Management</h4>
+                    </div>
+                    <div class="d-flex">
+                        <!-- <div id="reportrange" class="form-control form-control-sm text-truncate mr-15">
+                                <i class="fa fa-calendar text-light-40"></i>&nbsp;
+                                <span></span> <i class="fa fa-caret-down text-light-40 font-12 ml-10"></i>
+                            </div> -->
+                        <div style="margin-right:50px ">
+                            <!-- <label for="username">Date</label> -->
+                            <input type="text" class="form-group" style="width:15em;margin-left:5px;"
+                                ngxDaterangepickerMd [(ngModel)]="selected"
+                                [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+                                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true"
+                                [showClearButton]="true" (change)="date($event)" placeholder="Select Date..."
+                                class="form-control" />
+                        </div>
+                        <select class="form-control custom-select" aria-placeholder="Select Company"
+                            style="margin-right:50px " (change)="fetchdata($event.target.value)" required
+                            placeholder="d.ff">
+                            <option hidden [value]="" selected>Select Company </option>
+                            <option *ngFor="let uc of usercompanies" value={{uc.CompanyId}}>{{uc.AccountName}}
+                            </option>
+                        </select>
+                        <select *ngIf="show == 2" id="store_select" class="form-control custom-select"
+                            style="margin-right:50px " (change)="storechange($event.target.value)">
+                            <option *ngFor="let store of stores" value={{store.Id}}>{{store.Name}}</option>
+                        </select>
+
+                        <!-- <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                                class="antifocus text-danger" (click) = "back()">
+                                <mat-icon class="font-18">subdirectory_arrow_left</mat-icon>
+                            </button> -->
+                    </div>
+                </div>
+                <div *ngIf="show == 2" class="hk-row col-xl-12">
+                    <div class="col-xl-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span
+                                            class="d-block font-12 font-weight-500 text-dark text-uppercase mb-5">Bill</span>
+                                        <span class="d-block display-6 font-weight-400 text-dark">&#8377;
+                                            {{totalbill |
+                                            number: ".2"}}</span>
+                                    </div>
+                                    <!-- <div>
+                                            <div id="sparkline_4"></div>
+                                        </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span
+                                            class="d-block font-12 font-weight-500 text-dark text-uppercase mb-5">Payment</span>
+                                        <span class="d-block display-6 font-weight-400 text-dark">&#8377;
+                                            {{dashboarddata?.Payments[0]?.Payments | number: ".2"}}</span>
+                                    </div>
+                                    <!-- <div>
+                                            <div id="sparkline_5"></div>
+                                        </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="d-block font-12 font-weight-500 text-dark text-uppercase mb-5">No
+                                            of Bills</span>
+                                        <span class="d-block display-6 font-weight-400 text-dark">{{noofbills}}</span>
+                                    </div>
+                                    <!-- <div>
+                                    <span id="pie_chart_1" class="d-flex easy-pie-chart" data-percent="91">
+                                        <span class="percent head-font">91</span>
+                                    </span>
+                                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card card-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="d-block font-12 font-weight-500 text-dark text-uppercase mb-5">New
+                                            Customers</span>
+                                        <span
+                                            class="d-block display-6 font-weight-400 text-dark">{{dashboarddata?.NewCustomers[0]?.TotNewCustomers}}</span>
+                                    </div>
+                                    <!-- <div>
+                                    <span id="pie_chart_1" class="d-flex easy-pie-chart" data-percent="91">
+                                        <span class="percent head-font">91</span>
+                                    </span>
+                                </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="show == 2" class="card">
+                <div class="card-header card-header-action">
+                    <h6>Storewise Sale</h6>
+                    <div class="d-flex align-items-center card-action-wrap">
+                        <a href="#" class="inline-block refresh mr-15">
+                            <i class="ion ion-md-arrow-down"></i>
+                        </a>
+                        <a href="#" class="inline-block full-screen mr-15">
+                            <i class="ion ion-md-expand"></i>
+                        </a>
+                        <a class="inline-block card-close" href="#" data-effect="fadeOut">
+                            <i class="ion ion-md-close"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body pa-0">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Store</th>
+                                        <th class="w-40">Bills</th>
+                                        <th class="w-25">Payment</th>
+                                        <th>No Of Bills</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ts of totalsale">
+                                        <td>{{ts.Name}}</td>
+                                        <td>{{ts.TotalBills | number:".2"}}</td>
+                                        <td>{{ts.TotalSales | number:".2"}}</td>
+                                        <td>{{ts.NoOfBills}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

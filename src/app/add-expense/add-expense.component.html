@@ -1,0 +1,49 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Expenses</li>
+      </ol>
+    </nav>
+  <!-- {{TransForm.value | json}} -->
+    <div class="container">
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Add Expenses </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">
+                <form [formGroup]="TransForm">
+                <div class="form-group" >
+                  <span>Description</span>
+                  <input style="width: 20em" type="text" class="form-control"  formControlName="Notes"  />
+                </div>
+                <div class="form-group" >
+                  <span>Amount</span>
+                  <input style="width: 20em" type="number" class="form-control" formControlName="Amount"/>
+                </div>
+                <span>Payment Type</span>
+                <div *ngFor="let item of payment">
+                <span class="custom-control custom-radio mb-5">
+                    <input type="radio" value="{{item.Id}}" formControlName="PaymentTypeId" id="{{item.Id}}" [checked]="TransForm.value.PaymentTypeId === item.Id">
+                    <label>{{item.Description}}</label>
+      <!-- <input type="radio" formControlName="PaymentId" value="lamb"> Lamb
+      <input type="radio" formControlName="PaymentId" value="fish"> Fish -->
+                </span> </div>    
+                <!-- <span class="custom-control custom-radio mb-5" *ngFor="let item of receipts.PaymentType">
+                    <input [(ngModel)]="transaction.PaymentTypeId" [value]="item.Id" id="{{item.Description}}" name="optionHorizontal" class="custom-control-input" type="radio">
+                    <label class="custom-control-label" for="{{item.Description}}">{{item.Description}}</label>
+                </span> -->
+                <!-- <mat-radio-group aria-label="Select an option" *ngFor="let item of payment">
+                    <mat-radio-button [value]="item.Id" >{{item.Description}}</mat-radio-button>
+                     <mat-radio-button value="2">Option 2</mat-radio-button>
+                  </mat-radio-group> -->
+                 <button type="submit" style="margin-left: 85px" class="btn-primary" (click)="ExpenseGroup()">Save</button>
+              </form>
+                </div>
+                </div>
+                </section>
+                </div>
+                </div>
+              </div>
+  

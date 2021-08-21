@@ -1,0 +1,139 @@
+<div *ngIf="showloading" class="preloader-it">
+    <div class="loader-pendulums"></div>
+</div>
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"> &nbsp; Outlet</h4>
+        </div>
+        <!-- <ol class="breadcrumb breadcrumb-light bg-transparent"> -->
+        <!-- <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li> -->
+        <!-- </ol> -->
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search Outlet.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/createoutlet',0]">
+                    <button class="btn btn-success btn-sm mx-10 w-20">
+                        <span class="btn-text"> + Add Outlet</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-14 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <!-- <form> -->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-sm">
+                                    <thead>
+                                        <tr style="background-color:rgb(217, 226, 250);">
+                                            <th (click)="sortsettings('Name')"><strong style="font-size:12px;">Outlet
+                                                    Name</strong> <i *ngIf="sortfield == 'Name' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'Name' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i> </th>
+                                            <!-- <th (click)="sortsettings('Address')"><strong><a class="text-blue"
+                                                            style="font-size:12px;">Address</a></strong> <i
+                                                        *ngIf="sortfield == 'Address' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'Address' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i></th> -->
+                                            <th (click)="sortsettings('City')"><strong
+                                                    style="font-size:12px;">City</strong> <i
+                                                    *ngIf="sortfield == 'City' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'City' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th (click)="sortsettings('ContactNo')"><strong
+                                                    style="font-size:12px;">Contact
+                                                    No</strong>
+                                                <i *ngIf="sortfield == 'ContactNo' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'ContactNo' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th (click)="sortsettings('Email')"><strong style="font-size:12px;">
+                                                    Email</strong> <i *ngIf="sortfield == 'Email' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'Email' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th (click)="sortsettings('OpeningTime')"><strong
+                                                    style="font-size:12px;">Opening
+                                                    Time</strong> <i *ngIf="sortfield == 'OpeningTime' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'OpeningTime' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th (click)="sortsettings('ClosingTime')"><strong style="font-size:12px;">
+                                                    Closing
+                                                    Time</strong> <i *ngIf="sortfield == 'ClosingTime' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'ClosingTime' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i></th>
+                                            <th> <strong style="font-size:12px;">Active</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                            <td class="mw-300p" style="font-size:12px;"><strong><a
+                                                        href="javascript:void(0)"
+                                                        [routerLink]="['/createoutlet',item.Id]"
+                                                        class="text-info">{{item.Name}}</a></strong><br>
+                                                <span style="font-size:12px;">{{item.Address}}</span>
+                                            </td>
+                                            <!-- <td>{{item.Address}}</td> -->
+                                            <td style="font-size:12px;">{{item.City}}</td>
+                                            <td style="font-size:12px;">{{item.ContactNo}}</td>
+                                            <td style="font-size:12px;">{{item.Email}}</td>
+                                            <td style="font-size:12px;">{{item.OpeningTime}}</td>
+                                            <td style="font-size:12px;">{{item.ClosingTime}}</td>
+                                            <td>
+                                                <a class="px-10">
+                                                    <input type="checkbox" [(ngModel)]="item.isactive"
+                                                        (click)="active(item.Id,!item.isactive)">
+                                                </a>
+                                                <!-- <a [routerLink]="['/createoutlet',item.Id]" class="mr-20"
+                                                        data-toggle="tooltip"title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentdetail);deleteId = item.Id"
+                                                        data-toggle="tooltip"title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a> -->
+                                            </td>
+
+                                        </tr> <br>
+                                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete This Outlet? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20 text-center" data-dismiss="modal"
+                        aria-label="Close" (click)="DeleteData(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20 text-center" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

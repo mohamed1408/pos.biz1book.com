@@ -1,0 +1,209 @@
+<div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+  </div>
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+        </ol>
+    </nav> -->
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">Transaction</h4>
+    </div>
+    <div class="col-sm-14">
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="form-group row">
+            <div style="margin-left:30px ">
+              <label for="username">Location</label>
+              <ng-autocomplete (inputCleared) = "focusAutocomplete()" [data]="stores" style="width:10em;margin-left:30px;  
+                      border-color: #c5d4d6;" [formControl]="myControl" [searchKeyword]="key"
+                (selected)='selectEvent($event)' placeHolder="Choose Location" [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1" [(ngModel)]="all"></ng-autocomplete>
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.Name"></a>
+              </ng-template>
+      
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+            <!-- <div style="margin-left:50px;margin-top: 3px">
+              <label for="username">Date</label>
+              <input type="text" class="form-group" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [(ngModel)]="selected" [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+            </div>
+            <div hidden style="margin-left:90px;">
+              <label for="username">Date</label>
+              <input type="text" class="form-group" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [(ngModel)]="selected" [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+            </div> -->
+            <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">Source</label>
+              <select class="form-control custom-select" [(ngModel)]="sourceId" name="Source">
+                <option value="0">All</option>
+                <option value="1">POS</option>
+                <option value="2">Swiggy</option>
+                <option value="3">Zomato</option>
+                <option value="4">Food Panda</option>
+              </select>
+            </div>
+      
+            <div class="form-group" style="width: 150px;margin-left: 30px;">
+              <label for="username">Payment Type</label>
+              <!-- <select class="form-control custom-select" [(ngModel)]="PaymentId" name="pay">
+                <option value="0" selected>All</option>
+                <option value="{{item.Id}}" *ngFor="let item of paymt.paymenttype">{{item.Description}}</option>
+              </select> -->
+              <div class="invalid-feedback">
+                <div>Select Payment</div>
+              </div>
+              <div style="margin-left:75px;margin-top: -35px;">
+                <button  class="btn btn-success  btn-sm mx-100 w-300" (click)="Submit()">Submit</button>
+              </div>
+        
+            </div>
+      
+            <!-- <div  style="margin-left:80px">
+                  <span> <label for="username">From Date</label></span>
+                      <div class="input-group">
+                        <div class="input-group">
+                          <input class="form-control" (change)="toggle()" 
+                                ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="startdate" (click)="d1.toggle()" 
+                                >
+                          
+                        </div>  
+                  </div>
+      </div>     -->
+            <!-- <div  style="margin-left:50px">
+                  <span>  <label for="username">To Date</label></span>
+                      <div class="input-group">
+                        <div class="input-group">
+                          <input class="form-control" 
+                                ngbDatepicker #d2="ngbDatepicker" [(ngModel)]="enddate"(click)="d2.toggle()" >
+                          
+                        </div>    
+                      </div>
+                  </div> -->
+         
+          </div>
+      
+          <div class="row">
+            <div class="col-sm">
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+                  <br>
+                  <table class="table mb-0 table-sm">
+                    <thead>
+                      <tr style ="background-color:rgb(217, 226, 250);">
+                        <th (click)="sortsettings('TransDate')"><strong> <a class="font-12"> Id</a></strong><i
+                            *ngIf="sortfield == 'TransDate' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'TransDate' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('TransDate')"><strong> <a class="font-12"> Date</a></strong><i
+                            *ngIf="sortfield == 'TransDate' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'TransDate' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Name')"> <strong><a class="font-12">Name</a></strong><i
+                            *ngIf="sortfield == 'Name' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Name' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Description')"><strong> <a class="font-12">
+                              Description</a></strong><i *ngIf="sortfield == 'Description' && x == -1"
+                            class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Description' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Amount')"><strong> <a class="font-12"> Amount</a></strong><i
+                            *ngIf="sortfield == 'Amount' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Amount' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Description1')"> <strong><a class="font-12">Payment
+                              Type</a></strong><i *ngIf="sortfield == 'Description1' && x == -1"
+                            class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Description1' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr (click)="openDetailpopup(contentdetail1,item.Id)"
+                        *ngFor="let item of sortData | filter:term  ">
+                        <td  class="font-12">{{item.TransId}}</td>
+                        <td  class="font-12">{{item.TransDate}}</td>
+                        <td  class="font-12">{{item.Name}}</td>
+                        <td  class="font-12">{{item.Description}}</td>
+                        <td  class="font-12">&#8377;{{item.Amount | number: ".2"}}</td>
+                        <td  class="font-12">{{item.Description1}}</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td  class="font-14">TotalSales</td>
+                        <td  class="font-14">&#8377;{{Totalsales | number:".2"}}</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td  class="font-14">TotalExpenses</td>
+                        <td  class="font-14">&#8377;{{Totalexpenses | number:".2"}}</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td  class="font-14">TotalRefund</td>
+                        <td  class="font-14">&#8377;{{Totalrefund | number:".2"}}</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <td>Product</td>
+                <td>Quantity</td>
+                <td>TotalSales</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of receipt">
+                <td>{{item.Description}}</td>
+                <td>{{item.Quantity}}</td>
+                <td>&#8377;{{item.Price | number:".2"}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td> TotalQty</td>
+                <td>{{ TotalPrdQty}}</td>
+                <section></section>
+              </tr>
+              <tr>
+                <td></td>
+                <td> TotalSales</td>
+                <td>&#8377;{{TotalProductSale}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

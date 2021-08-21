@@ -1,0 +1,166 @@
+<div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+  </div>
+<div class="hk-pg-wrapper">
+    <div class="container">
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <!-- <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li> -->
+        </ol>
+    </nav>
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title" >UP ProductStock</h4>
+        </div>
+
+        <div class="col-sm-14">
+            <div class="col-xl-12 pl-0 pr-0">
+                <section class="hk-sec-wrapper">
+                  <div class="form-group row">
+                    <div style="margin-left:20px ">
+                        <label for="username">Category</label>
+                        <ng-autocomplete (inputCleared) = "focusAutocomplete()" [data]="cat" style="width:350px;
+                        border-color: #90a7a8;  " [searchKeyword]="key" (selected)='selectEvent($event)'
+                            placeHolder="Select Category" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                            [(ngModel)]="all"></ng-autocomplete>
+                        <ng-template #itemTemplate1 let-item>
+                            <a [innerHTML]="item.Description"></a>
+                        </ng-template>
+        
+                        <ng-template #notFoundTemplate1 let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                    
+                    <div style="margin-left:75px;margin-top:35px;">
+                      <button  class="btn btn-success  btn-sm mx-10 w-100" (click)="Submit()">Submit</button>
+                    </div>
+                </div> 
+        
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                        <!-- <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term"> -->
+                                   <table  class="table mb-0 table-sm">
+                                        <thead>
+                                            <tr style ="background-color:rgb(217, 226, 250);">
+                                                <th><strong><a class ="font-12">Products </a></strong> </th>
+                                                <th><strong><a  class ="font-12">InStock</a></strong></th>
+                                             <th><strong><a  class ="font-12">OutStock</a></strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of product.Order | filter:term " >
+                                                <td  class ="font-13"><a>{{item.Product}}</a></td>
+                                                       <td   class ="font-12"(click)="func(item.Id);openDetailpopup(contentdetail1)" >{{item.InStockCount}}  </td>
+                                                       <td  class ="font-12" (click)="func1(item.Id);openDetailpopup(contentdetail2)"> {{item.OutStockCount}}</td>
+                                                       
+                                            </tr>                                                                                                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+      <div class="modal-dialog ma-0" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <table class="table table-sm mb-0" style="font-size:9px;">
+              <thead>
+                <tr>
+                  <td>Stores</td>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr  *ngFor="let item of receipt[1]">
+                 
+                  <!-- <td>fgfgfgfgfgfg</td> -->
+                  <!-- <td >{{splitted}}</td> -->
+                    <td>{{item}}</td> 
+                </tr> 
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="modal.close()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #contentdetail2 let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+      <div class="modal-dialog ma-0" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <td>Stores</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of receipt[1]">
+                    <td>{{item}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="modal.close()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+    <!-- <div *ngIf="show">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search data.." [(ngModel)]="term">
+            </div>
+        </div>
+        <div class="col-xl-14 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table  class="table table-hover w display " style="font-size:13px;">
+                                        <thead>
+                                            <tr >
+                                                <th><strong><a style="color:#22af47">Stores </a></strong> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of receipt | filter:term " >
+                                                <td><a style="color:blue">{{item.Name}}</a></td>
+                                            </tr>                                                                                                                                        <br>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    </div> -->
+
+
+
+
+
+

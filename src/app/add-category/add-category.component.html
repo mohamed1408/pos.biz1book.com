@@ -1,0 +1,359 @@
+<div class="hk-pg-wrapper">
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <!-- Breadcrumb -->
+  </nav>
+  <!-- /Breadcrumb -->
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Title -->
+    <form name="CatForm" (ngSubmit)="f.valid && SaveCat()" #f="ngForm" novalidate>
+      <div class="hk-pg-header">
+        <h4 class="hk-pg-title">Add category</h4>
+      </div>
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Category Basic Info</strong><span class="text-danger">*</span>
+            </div>
+            <div class="col-xl-12 ">
+              <br>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="category1.IsUPCategory" name="IsUPCategory" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">IsUPCategory</label><span class="text-danger">*</span>
+            </div>  
+              <div class="form-group">
+                <input type="text" class="form-control" style="width: 20em" placeholder="Enter Category Name"
+                  [(ngModel)]="category1.Description" name="Description" #Description="ngModel"
+                  [ngClass]="{'is-invalid': f.submitted && Description.invalid}" required>
+                  <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback" ><span class="text-danger">*</span>
+                    <div *ngIf="Description.errors.required">Category Name is required</div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" style="width: 20em">
+            <select class="form-control custom-select" [(ngModel)]="category1.ParentCategoryId" style="width: 20em"
+              name="ParentCategoryId">
+              <option value="null">ParentCategory</option><span class="text-danger">*</span>
+              <option value="{{item.Id}}" *ngFor="let item of parentcategory">{{item.Description}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <span style="font-weight: bold;">FreeQtyPercentage</span>
+            <input style="width: 20em" type="number" name="FreeQtyPercentage" class="form-control" [(ngModel)]="category1.FreeQtyPercentage" />
+          </div>
+          <div class="form-group">
+            <span style="font-weight: bold;">MinimumQty</span>
+            <input style="width: 20em" type="number" name="MinimumQty" class="form-control" [(ngModel)]="category1.MinimumQty" />
+          </div>
+
+           <div class="form" style="width:20em;height:15em;" *ngIf="category1.ParentCategoryId>0">
+            <ng-multiselect-dropdown #multiSelect [placeholder]="'Select OptionGroup'" [(ngModel)]="options"
+           [data]="opt.catOptgp"   [settings]="settings"
+           [disabled]="false" (onFilterChange)="onFilterChange($event)" (onSelect)="onItemSelect($event)"
+           (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+           (onDeSelectAll)="onDeSelectAll($event)"
+           >
+         </ng-multiselect-dropdown>
+        </div>
+    </section>
+          <div class="col-xl-12 pl-0 pr-0 text-right">
+            <button (click)="location.back()" class="btn btn-secondary btn-sm mx-10 w-10">Back</button>
+            <button class="btn btn-success btn-sm mx-10 w-10"(click) = "focus()">Save</button>
+          </div>    
+      </div>
+      </form>
+    </div>
+  </div>
+
+      <!-- <div class="col-xl-12 pl-0 pr-0">
+                              <section class="hk-sec-wrapper">
+                                <div class="row">
+                                  <div class="col-xl-4">
+                                    <strong class="text-light">Product Variant Info<button type="button" class="btn btn-link" (click)="openDetailpopup(contentDetail1);onChange()">+ Add Varient Group</button></strong>
+                                  </div>
+                                  <div class="col-xl-6 offset-xl-4">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                      <li class="nav-item" *ngFor="let item of variantGroup">
+                                        <a 
+                                          class="nav-link"
+                                          data-toggle="tab"
+                                          href="#2"
+                                          role="tab"
+                                          aria-controls="size"
+                                          (click)="setvarId(item.Id)"
+                                          >{{item.Description}}
+                                                            </a>
+                                  
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent" >
+                                      <div
+                                        class="mt-4 mb-4 tab-pane fade show active"
+                                        id="2"
+                                        role="tabpanel"
+                                      >
+                                      <div>
+                                      <div class="form-group row">
+                                      </div>
+                                      </div>
+                                      <div *ngFor="let item of category1.Variants">
+                                        <div class="form-group row" *ngIf="item.VariantGroupId == groupId">
+                                          <div class="col-sm-3">
+                                            <strong class="text-light">{{item.Description}}</strong>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        <button type="button" class="btn btn-link" (click)="deletevrt()">-Delete Group</button><span><button type="button" class="btn btn-link" (click)="openDetailpopup(contentDetail2)">Edit Group</button></span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
+                            </div>
+                            <div class="col-xl-12 pl-0 pr-0">
+                                <section class="hk-sec-wrapper">
+                                  <div class="row">
+                                    <div class="col-xl-4">
+                                      <strong class="text-light">Product Addon Info  <button type="button" class="btn btn-link" (click)="openDetailpopup(contentDetail3);onChange1()">+ Add Addon Group</button> </strong>
+                                    </div>
+                                    <div class="col-xl-6 offset-xl-4">
+                                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" *ngFor="let item of addonGroup">
+                                          <a
+                                            class="nav-link"
+                                            data-toggle="tab"
+                                            href="#1"
+                                            role="tab"
+                                            aria-controls="Extra"
+                                            (click)="setAddonId(item.Id)"
+                                            >{{item.Description}}
+                                            </a
+                                          >
+                                  
+                                        </li>               
+                                      </ul>
+                                      <div class="tab-content" id="myTabContent">      
+                                        <div
+                                          class="mt-4 mb-4 tab-pane fade show active"
+                                          id="1"
+                                          role="tabpanel">
+                                        <div>
+                                        <div class="form-group row">
+                                        </div>
+                                      </div>
+                                      <div  *ngFor="let item of category1.Addons">
+                                        <div class="form-group row" *ngIf="item.AddonGroupId == AddonGrpId">
+                                            <div class="col-sm-3">
+                                            <strong class="text-light" >{{item.Description}}</strong>
+                                            </div>
+                                               </div>
+                                        </div>
+                                          <button type="button" class="btn btn-link" (click)="deleteAddon()">-Delete Group</button><span><button type="button" class="btn btn-link" (click)="openDetailpopup(contentDetail4)">Edit Group</button></span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </section>
+                              </div>
+                            -->
+
+      <!-- <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Option Info<button type="button" class="btn btn-link"
+                  (click)="openDetailpopup(contentDetail5);onchng(undefined)">+ Add Option Group</button></strong>
+            </div>
+            <div class="col-xl-6 offset-xl-4">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" *ngFor="let item of optionGroup">
+                  <a class="nav-link" data-toggle="tab" href="#2" role="tab" aria-controls="size"
+                    (click)="setOptionId(item.Id);OptionGrpId=item.Id">
+                    {{item.Name}}
+                  </a>
+
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="mt-4 mb-4 tab-pane fade show active" id="2" role="tabpanel">
+                  <div>
+                    <div class="form-group row">
+                    </div>
+                  </div>
+                  <div *ngFor="let item of category1.options">
+                    <div class="form-group row" *ngIf="item.OptionGroupId == optgrpId">
+                      <div class="col-sm-3">
+                        <strong class="text-light">{{item.Name}}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-link" (click)="deleteOption()">-Delete
+                    Group</button><span><button type="button" class="btn btn-link"
+                      (click)="openDetailpopup(contentDetail6)">Edit Group</button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div> -->
+
+
+<!-- <ng-template #contentDetail1 let-modal>
+                                <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog ma-0" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Add Variant Group</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <select class="form-control custom-select" (change)="onChange($event.target.value)">
+                                                 <option *ngFor="let item of vartGroup; let pointIndex=index" value="{{item.Id}}" id="{{pointIndex}}">{{item.Description}}</option>
+                                              </select>
+                                            </div>
+                                            <div class="modal-body" *ngFor="let item of Variants; let i=index" >
+                                              <div class="col-sm-3">
+                                              <input type="checkbox" (change)="push($event.target.checked,item.Id)"/>
+                                              <strong class="text-light">{{item.Description}}</strong>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')" >Close</button>
+                                                <button type="button" class="btn btn-primary" (click)="save();modal.close('Save click')">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </ng-template>
+                              
+                              <ng-template #contentDetail2 let-modal>
+                                <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog ma-0" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Variant Group</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                             <div class="modal-body" *ngFor="let item of variants1;let i=index">
+                                               <div class="col-sm-3">
+                                              <input type="checkbox" (change)="push2($event,item.Id)" [checked]="item.checked"/>
+                                              <strong class="text-light">{{item.Description}}</strong>
+                                              </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                              </ng-template>
+                              
+                              <ng-template #contentDetail3 let-modal>
+                                <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog ma-0" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Add Addon Group</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <select #qwerty class="form-control custom-select" (change)="onChange1($event.target.value)">
+                                                 <option *ngFor="let item of Addongrp; let pointIndex=index" value="{{item.Id}}" id="{{pointIndex}}" >{{item.Description}}</option> 
+                                              </select>
+                                            </div>
+                                            <div class="modal-body" *ngFor="let item of Addons let i=index">
+                                              <div class="col-sm-3">
+                                              <input type="checkbox" (change)="push3($event.target.checked,item.Id)"  />
+                                              <strong class="text-light" >{{item.Description}}</strong>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')" >Close</button>
+                                                <button type="button" class="btn btn-primary" (click)="SaveAddon(qwerty.value);modal.close('Save click')">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </ng-template>
+                              
+                              <ng-template #contentDetail4 let-modal>
+                                <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog ma-0" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Addon Group</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div >
+                                            <div class="modal-body" *ngFor="let item of addons1;let i=index" >
+                                              <div class="col-sm-3">
+                                              <input type="checkbox" (change)="push4($event,item.Id)" [checked]="item.checked" />
+                                              <strong class="text-light">{{item.Product.Description}}</strong>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </ng-template> -->
+
+<ng-template #contentDetail5 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Option Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <select #qwerty class="form-control custom-select" (change)="onchng($event.target.value)">
+            <option *ngFor="let item of optgp;let pointIndex=index" value="{{item.Id}}" id="{{pointIndex}}">
+              {{item.Name}}</option>
+          </select>
+        </div>
+        <div class="modal-body">
+          <div class="col-sm-3" *ngFor="let item of options;">
+            <input type="checkbox" value="{{item.Id}}" (change)="push5($event.target.checked,item.Id)" />
+            <strong class="text-light">{{item.Name}}</strong>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger btn-sm mx-10 w-20"(click)="modal.close('Save click')">Close</button>
+          <button class="btn btn-success btn-sm mx-10 w-20"
+            (click)="saveOption(qwerty.value);modal.close('Save click')">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentDetail6 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Option Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngFor="let item of options1;let i =index">
+          <div class="col-sm-3">
+            <input type="checkbox" (change)="push6($event,item.Id)" [checked]="item.checked" />
+            <strong class="text-light">{{item.Name}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

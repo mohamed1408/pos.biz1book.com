@@ -1,0 +1,24 @@
+.search-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px 13px;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+.calender {
+    position: absolute;
+}
+
+.edited {
+    background-color: #faad152e;
+}
+canvas{
+    border: 1px black solid;
+}
+#textCanvas{
+    display: none;
+}

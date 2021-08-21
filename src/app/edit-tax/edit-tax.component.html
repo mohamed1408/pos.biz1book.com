@@ -1,0 +1,56 @@
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Variant</li>
+    </ol>
+  </nav> -->
+
+  <div class="container">
+
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light">Add Taxgroup </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="TaxForm" (ngSubmit)="saveTaxGroup()">
+              <div class="form-group">
+                <div class="col-md-4 mt-15">
+                  <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="customCheck1" formControlName="IsInclusive">
+                      <label class="custom-control-label" for="customCheck1">Inclusive Tax</label>
+                  </div>
+              </div>
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">Tax Group</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Description"
+                [ngClass]="{ 'is-invalid': submitted && f.Description.errors }" />
+                <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+                  <div *ngIf="f.Description.errors.required">TaxGroup is required</div>
+              </div>
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">Tax1</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="Tax1" />
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">Tax2</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="Tax2" />
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">Tax3</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="Tax3" />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-danger btn-sm mx-10 w-20 text-center" (click)="location.back()">Cancel</button>
+              <button class="btn btn-success btn-sm mx-10 w-20 text-center">Save</button>
+            </div>  
+            </form>
+              </div>
+              </div>
+              </section>
+              </div>
+              </div>
+            </div>

@@ -1,0 +1,18 @@
+.centre{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* ::ng-deep snack-bar-container.custom-class {
+  background: yellow;
+}
+
+::ng-deep .custom-class .mat-simple-snackbar {
+  color: green;
+} */

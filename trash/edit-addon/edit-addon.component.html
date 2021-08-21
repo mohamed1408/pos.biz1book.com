@@ -1,0 +1,65 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add ProductAddon</li>
+      </ol>
+    </nav>
+  
+    <div class="container">
+  
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Add ProductAddon </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">
+              <form [formGroup]="myForm">
+                <div class="form-group">
+                  <span>Addon Group</span>
+                  <input type="text" style="width: 20em" class="form-control" formControlName="Description" />
+                </div>
+  
+                <span>Addon</span>
+                <div>
+                    <div class="form-group row" [formGroupName]="i" *ngFor="let item of addonArray1; let i = index" >
+                      <ng-autocomplete 
+                    [data]="product"
+                    [(ngModel)]="item.Description"[ngModelOptions]="{standalone: true}"
+                    style="width: 20em;margin-left: 32px"
+                    [searchKeyword]="keyword"
+                    placeHolder="Enter the Product Name"
+                    (selected)='selectEvent($event, i)'
+                    (inputChanged)='onChangeSearch($event)'
+                    (inputFocused)='onFocused($event)'
+                    historyIdentifier="product"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    [initialValue]>
+                  </ng-autocomplete>
+                
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.Description">                      
+                    </a>
+                  </ng-template>
+                
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template> &nbsp;&nbsp;&nbsp;
+                  <span class="glyphicon glyphicon-trash" (click)="deleteaddon(i)"></span>
+                
+                      <br><br>
+                      <input type="hidden" formControlName="productId"/>
+                    </div>
+                    <button type="button" (click)="addItem()"  class="btn btn-link sp-nav-button"style="margin-right: 5px;">+ Add Product</button>
+                  </div>
+                
+  
+                <button type="button" (click)=" getformAddon()" class="btn-primary">Update</button>
+                <br>
+                <br>
+                <a style="float: right" [routerLink]="['/addon']">GoBack</a>
+                 <pre>{{myForm.value | json}}</pre> 
+                 <pre>{{addonArray1 | json}}</pre> 
+              </form>
+  

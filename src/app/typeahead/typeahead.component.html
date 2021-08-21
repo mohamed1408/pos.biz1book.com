@@ -1,0 +1,76 @@
+<ng-template #rt let-r="result" let-t="term">
+  <ngb-highlight [result]="r.product" [term]="t"></ngb-highlight>
+</ng-template>
+
+<div class="row">
+  <div class="col-xl-6 text-left">
+    <input
+      id="typeahead-template"
+      type="text"
+      class="form-control"
+      [(ngModel)]="model"
+      [ngbTypeahead]="search"
+      [resultTemplate]="rt"
+      [inputFormatter]="formatter"
+      (selectItem)="selectedItem($event)"
+    />
+  </div>
+  <div class="col-xl-6 mb-10 text-right">
+    <div class="row">
+      <div class="col-xl-4 text-left form-group col-md-2">
+        <input
+          type="text"
+          class="form-control"
+          #Quantity
+          placeholder="Enter Price"
+          id="ex1"
+          style="width: 127px"
+        />
+      </div>
+      <div class="col-xl-8 mb-10 text-right">
+        <button
+          class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg"
+        >
+          <span class="icon-label"
+            ><span class="feather-icon"><i data-feather="plus"></i></span
+          ></span>
+          <span class="btn-text">Add Product</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-xl-8 col-sm-12">
+    <input
+      id="typeahead-template"
+      type="text"
+      class="form-control"
+      [(ngModel)]="model"
+      [ngbTypeahead]="search"
+      [resultTemplate]="rt"
+      [inputFormatter]="formatter"
+      (selectItem)="selectedItem($event)"
+    />
+  </div>
+  <div class="col-xl-4 col-sm-12" [hidden]="!AddButtom">
+    
+
+    <input
+      type="text"
+      class="form-control"
+      #Quantity
+      placeholder="Enter Price"
+    />
+  </div>
+
+  <div class="col-xl-4 col-sm-12" [hidden]="!AddButtom">
+    <button class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg">
+      <span class="icon-label"
+        ><span class="feather-icon"><i data-feather="plus"></i></span
+      ></span>
+      <span class="btn-text">Add</span>
+    </button>
+  </div>
+</div> -->

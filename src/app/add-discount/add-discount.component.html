@@ -1,0 +1,89 @@
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Discount</li>
+    </ol>
+  </nav> -->
+
+  <div class="container">
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light"> Add DiscountRule </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="DiscForm" (ngSubmit)="addDiscRule()">
+              <div class="form-group">
+                <span style="font-weight: bold;">CouponCode</span><span class="text-danger">*</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="CouponCode"
+                  placeholder="Enter CouponCode" [ngClass]="{ 'is-invalid': submitted && f.CouponCode.errors }" />
+                <div *ngIf="submitted && f.CouponCode.errors" class="invalid-feedback">
+                  <div *ngIf="f.CouponCode.errors.required">CouponCode is required</div>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <span>DiscountType</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="DiscountType" />
+              </div> -->
+              <div class = "form-group">
+                <span style="font-weight: bold;">StartDate</span>
+                <input style = "width:20em" type = "datetime-local" class = "form-control"
+                formControlName = "StartDate" />
+              </div>
+
+              <div class = "form-group">
+                <span style="font-weight: bold;">EndDate</span>
+                <input style = "width:20em" type = "datetime-local" class = "form-control"
+                formControlName = "EndDate" />
+              </div>
+
+              <div class="form-group" style="width: 20em">
+                <span style="font-weight: bold;">DiscountType</span> <span class="text-danger">*</span>
+                <!-- <input style="width: 20em" type="number" class="form-control" formControlName="ChargeType" /> -->
+                <select class="form-control custom-select" formControlName="DiscountType"
+                  [ngClass]="{ 'is-invalid': submitted && f.DiscountType.errors }">
+                  <option value="0" selected>Select DiscountType</option>
+                  <option value="1">Percentage</option>
+                  <option value="2">Cash</option>
+                </select>
+                <div *ngIf="submitted && f.DiscountType.errors" class="invalid-feedback">
+                  <div *ngIf="f.DiscountType.errors.min">Select DiscountType</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <span style="font-weight: bold;">DiscountValue</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="DiscountValue"
+                  [ngClass]="{ 'is-invalid': submitted && f.DiscountValue.errors }" />
+                  <div *ngIf="submitted && f.DiscountValue.errors" class="invalid-feedback">
+                    <div *ngIf="f.DiscountValue.errors.min">DiscountValue is required</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">MiniOrderValue</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="MiniOrderValue" 
+                [ngClass]="{ 'is-invalid': submitted && f.MiniOrderValue.errors }" />
+                <div *ngIf="submitted && f.MiniOrderValue.errors" class="invalid-feedback">
+                  <div *ngIf="f.MiniOrderValue.errors.min">MiniOrderValue is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">MaxDiscountAmount</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="MaxDiscountAmount"
+                [ngClass]="{ 'is-invalid': submitted && f.MaxDiscountAmount.errors }"  />
+                <div *ngIf="submitted && f.MaxDiscountAmount.errors" class="invalid-feedback">
+                  <div *ngIf="f.MaxDiscountAmount.errors.min">MaxDiscountAmount is required</div>
+                </div>
+              </div>
+              <div class="form-group ">
+                <button class="btn btn-danger btn-sm mx-10 w-20 text-center" (click)="location.back()">Cancel</button>
+                <button class="btn btn-success btn-sm mx-10 w-20" >Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="hk-pg-wrapper">
+
+  <!-- Container -->
+  <div class="container">
+    <!-- Title -->
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title"> Category</h4>
+    </div>
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <strong class="text-light">Category Basic Info</strong>
+        <div class="col-xl-12 row">
+          <div class="col-xl-6">
+            <div class="form-group">
+              <strong>Name</strong>
+              <input #des type="text" class="form-control" placeholder="Enter Category Name"
+                [(ngModel)]="category1.Description" name="Description" />
+            </div>
+            <div class="form-group">
+              <strong>ParentCategory</strong>
+              <select class="form-control custom-select" [(ngModel)]="category1.ParentCategoryId"
+                name="ParentCategoryId">
+                <option value="null">ParentCategory</option>
+                <option *ngFor="let item of getparentcategory(catId)" value="{{item.Id}}">{{item.Description}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group" *ngIf="category1.ParentCategoryId>0">
+              <ng-multiselect-dropdown #multiSelect [placeholder]="'Select OptionGroup'" [(ngModel)]="selectedItems"
+                name="OptionGroup" [data]="opt.catOptgp" [settings]="settings" [disabled]="false"
+                (onFilterChange)="onFilterChange($event)" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="form-group">
+              <span style="font-weight: bold;">FreeQtyPercentage</span>
+              <input type="number" name="FreeQtyPercentage" class="form-control"
+                [(ngModel)]="category1.FreeQtyPercentage" />
+            </div>
+            <div class="form-group">
+              <span style="font-weight: bold;">MinimumQty</span>
+              <input type="number" name="MinimumQty" class="form-control" [(ngModel)]="category1.MinimumQty"
+                name="MinimumQty" />
+            </div>
+            <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="category1.IsUPCategory"
+                  name="IsUPCategory" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">IsUPCategory</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="my-5 text-right">
+          <button (click)="location.back();clear()" class="btn btn-danger btn-sm mx-10 w-10">Cancel</button>
+          <button class="btn btn-success btn-sm mx-10 w-10" (click)="SaveCat()">Save Category</button>
+        </div>
+      </section>
+      <section class="hk-sec-wrapper">
+        <div class="col-xl-12 row">
+          <div class="col-xl-6">
+            <strong>Mapped Products</strong>
+          </div>
+          <div class="col-xl-6">
+            <strong>Unmapped Products</strong>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

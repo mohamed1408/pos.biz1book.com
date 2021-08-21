@@ -1,0 +1,186 @@
+<!-- <div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+</div> -->
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <!-- <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li> -->
+      </ol>
+    </nav>
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">Option Reports</h4>
+    </div>
+
+
+
+    <!-- <div class="col-xl-4 text-right">
+              <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+          </div> -->
+
+    <div class="col-sm-14">
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="form-group row">
+            <div style="margin-left:30px ">
+              <label for="username">Location</label>
+              <ng-autocomplete (inputCleared) = "focusAutocomplete()" [data]="stores" style="width:10em;margin-left:30px;
+                        border-color: #90a7a8;  " [searchKeyword]="key" (selected)='selectLocation($event)'
+                placeHolder="Choose Location" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                [(ngModel)]="all"></ng-autocomplete>
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.Name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+            <div style="margin-left:50px;">
+              <label for="username">Date</label>
+              <input type="text" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [(ngModel)]="selected" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+
+            </div>
+            <!-- <div hidden style="margin-left:50px;">
+              <label for="username">Date</label>
+              <input type="text" ngxDaterangepickerMd [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+                [(ngModel)]="selected" [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                [linkedCalendars]="true" [showClearButton]="true" (change)="date($event)" placeholder="Select Date..."
+                class="form-control" />
+            </div> -->
+            <!-- <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">ParentCategory</label>
+              <select class="form-control custom-select" [(ngModel)]="ParentCatId" name="ParentCategoryId">
+                <option value="0">All</option>
+                <option value="{{item.Id}}" *ngFor="let item of parentcategory">{{item.Description}}</option>
+              </select>
+            </div> -->
+            <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">Source</label>
+              <select class="form-control custom-select" [(ngModel)]="payload.sourceId" name="Source">
+                <option value="0">All</option>
+                <option value="1">POS</option>
+                <option value="2">Swiggy</option>
+                <option value="3">Zomato</option>
+                <option value="4">Food Panda</option>
+              </select>
+            </div>
+            <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">OptionGroup</label>
+              <select class="form-control custom-select" [(ngModel)]="payload.optionGroupId" name="Source">
+                <option value="0">All</option>
+                <option *ngFor="let item of optiongroups" value="{{item.Id}}">{{item.OptionGroup}}</option>
+              </select>
+            </div>
+            <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">Option</label>
+              <select class="form-control custom-select" [(ngModel)]="payload.optionId" name="Source">
+                <option value="0">All</option>
+                <option *ngFor="let item of filterOptions()" value="{{item.Id}}">{{item.Name}}</option>
+              </select>
+            </div>
+            <div style="margin-left:40px ">
+              <label for="username">Product</label>
+              <ng-autocomplete (inputCleared) = "focusedAutocomplete()" [data]="product" style="width:10em;margin-left:30px;
+                          border-color: #90a7a8;  " [searchKeyword]="key" (selected)='selectProduct($event)'
+                placeHolder="Select Product" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                [(ngModel)]="prd"></ng-autocomplete>
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.Name"></a>
+              </ng-template>
+      
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+      
+            <div style="margin-left:75px;margin-top:35px;">
+              <button class="btn btn-success  btn-sm mx-10 w-100" (click)="Submit()">Submit</button>
+            </div>
+          </div>
+          <div *ngIf="report.length > 0" class="row">
+            <div class="col-sm">
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+                  <br>
+                  <table class="table mb-0 table-sm">
+                    <thead>
+                      <tr style="background-color:rgb(217, 226, 250);">
+                        <th (click)="sortsettings('Name')"><strong><a class="font-12"> Name </a></strong><i
+                            *ngIf="sortfield == 'Name' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Name' && x == 1" class="icon-arrow-down  pull-right"></i> </th>
+                        <th (click)="sortsettings('Quantity')"><strong> <a class="font-12">Quantity </a></strong><i
+                            *ngIf="sortfield == 'Quantity' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Quantity' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                          <th (click)="sortsettings('Amount')"><strong> <a class="font-12">Amount </a></strong><i
+                            *ngIf="sortfield == 'Amount' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Amount' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr (click)="openDetailpopup(contentdetail1,item.Id)"
+                        *ngFor="let item of report | filter:term ">
+                        <td class="font-12">{{item.Name}}</td>
+                        <td class="font-12">&#8377;{{item.Qty | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.Amount | number: ".2"}}</td>
+                      </tr>
+                      <tr>
+                        <td class="font-13"><strong> Total</strong></td>
+                        <td class="font-13"><strong>&#8377;{{TotalQuantity | number: ".2"}}</strong></td>
+                        <td class="font-13"><strong>&#8377;{{TotalSales | number: ".2"}}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <td>Product</td>
+                <td>Quantity</td>
+                <td>TotalSales</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filtprd.data">
+                <td>{{item.Product}}</td>
+                <td>{{item.Quantity}}</td>
+                <td>&#8377;{{item.TotalSales | number:".2"}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td> TotalQty</td>
+                <td>{{ TotalPrdQty}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td> TotalSales</td>
+                <td>{{TotalProductSale}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,76 @@
+<div class="hk-pg-wrapper">
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title">Customers Details</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search Customer.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/createcustomer',0]">
+                <!-- <button class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg">
+                        <span class="icon-label"><span class="feather-icon"><i data-feather="plus"></i></span></span>
+                        <span class="btn-text">Add Customers</span>
+                    </button> -->
+                </a>
+            </div>
+        </div>
+            <div class="col-xl-12 pl-0 pr-0">
+                <section class="hk-sec-wrapper">
+                    <div class="row">
+                        <div class="col-sm">
+                            <form>
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <thead>
+                                            <tr  style ="background-color:rgb(217, 226, 250);">
+                                                <th> <strong><a class ="font-12">Name</a></strong></th>
+                                                <th> <strong><a class ="font-12">PhoneNo</a></strong></th>
+                                                <th> <strong><a class ="font-12">Order Count</a></strong></th>
+                                                <th> <strong><a class ="font-12">Order Value</a></strong></th>
+                                                <th> <strong><a class ="font-12">Last Seen</a></strong></th>                                                                  
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of cust | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                                <td class ="font-12" >{{item.Name}}</td>
+                                                <td class ="font-12">{{item.PhoneNo}}</td>
+                                                <td class ="font-12">{{item.OrderCount}}</td>
+                                                <td class ="font-12">&#8377;{{item.Ordervalue | number: ".2"}}</td>
+                                                <td class ="font-12">{{item.LastSeen}}</td>                                                                                 
+                                                <td>
+                                                    <a [routerLink]="['/createcustomer',item.Id]" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                                    <a (click)="  openDetailpopup(contentdetail);deleteId = item.Id" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                                </td>
+                                            </tr> 
+                                            <br>
+                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>                                                   
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #contentdetail let-modal>
+            <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                <div class="modal-dialog ma-0" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Do You Really Want To Delete This Customer? </h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-success" data-dismiss="modal" aria-label="Close" (click)="getcusdelete(deleteId);modal.close()" >Yes</button>
+                            <button type="button" class="btn btn-outline-success" data-dismiss="modal" aria-label="Close" (click)="modal.close()">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>

@@ -1,0 +1,162 @@
+<div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+</div>
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+    </ol>
+  </nav> -->
+  <div class="hk-pg-header">
+    <h4 class="hk-pg-title">&nbsp;&nbsp; Users</h4>
+  </div>
+  <div class="container">
+    <div class="col-xl-15 mb-10 " *ngIf="!show">
+
+      <div class="row">
+        <div class="col-xl-4 ">
+          <input type="text" class="form-control" placeholder="Search Users.." [(ngModel)]="term">
+        </div>
+        <div class="col-xl-8 mb-10 text-right">
+          <button class="btn btn-success btn-sm mx-10 w-20" (click)="show = true">
+            <!-- <span class="icon-label"><span class="feather-icon"><i data-feather="archive"></i></span></span> -->
+            <span class="btn-text">+ Add User</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-xl-20 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-sm ">
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <div class="col-xl-40 ">
+
+                    <table class="table mb-0 table-sm">
+
+                      <thead>
+                        <tr style="background-color:rgb(217, 226, 250);">
+                          <th (click)="sortsettings('Name')"> <strong><a class="font-12">Name</a></strong>
+                            <i *ngIf="sortfield == 'Name' && x == -1" class="icon-arrow-up  pull-right"></i>
+                            <i *ngIf="sortfield == 'Name' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                          <th> <strong class="font-12">Role</strong></th>
+                          <th (click)="sortsettings('Stores')"> <strong><a class="font-12">Store Name</a></strong>
+                            <i *ngIf="sortfield == 'Stores' && x == -1" class="icon-arrow-up  pull-right"></i>
+                            <i *ngIf="sortfield == 'Stores' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                          <!-- <th><strong class="font-12">Action</strong></th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p }">
+                          <td  class="mw-100p font-12"><strong><a href="javascript:void(0)"
+                            (click)="show = true; filter(item)" class="text-info">{{item.Name}}</a></strong>
+                          </td>
+                          <td class="font-12">{{item.Role.Name}}</td>
+                          <td class="font-12">{{item.Stores}}</td>
+                          <!-- <td> -->
+                            <!-- <a (click)="show = true; filter(item)" class="mr-25" data-toggle="tooltip" title="Edit"> <i
+                                class="icon-pencil"></i> </a>
+                            <a (click)="openDetailpopup(contentdetail);deleteId = item.Id" data-toggle="tooltip"
+                              title="Delete"> <i class="icon-trash txt-danger"></i> </a> -->
+                          <!-- </td> -->
+                        </tr>
+                      </tbody>
+                      <br>
+                      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="show">
+    <div class="container">
+      <div class="col-xl-20 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <form name="form" #f="ngForm" (ngSubmit)="userData.stores.length > 0 && f.form.valid && saveuser()"
+              novalidate>
+              <div class="col-xl-25">
+                <strong class="text-light">Add New User</strong>
+              </div>
+              <div class="col-xl-15  offset-xl-6">
+                <div class="form-group" style="width:20em;">
+                  <label for="firstName"><strong class="text-light">Name</strong></label><span
+                    class="text-danger">*</span>
+                  <input [(ngModel)]="userData.Name" type="text" class="form-control" placeholder="Enter User Name"
+                    name="uname" #uname="ngModel" [ngClass]="{'is-invalid': f.submitted && uname.invalid}" required />
+                </div>
+                <div class="form-group" style="width:20em">
+                  <label for="firstName"><strong class="text-light">Enter Pin</strong></label><span
+                    class="text-danger">*</span>
+                  <input [(ngModel)]="userData.Pin" type="number" (input)="errorMsg=''" class="form-control"
+                    placeholder="4 digit user pin" maxlength="4" name="pin" #pin="ngModel"
+                    [ngClass]="{'is-invalid': f.submitted && pin.invalid}" minlength="4" required />
+                  <div *ngIf="f.submitted && pin.invalid" class="invalid-feedback">
+                    <div *ngIf="pin.errors.minlength || pin.errors.required">Pin should be 4 digits</div>
+                  </div>
+                </div>
+                <div class="form-group" style="width: 20em">
+                  <select [(ngModel)]="userData.RoleId" class="form-group custom-select" style="width:20em;"
+                    name="role">
+                    <option value="0" disabled selected>Select Role </option>
+                    <option value="{{rol.Id}}" *ngFor="let rol of getrole">{{rol.Name}}</option>
+                  </select>
+                  <div *ngIf="f.submitted && userData.RoleId==0" class="d-block invalid-feedback">
+                    Select Role
+                  </div>
+                </div>
+                <div class="form" style="width:20em;">
+
+                  <ng-multiselect-dropdown #multiSelect [placeholder]="'Select Stores'" [(ngModel)]="selectedItems"
+                    [data]="udata" [formControl]="form.controls['name']" (change)="data($event)" [settings]="settings"
+                    [disabled]="false" (onFilterChange)="onFilterChange($event)" (onSelect)="onItemSelect($event)"
+                    (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                    (onDeSelectAll)="onDeSelectAll($event)"
+                    [ngClass]="{'is-invalid': f.submitted && userData.stores.length == 0}">
+                  </ng-multiselect-dropdown>
+                  <div *ngIf="f.submitted && userData.stores.length==0" class="d-block invalid-feedback">
+                    Select atleast one store!
+                  </div>
+                </div>&nbsp;
+
+                <div class="modal-footer" class="form-group" style="width:20em;">
+                  <button class="btn btn-secondary btn-sm mx-10 w-30" (click)="clear(); show = false">Back</button>&nbsp;
+                  <button class="btn btn-success btn-sm mx-10 w-30">Save</button>
+
+                </div>
+                <!-- {{userData | json}} -->
+                <!-- {{errorMsg}} -->
+                <!-- <div *ngFor="let rol of udata">
+{{rol.Name}}
+</div> -->
+
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #contentdetail let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Do You Really Want To Delete This User? </h5>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger btn-sm mx-10 w-20 text-center"
+            (click)="deleteuser(deleteId);modal.close()">Yes</button>
+          <button class="btn btn-success btn-sm mx-10 w-20 text-center" (click)="modal.close()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

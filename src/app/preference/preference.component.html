@@ -1,0 +1,84 @@
+<div class="hk-pg-wrapper">
+  <h4 class="hk-pg-title"><span class="pg-title-icon"></span> &nbsp; &nbsp; Preferences</h4>
+  <br>
+  <ul class="nav nav-tabs active" id="myTab" role="tablist">
+
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#Selling" role="tab" aria-controls="Selling" id="Sellingtab">
+        Selling Preferences</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " data-toggle="tab" href="#Permission" role="tab" aria-controls="Permission"
+        id="Permissiontab">Permission Preferences</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link " data-toggle="tab" role="tab" aria-controls="Printing" id="Printingtab">Printing
+        Preferences</a>
+    </li>
+  </ul>
+
+
+  <div class="tab-content" id="myTabContent">
+    <div class="mt-4 mb-4 tab-pane fade show active " id="Selling" role="tabpanel">
+      <div class="container">
+        <!-- Row -->
+        <div class="row">
+          <div class="col-xl-12">
+            <section class="hk-sec-wrapper">
+              <div class="row">
+                <div class="col-sm">
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="OrderTicket" type="checkbox"
+                      [(ngModel)]="prefdata.KOTGenerate" name="KOTGenerate">
+                    <label class="custom-control-label" for="OrderTicket">Enable OrderTicket/KOT Generation</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Customer" type="checkbox"
+                      [(ngModel)]="prefdata.EnforceCustomerNo" name="EnforceCustomerNo">
+                    <label class="custom-control-label" for="Customer">Enforce Customer mobile Number</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Quantity" type="checkbox"
+                      [(ngModel)]="prefdata.FreeQuantity" name="FreeQuantity">
+                    <label class="custom-control-label" for="Quantity">FreeQuantity</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="QuickOrder" type="checkbox"
+                      [(ngModel)]="prefdata.QuickOrder" name="QuickOrder">
+                    <label class="custom-control-label" for="QuickOrder">Quick Order</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="ShowUpcategory" type="checkbox"
+                      [(ngModel)]="prefdata.ShowUpcategory" name="ShowUpcategory">
+                    <label class="custom-control-label" for="ShowUpcategory">Show UpCategory</label>
+                  </div>
+                  <button type="submit" style="margin-left: 85px" class="btn btn-success"
+                    (click)="saveData()">Save</button>
+                  <button type="submit" style="margin-left: 20px"class="btn btn-indigo btn-sm mx-10 w-10"
+                    (click)="Getdata()">Reset</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>

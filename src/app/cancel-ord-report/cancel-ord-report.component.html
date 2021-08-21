@@ -1,0 +1,285 @@
+<div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+</div>
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">CancelOrder</h4>
+    </div>
+    <div class="col-sm-14">
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="form-group row">
+            <div style="margin-left:30px ">
+              <label for="username">Location</label>
+              <ng-autocomplete (inputCleared)="focusAutocomplete()" [data]="stores" style="width:10em;  
+                border-color: #c5d4d6;" [formControl]="myControl" [searchKeyword]="key"
+                (selected)='selectEvent($event)' placeHolder="Choose Location" [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1" [(ngModel)]="all"></ng-autocomplete>
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.Name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+            <div style="margin-left:50px;">
+              <label for="username">Date</label>
+              <input type="text" class="form-group" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [(ngModel)]="selected" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+            </div>
+            <div hidden style="margin-left:120px;margin-top: 3px">
+              <label for="username">Date</label>
+              <input type="text" class="form-group" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [(ngModel)]="selected" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+            </div>
+
+
+            <div class="form-group" style="width: 10em;margin-left:40px;">
+              <label for="username">Source</label>
+              <select class="form-control custom-select" [(ngModel)]="sourceId" name="Source">
+                <option value="0">All</option>
+                <option value="1">POS</option>
+                <option value="2">Swiggy</option>
+                <option value="3">Zomato</option>
+                <option value="4">Food Panda</option>
+              </select>
+            </div>
+
+            <div style="margin-left:75px;margin-top:35px;">
+              <button class="btn btn-success  btn-sm mx-10 w-100" (click)="Submit()">Submit</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+                  <br>
+                  <table class="table mb-0 table-sm">
+                    <thead>
+                      <tr style="background-color:rgb(217, 226, 250);">
+                        <th><strong><a class="font-12">Id</a></strong></th>
+                        <th> <strong><a class="font-12">Date</a></strong></th>
+                        <th><strong><a class="font-12">StoreName</a></strong></th>
+                        <th><strong><a class="font-12">Bill Amount</a></strong></th>
+                        <th><strong><a class="font-12">Paid Amount</a></strong></th>
+                        <th><strong><a class="font-12">DiscAmount</a></strong></th>
+                        <th><strong><a class="font-12">RefundAmount</a></strong></th>
+                        <th><strong><a class="font-12">Reason</a></strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor = "let item of sortData |  filter:term" >
+                        <td class="font-12">{{item.InvoiceNo}}</td>
+                        <td class="font-12">{{item.OrderedDate}}</td>
+                        <td class="font-12">{{item.Name}}</td>
+                        <td class="font-12">&#8377;{{item.BillAmount | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.PaidAmount | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.DiscAmount | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.RefundAmount | number: ".2"}}</td>
+                        <td class="font-12">
+                          <!-- <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                            class="antifocus text-success" data-toggle="modal" data-target="#exampleModalCenter" (click)="selectOrder(item)">
+                            <mat-icon class="font-18">get_app</mat-icon>
+                          </button> -->
+                          <!-- <div class="row">
+                            <input class="form-control form-control-sm mt-15" [(ngModel)]="item.CancelReason" type="text"
+                            placeholder=".form-control-sm">
+                          <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                            class="antifocus text-success" data-toggle="modal" data-target="#exampleModalCenter"
+                            (click)="selectOrder(item)">
+                            <mat-icon class="font-18">get_app</mat-icon>
+                          </button>
+                          </div>                          -->
+                          <div class="form-group mt-2">
+                            <div class="input-group">
+                              <input readonly type="text" class="form-control form-control-sm " [(ngModel)]="item.CancelReason"
+                                placeholder="Reason" aria-label="Recipient's username"
+                                aria-describedby="basic-addon2">
+                              <div class="input-group-append">
+                                <button class="btn btn-sm btn-info" type="button" data-toggle="modal"
+                                  data-target="#exampleModalCenter" (click)="selectOrder(item)"><i class="fa fa-exclamation fa-xs"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="font-14">TotalSales</td>
+                        <td class="font-14">&#8377;{{TotalSales | number:".2"}}</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="font-14">TotalPayments</td>
+                        <td class="font-14">&#8377;{{TotalPayments | number:".2"}}</td>
+                        <td></td>
+                      </tr>
+                      <!-- <tr>
+                            <td></td>
+                            <td></td> DiscAmount
+                            <td></td>
+                            <td></td>
+                            <td>TotalSales</td>
+                            <td>&#8377;{{TotalSales | number:".2"}}</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>TotalPayments</td>
+                            <td>&#8377;{{TotalPayments | number:".2"}}</td>
+                            <td></td>
+                          </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenter" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Cancel Request</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <!-- <div *ngIf="temporder" class="modal-body">
+                  <strong>InvoiceNo: </strong> {{temporder.InvoiceNo}} <br>
+                  <strong>Store: </strong> {{temporder.Name}} <br>
+                  <strong>Bill Amt: </strong>&#8377; {{temporder.BillAmount | number: ".2"}} <br>
+                  <strong>Paid Amt: </strong>&#8377; {{temporder.PaidAmount | number: ".2"}} <br>
+                  <div class="row">
+                    <div>
+                      <strong class="ml-10">Reason: </strong>
+                    </div>
+                    <div>
+                      <input class="form-control form-control-sm" [(ngModel)]="temporder.CancelReason" type="text"
+                        placeholder=".form-control-sm">
+                    </div>
+                  </div>
+                </div> -->
+                <div *ngIf="temporder" class="card-body">
+                  <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="baseFullname"><strong>InvoiceNo</strong></label>
+                      <div class="col-md-6 pt-2">
+                        {{temporder.InvoiceNo}}
+                      </div>
+                      <!-- <span *ngIf="submitted && variantgroup.name == ''" class="text-danger">*VariantGroup cannot be
+                          empty</span> -->
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="baseFullname"><strong>Store</strong></label>
+                      <div class="col-md-6 pt-2">
+                        {{temporder.Name}}
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="baseFullname"><strong>Bill Amt</strong></label>
+                      <div class="col-md-6 pt-2">
+                        &#8377; {{temporder.BillAmount | number: ".2"}}
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="formControlRange"><strong>Paid Amt</strong></label>
+                      <div class="col-md-6 pt-2">
+                        &#8377; {{temporder.PaidAmount | number: ".2"}}
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="formControlRange"><strong>Reason</strong></label>
+                      <div class="col-md-6 pt-2">
+                        <!-- <input class="form-control form-control-sm" [(ngModel)]="temporder.CancelReason" type="text"
+                        placeholder="Some Reason.."> -->
+                        <textarea [(ngModel)]="temporder.CancelReason" class="form-control" rows="1"
+                    placeholder="Some Reason..."></textarea>
+                      </div>
+                  </div>
+              </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click) = "save()" >Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <ng-template #contentdetail1 let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+      <div class="modal-dialog ma-0" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr>
+                  <td>Product</td>
+                  <td>Quantity</td>
+                  <td>Tax</td>
+                  <td>Price</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr 
+                *ngFor="let item of receipt"  >
+                  <td>{{item.Description}}</td>
+                  <td>{{item.Quantity}}</td>
+                  <td>{{item.Tax1+item.Tax2}}%</td>
+                  <td>&#8377;{{item.Price | number:".2"}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Subtotal</td>
+                  <td>&#8377;{{subtotal | number:".2"}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>CGST</td>
+                  <td>&#8377;{{cgst | number:".2"}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>SGST</td>
+                  <td>&#8377;{{sgst | number:".2"}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Total</td>
+                  <td>&#8377;{{total | number:".2"}}</td>
+                </tr>  
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template> -->

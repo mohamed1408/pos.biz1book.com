@@ -1,0 +1,112 @@
+<div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+          <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+      </ol>
+  </nav> -->
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title">&nbsp;DiscountRule</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search DiscountRule.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/addDiscountrule']">
+                    <button class="btn btn-success btn-sm mx-10 w-20">
+                        <span class="btn-text"> + Add DiscountRule</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <form>
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-sm">
+                                        <thead>
+                                            <tr style ="background-color:rgb(217, 226, 250);">
+                                                <!-- <th> <strong><span class="fas fa-sort" (click)="sortsettings('Name')"></span><a style="color:#22af47">Name</a></strong></th> -->
+                                                <th (click)="sortsettings('CouponCode')"><strong><a class="font-12">Coupon
+                                                            Code</a></strong><i
+                                                        *ngIf="sortfield == 'CouponCode' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'CouponCode' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i> </th>
+                                                <th (click)="sortsettings('StartDate')"><strong><a
+                                                    class="font-12">Duration</a></strong><i
+                                                        *ngIf="sortfield == 'StartDate' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'StartDate' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i> </th>
+                                                <th class="font-12"><strong> <a>Discount Type</a></strong> </th>
+                                                <th class="font-12"><strong> <a>Discount Value</a></strong> </th>
+                                                <th class="font-12"><strong> <a>Mini OrderValue</a></strong> </th>
+                                                <th (click)="sortsettings('MaxDiscountAmount')"><strong><a class="font-12">Max
+                                                            DiscountAmount</a></strong><i
+                                                        *ngIf="sortfield == 'MaxDiscountAmount' && x == -1"
+                                                        class="icon-arrow-up  pull-right"></i>
+                                                    <i *ngIf="sortfield == 'MaxDiscountAmount' && x == 1"
+                                                        class="icon-arrow-down  pull-right"></i> </th>
+                                                <!-- <th class="font-12"><strong>Action</strong></th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ">
+                                                <td class="font-12"><strong><a href="javascript:void(0)"
+                                                    [routerLink]="['/editdiscount',item.Id]"
+                                                    class="text-info">{{item.CouponCode}}</a></strong> </td>
+                                                <td class="font-12">{{item.StartDate | date}}-{{item.EndDate | date}}
+                                                </td>
+                                                <td class="font-12">{{(item.DiscountType==1)?'Percentage':'Cash'}}</td>
+                                                <td class="font-12">{{(item.DiscountType==1)?item.DiscountValue+'%':'&#8377;'+item.DiscountValue+'.00'}}
+                                                </td>
+                                                <td class="font-12">&#8377;{{item.MiniOrderValue | number: ".2"}}</td>
+                                                <td class="font-12">&#8377;{{item.MaxDiscountAmount | number: ".2"}}
+                                                </td>
+                                                <!-- <td>
+
+                                                    <a [routerLink]="['/editdiscount',item.Id]" class="mr-25"
+                                                        data-toggle="tooltip" data-original-title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentdetail);deleteId = item.Id"
+                                                        data-toggle="tooltip" data-original-title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a>
+                                                </td> -->
+                                            </tr>
+                                            <br>
+                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete This Discount Rule? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="getdelete(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

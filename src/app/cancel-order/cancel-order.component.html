@@ -1,0 +1,115 @@
+<div class="hk-pg-wrapper">
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item"><a href="javascript:void(0);">Company Management</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> Cancel Orders</li>
+    </ol>
+  </nav>
+  <div class="container">
+    <!-- Title -->
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+              data-feather="archive"></i></span></span>Cancel Orders</h4>
+    </div>
+    <!-- Row -->
+    <section class="hk-sec-wrapper">
+
+      <div class="row">
+        <!-- <div class="col-xl-4 text-right">
+        <input type="text" class="form-control" placeholder="Typing.." >
+      </div>
+      <div class="col-xl-8 mb-10 text-right">
+        <button class="btn btn-success btn-sm mx-10 w-10">Import</button>
+      </div> -->
+        <div class="form-group">
+          <div class="input-group mx-10 text-right">
+            <input type="text" class="form-control" [(ngModel)]="invoiceno" placeholder="InVoice Number"
+              aria-label="Recipient's username" aria-describedby="basic-addon2" (keyup.enter)="getorderbyinvoiceno()">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" (click)="getorderbyinvoiceno()">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="orders.length > 0" class="row w-100 mt-3">
+          <div class="col-sm">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr style="background-color:rgb(217, 226, 250);">
+                      <th><strong>OrderId#</strong></th>
+                      <th><strong>Store</strong></th>
+                      <th><strong>OrderType</strong></th>
+                      <th><strong>OrderedDate</strong></th>
+                      <th><strong>Bill Amount</strong></th>
+                      <th><strong>Paid Amount</strong></th>
+                      <!-- <th><strong>Delivery Date</strong></th> -->
+                      <th><strong>Status</strong></th>
+                      <th><strong>Reason</strong></th>
+                      <th><span class="pl-20"><strong>Action</strong></span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let order of orders">
+                      <td class="font-13">{{order.Id}}</td>
+                      <td class="font-13">{{order.Store.Name}}</td>
+                      <td class="font-13">{{order.type}}</td>
+                      <td class="font-13">{{order.OrderedDateTime | date:'MMM d, y'}}</td>
+                      <td class="font-13">&#8377;{{order.BillAmount}}</td>
+                      <td class="font-13">&#8377;{{order.PaidAmount}}</td>
+                      <!-- <td class="font-13">{{order.DeliveryDateTime | date:'MMM d, y'}}</td> -->
+                      <td class="font-13">{{order.status}}</td>
+                      <td class="font-13">
+                        <div class="modal-body pl-5">
+                          <textarea [(ngModel)]="order.Payload.CancelReason" class="form-control" rows="2" 
+                            placeholder="Textarea"></textarea>
+                        </div>
+                      </td>
+                      <td>
+                        <!-- <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                          class="antifocus text-danger ">
+                          <mat-icon class="font-18 ">cancel</mat-icon>
+                        </button> -->
+                        <button *ngIf="order.OrderStatusId != -1"
+                          class="btn btn-danger btn-wth-icon icon-wthot-bg btn-sm" (click)="cancel(order.Payload)"><span
+                            class="icon-label"><i class="fa fa-times"></i> </span><span
+                            class="btn-text">Cancel</span></button>
+                        <!-- <button mat-icon-button
+                                                aria-label="Example icon button with a vertical three dot icon"
+                                                class="antifocus text-danger">
+                                                <mat-icon class="font-18">delete_outline</mat-icon>
+                                            </button> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenter" aria-hidden="true">
+            <div *ngIf="temporder" class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Cancel Request</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <textarea [(ngModel)]="temporder.CancelReason" class="form-control mt-15" rows="3"
+                    placeholder="Textarea"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+    </section>
+  </div>
+</div>

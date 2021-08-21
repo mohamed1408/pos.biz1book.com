@@ -1,0 +1,79 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add AdditionalCharges</li>
+        </ol>
+    </nav>
+
+    <div class="container">
+
+        <div class="col-xl-12 pl-0 pr-0 ">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <strong class="text-light">Add Location </strong>
+                    </div><br>
+                    <div class="col-xl-6  offset-xl-4">
+                        <div class="form-group">
+                            <!-- <span>Linked Store</span><br> -->
+                            <select [(ngModel)]="indicator" class="form-control custom-select w-300p" name="store"
+                                (change)="setStore($event.target.value)">
+                                <option value="0" selected disabled>Select Store</option>
+                                <option *ngFor="let store of stores" value="{{store|json}}">{{store.Name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="indicator!=0">
+                            <span>Location Name</span>
+                            <input [(ngModel)]="obj.name" type="text" class="form-control w-300p"
+                                placeholder="Enter Location Name"
+                                [ngClass]="{ 'is-invalid': submitted && f.Description.errors }" />
+                            <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+                                <div *ngIf="f.Description.errors.required">Description is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="indicator!=0">
+                            <span>Brand</span><br>
+                            <select [(ngModel)]="brandId" class="form-control custom-select w-300p" name="brand"
+                                (change)="setBrand($event.target.value)">
+                                <option value="0" selected>No Brand</option>
+                                <option *ngFor="let brand of Brands" value="{{brand.Id}}">{{brand.Name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="indicator!=0">
+                            <strong>Included Platforms :</strong><br>
+                            <div class="pl-100 ml-50">
+                                <input type="checkbox" (input)="includeplatforms($event.target.checked,'zomato')"
+                                    name="zomato" id="zomato"><label for="zomato">&nbsp;Zomato</label><br>
+                                <input type="checkbox" (input)="includeplatforms($event.target.checked,'swiggy')"
+                                    name="Swiggy" id="Swiggy"><label for="Swiggy">&nbsp;Swiggy</label><br>
+                                <!-- <input type="checkbox" (input)="includeplatforms($event.target.checked,'foodpanda')" name="FoodPanda" id="FoodPanda"><label
+                                    for="FoodPanda">FoodPanda</label><br> -->
+                                <input type="checkbox" (input)="includeplatforms($event.target.checked,'dunzo')"
+                                    name="Dunzo" id="Dunzo"><label for="Dunzo">&nbsp;Dunzo</label><br>
+                                <input type="checkbox" (input)="includeplatforms($event.target.checked,'urbanpiper')"
+                                    name="UrbanPiper" id="UrbanPiper"><label
+                                    for="UrbanPiper">&nbsp;UrbanPiper</label><br>
+                                <!-- <input type="checkbox" (input)="includeplatforms($event.target.checked,'')" name="UrbanPiper" id="UrbanPiper"><label
+                                    for="UrbanPiper">UrbanPiper</label><br> -->
+                            </div>
+                        </div>
+                        <!-- {{json|json}} -->
+                        <div class="form-group">
+                            <button [disabled]="loading" class="btn btn-danger btn-sm mx-10 w-20"
+                                (click)="location.back()">Cancel</button>&nbsp;
+                            <button [disabled]="loading" class="btn btn-success btn-sm mx-10 w-20"
+                                (click)="AddLocation();"><i *ngIf="loading"
+                                    class="fa fa-circle-o-notch fa-spin"></i><span *ngIf="!loading">Add
+                                    Location</span></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <button [disabled]="isprogress" class="btn btn-primary w-65p"><i *ngIf="loading"
+        class="fa fa-circle-o-notch fa-spin"></i><span *ngIf="!loading">Add Location</span></button> -->

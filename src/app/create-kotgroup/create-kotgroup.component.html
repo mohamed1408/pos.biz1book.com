@@ -1,0 +1,47 @@
+ <div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add KOTGroup</li>
+      </ol>
+    </nav> -->
+  
+    <div class="container">
+  
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Add KOTGroup </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">
+              <form [formGroup]="KOTForm"  (ngSubmit)="onSubmit()">
+                
+
+
+                  <div class="form-group">
+                      <label style="font-weight: bold;">Description</label> <span class="text-danger">*</span>
+                      <input type="text" style="width: 20em"  formControlName="Description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Description.errors }" />
+                      <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+                          <div *ngIf="f.Description.errors.required">Description is required</div>
+                      </div>
+                  </div>
+
+                <!-- <div class="form-group">
+                  <span>Description</span>
+                  <input style="width: 20em" type="text" class="form-control" formControlName="Description" />
+                </div> -->
+                <div class="form-group">
+                  <button class="btn btn-danger btn-sm mx-10 w-20 text-center" (click)="location.back()">Cancel</button>
+                  <button class="btn btn-success btn-sm mx-10 w-20 text-center" (click)="saveKot()">Save</button>
+          </div>      
+          </form>
+                </div>
+                </div>
+                </section>
+                </div>
+                </div>
+              </div>
+
+
+
+

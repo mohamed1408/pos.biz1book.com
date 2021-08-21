@@ -1,0 +1,89 @@
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Outlet</li>
+      </ol>
+    </nav> -->
+
+  <div class="container">
+
+    <div class="col-xl-14 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-12">
+            <strong class="text-light">Add Outlet </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="OutletForm" (ngSubmit)="AddOutlet()">
+              <div class="form-group">
+                <span  style="font-weight: bold;">OutletName</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Name"
+                  [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
+                <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
+                  <div *ngIf="f.Name.errors.required">OutletName is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span  style="font-weight: bold;">Address</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Address"
+                  [ngClass]="{ 'is-invalid': submitted && f.Address.errors }" />
+                <div *ngIf="submitted && f.Address.errors" class="invalid-feedback">
+                  <div *ngIf="f.Address.errors.required">Address is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span  style="font-weight: bold;">City</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="City"
+                  [ngClass]="{ 'is-invalid': submitted && f.City.errors }" />
+                <div *ngIf="submitted && f.City.errors" class="invalid-feedback">
+                  <div *ngIf="f.City.errors.required">City is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span  style="font-weight: bold;">PinCode</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="PostalCode" />
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">ContactNo</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="ContactNo" />
+              </div>
+              <div class="form-group">
+                <span  style="font-weight: bold;">Email</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Email" />
+              </div>
+              <div class="form-group">
+                <span   style="font-weight: bold;">OpeningTime</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="time" class="form-control" formControlName="OpeningTime"
+                  [ngClass]="{ 'is-invalid': submitted && f.OpeningTime.errors }" />
+                <div *ngIf="submitted && f.OpeningTime.errors" class="invalid-feedback">
+                  <div *ngIf="f.OpeningTime.errors.required">OpeningTime is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">ClosingTime</span> <span class="text-danger">*</span>
+                <input style="width: 20em" type="time" class="form-control" formControlName="ClosingTime"
+                  [ngClass]="{ 'is-invalid': submitted && f.ClosingTime.errors }" />
+                <div *ngIf="submitted && f.ClosingTime.errors" class="invalid-feedback">
+                  <div *ngIf="f.ClosingTime.errors.required">ClosingTime is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <span  style="font-weight: bold;">GSTno</span>
+                <input style="width: 20em;  border-style: solid;"
+                 type="text" class="form-control" formControlName="GSTno"/>
+              </div>
+              <div class="form-group">
+                <button [disabled]="isprogress" class="btn btn-danger btn-sm mx-10 w-20"(click)="location.back()">Cancel</button>&nbsp;&nbsp;
+                <button [disabled]="isprogress" class="btn btn-success btn-sm mx-10 w-20"><i *ngIf="isprogress"
+                  ></i><span *ngIf="!isprogress">Save</span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- <button  class="btn btn-outline-primary w-65p" (click)="isprogress=true"><i ngIf="isprogress"
+    class="fa fa-circle-o-notch fa-spin"></i><span ngIf="!isprogress">Save</span></button> -->

@@ -1,0 +1,80 @@
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add AdditionalCharges</li>
+    </ol>
+  </nav> -->
+
+  <div class="container">
+
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light">  Add AdditionalCharges </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="AddForm">
+              <div class="form-group">
+                <span style="font-weight: bold;">Description</span><span class="text-danger">*</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Description"
+                placeholder="Enter Charge Name"
+                  [ngClass]="{ 'is-invalid': submitted && f.Description.errors }" />
+                <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+                  <div *ngIf="f.Description.errors.required">Description is required</div>
+                </div>
+              </div>
+              <!-- <div class="form-group">
+                <span>ChargeType</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="ChargeType"
+                  [ngClass]="{ 'is-invalid': submitted && f.ChargeType.errors }" />
+                <div *ngIf="submitted && f.ChargeType.errors" class="invalid-feedback">
+                  <div *ngIf="f.ChargeType.errors.required">ChargeType is required</div>
+                </div>
+              </div> -->
+               <div class="form-group" style="width: 20em">
+                  <span style="font-weight: bold;">ChargeType</span> <span class="text-danger">*</span>
+                  <!-- <input style="width: 20em" type="number" class="form-control" formControlName="ChargeType" /> -->
+                   <select  class="form-control custom-select" formControlName="ChargeType" 
+                   [ngClass]="{ 'is-invalid': submitted && f.ChargeType.errors }" >
+                    <!-- <option > </option> -->
+                     <option value="0" selected>Select Charge Type</option>
+                     <option value="1" >Percentage</option>
+                    <option value="2" >Cash</option>
+                </select>  
+                <div *ngIf="submitted && f.ChargeType.errors" class="invalid-feedback">
+                  <div *ngIf="f.ChargeType.errors.min">Select ChargeType</div>
+                </div>
+               </div>
+  
+              <div class="form-group">
+                <span style="font-weight: bold;">ChargeValue</span><span class="text-danger">*</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="ChargeValue"
+                  [ngClass]="{ 'is-invalid': submitted && f.ChargeValue.errors }" />
+                <div *ngIf="submitted && f.ChargeValue.errors" class="invalid-feedback">
+                  <div *ngIf="f.ChargeValue.errors.min">ChargeValue is required</div>
+                </div>
+              </div>
+
+              <div class="form-group" style="width: 20em">
+                <select class="form-control custom-select" formControlName="TaxGroupId" 
+                [ngClass]="{ 'is-invalid': submitted && f.TaxGroupId.errors }" >
+                  <option value="0" selected>Select GST%</option>
+                  <option value="{{item.Id}}" *ngFor="let item of tax">{{item.Description}}</option>
+                </select>
+                <div *ngIf="submitted && f.TaxGroupId.errors" class="invalid-feedback">
+                  <div *ngIf="f.TaxGroupId.errors.min">Select TaxGroup</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-danger btn-sm mx-10 w-20" (click)="location.back()">Cancel</button>&nbsp;
+                <button class="btn btn-success btn-sm mx-10 w-20"
+                  (click)="SaveAddCharge()">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

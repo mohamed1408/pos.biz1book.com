@@ -1,0 +1,62 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add ProductAddon</li>
+      </ol>
+    </nav>
+  
+    <div >
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Addon Group </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">  
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div class="form-group" >
+        <span>Addon Group</span>
+        <input  type="text" style="width: 20em;margin-left: 19px"  class="form-control" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">AddonGroup is required</div>
+        </div>
+      </div>
+
+      <span>AddOn Product</span>
+  <div formArrayName="arr" >
+    <div class="form-group row" [formGroupName]="i" *ngFor="let a of addonArray; let i = index" >
+      <ng-autocomplete 
+    [data]="product"
+    
+    style="width: 20em;margin-left: 32px"
+    [searchKeyword]="keyword"
+    placeHolder="Enter the Product Name"
+    (selected)='selectEvent($event,i)'
+    (inputChanged)='onChangeSearch($event)'
+    (inputFocused)='onFocused($event)'
+    historyIdentifier="product"
+    [itemTemplate]="itemTemplate"
+    [notFoundTemplate]="notFoundTemplate">
+  </ng-autocomplete>
+
+  <ng-template #itemTemplate let-item>
+    <a [innerHTML]="item.Product"></a>
+  </ng-template>
+
+  <ng-template #notFoundTemplate let-notFound>
+    <div [innerHTML]="notFound"></div>
+  </ng-template> &nbsp;&nbsp;&nbsp;
+  <span class="glyphicon glyphicon-trash" (click)="deleteVariant(i)"></span>
+
+      <br><br>
+    </div>
+    <button type="button" (click)="addItem()"  class="btn btn-link sp-nav-button"style="margin-right: 5px;">+ Add Product</button>
+  </div>
+  <button type="submit" class="btn-primary" style="margin-left: 85px" (click)="Submit()">Save</button>
+</form>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div> 

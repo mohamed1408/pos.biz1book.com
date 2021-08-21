@@ -1,0 +1,95 @@
+.search-clear {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px 13px;
+    cursor: pointer;
+  }
+  .cardProduct:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border-radius: 0.6rem;
+  }
+  .container {
+    max-width: 95% !important;
+  }
+  .categry-li {
+    cursor: pointer;
+  }
+  .categry-li:hover,
+  .categry-active {
+    cursor: pointer;
+    color: #fff;
+    background-color: #6c757d;
+  }
+  .payment-type-option {
+    display: inline;
+    margin-left: 1em;
+  }
+  .sp-margin-top20 {
+    margin-top: 20px;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+.sp-option-detail {
+    min-width: 75px;
+    cursor: pointer;
+    margin: 0 3px;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+    color: #000;
+    font-size: small;
+}
+.sp-no-user-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: Glyphicons Halflings;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.sp-option-selected {
+    color: #43ac6a;
+}
+.sp-margin-left20{
+  margin-left: 20px;
+  width: 20px;
+}
+.sp-fit-width{
+  min-width: 75px;
+  cursor: pointer;
+  font-size: small;
+}
+.cs{
+  /* text-align: right; */
+  padding-left: 900px;
+}
+.btn-link{
+  color: grey;
+}
+.header{
+  display: none;
+}
+br {
+            display: block; /* makes it have a width */
+            content: ""; /* clears default height */
+            margin-top: 20px; /* change this to whatever height you want it */
+}
+hr.print{
+  display: none;
+}

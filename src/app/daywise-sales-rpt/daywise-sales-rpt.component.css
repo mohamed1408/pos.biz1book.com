@@ -1,0 +1,14 @@
+.Textsize
+{
+    font-size:20px;
+    width:200px;
+    text-align: center;
+    border-radius: 1em;
+    
+}
+.ng-autocomplete {
+    width: 200px;
+    border-width: 1px;
+    border-radius: 20px;
+    box-shadow: 0px 0px;
+}

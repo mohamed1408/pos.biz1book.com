@@ -1,0 +1,52 @@
+<div class="hk-pg-wrapper">
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Variant</li>
+    </ol>
+  </nav>
+
+  <div class="container">
+
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light">Add Variant </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="VatForm">
+              <div class="form-group">
+                <span>Variant Group</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                    <div *ngIf="f.description.errors.required">VariantGroup is required</div>
+                </div>
+              </div>
+
+              <span>Variant</span>
+              <div formArrayName="Variants">
+
+                <div class="form-group row" *ngFor="let item of variantPoints.controls; let pointIndex=index"
+                  [formGroupName]="pointIndex">
+
+                  <input type="text" style="width: 20em;margin-left: 19px" formControlName="description"
+                    class="form-control"> &nbsp;&nbsp;&nbsp;
+                  <span class="glyphicon glyphicon-trash" (click)="deleteVariant(pointIndex)"></span>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-link sp-nav-button" (click)="addVar()">+ Add Variant</button>
+
+                </div>
+
+
+              </div>
+              <button type="button" style="margin-left: 85px" class="btn-primary" (click)="addVariant()">Save</button>
+
+
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

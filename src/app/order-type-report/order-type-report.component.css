@@ -1,0 +1,64 @@
+table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    color: black;
+  }
+  /* Border */
+  /* mat-form-field .mat-form-field-wrapper .mat-form-field-underline {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+mat-label {
+  color: black;
+} */
+/* Font color */
+/* input.mat-input-element {
+  color: white;
+} */
+  /* td, th {
+    width: 25%;
+  } */
+
+
+  /* .mat-table{
+    background: white;
+  }
+  .mat-header-cell {
+    color: rgba(0,0,0,.54);
+    font-size: 14px;
+}
+.mat-cell{
+  color: rgba(0,0,0,.54);
+}
+mat-footer-row, mat-header-row, mat-row, td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  border-bottom-color: rgba(0,0,0,.12);
+}
+button :focus {
+  outline: 0;
+} */
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-top: 13px;
+}
+.pt-7 {
+  padding-top: 7px;
+}
+.report-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+tr.mat-footer-row {
+  font-weight: bold;
+}
+/* .mat-header-cell {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.mat-cell {
+  text-align: right;
+  justify-content:flex-end;
+} */

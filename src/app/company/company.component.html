@@ -1,0 +1,119 @@
+
+   <div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Restaurent Details</li>
+      </ol>
+    </nav> -->
+  
+    <div class="container">
+      <div class="col-xl-12 pl-0 pr-0">
+        <form name="form" (ngSubmit) = "f.form.valid && saveData()" #f="ngForm" novalidate>
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <strong class="text-light">Restaurent Details </strong>
+            </div>
+            <div class="col-xl-6  offset-xl-4">
+                <div class="form-group">
+                  <span style="font-weight: bold;">Restaurent Name</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.Name" name = "Name"
+                  #Name = "ngModel" [ngClass]="{'is-invalid': f.submitted && Name.invalid}" required />
+                  <div *ngIf="f.submitted && Name.invalid" class="invalid-feedback">
+                    <div *ngIf="Name.errors.required">Restaurant Name is required</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <span  style="font-weight: bold;">Address</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.Address" name="Address"
+                  #Address = "ngModel" [ngClass]="{'is-invalid': f.submitted && Address.invalid}" required />
+                  <div *ngIf="f.submitted && Address.invalid" class="invalid-feedback">
+                    <div *ngIf="Address.errors.required">Restaurant Address is required</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <span  style="font-weight: bold;">City</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.City" name="City" 
+                  #City = "ngModel" [ngClass]="{'is-invalid': f.submitted && City.invalid}" required  />
+                  <div *ngIf="f.submitted && City.invalid" class="invalid-feedback">
+                    <div *ngIf="City.errors.required">City is required</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <span  style="font-weight: bold;">State</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.State" name="State"
+                  #State = "ngModel" [ngClass]="{'is-invalid': f.submitted && State.invalid}" required />
+                  <div *ngIf="f.submitted && State.invalid" class="invalid-feedback">
+                    <div *ngIf="State.errors.required">State is required</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <span  style="font-weight: bold;">Country</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.Country" name="Country"
+                  #Country = "ngModel" [ngClass]="{'is-invalid': f.submitted && Country.invalid}" required/>
+                  <div *ngIf="f.submitted && Country.invalid" class="invalid-feedback">
+                    <div *ngIf="Country.errors.required">Country is required</div>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                    <span  style="font-weight: bold;">PostalCode</span>
+                    <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.company.PostalCode" name="PostalCode"/>
+                  </div>
+  
+                <!-- <button style="margin-left: 85px" class="btn btn-primary" (click)="focus()" >Save</button>
+                <button type="submit" style="margin-left: 85px" class="btn btn-primary" (click)="Getdetails()">Reset</button> -->
+                </div>
+                </div>
+                </section>
+                <section  class="hk-sec-wrapper">
+                        <div class="col-xl-4">
+                                <strong class="text-light">Owner Details </strong>
+                              </div>   
+                              <div class="col-xl-6  offset-xl-4">               
+                    <div class="form-group">
+                        <span  style="font-weight: bold;">Owner</span>
+                        <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.accounts.Name" name="Name1"
+                        #Name1 = "ngModel" [ngClass]="{'is-invalid': f.submitted && Name1.invalid}" required/>
+                        <div *ngIf="f.submitted && Name1.invalid" class="invalid-feedback">
+                          <div *ngIf="Name1.errors.required">Owner Name is required</div>
+                        </div>
+                       </div>
+                      <div class="form-group">
+                        <span  style="font-weight: bold;">Email</span>
+                        <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.accounts.Email" name="Email"
+                        #Email = "ngModel" [ngClass]="{'is-invalid': f.submitted && Email.invalid}" required/>
+                        <div *ngIf="f.submitted && Email.invalid" class="invalid-feedback">
+                          <div *ngIf="Email.errors.required">Owner Email is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <span  style="font-weight: bold;">Mobile No</span>
+                        <input style="width: 20em" type="text" class="form-control" [(ngModel)]="userdata.accounts.PhoneNo" name="PhoneNo"
+                        #PhoneNo = "ngModel" [ngClass]="{'is-invalid': f.submitted && PhoneNo.invalid}" required minlength="5"/>
+                        <div *ngIf="f.submitted && PhoneNo.invalid" class="invalid-feedback">
+                          <div *ngIf="PhoneNo.errors.required">Owner PhoneNo is required</div>
+                          <div *ngIf="PhoneNo.errors.minlength">Enter valid phone no</div>
+                        </div>
+                      </div>  
+                      <div class="form-group">
+                          <span  style="font-weight: bold;">User PIN</span>
+                          <input style="width: 20em" type="number" class="form-control" [(ngModel)]="userdata.user.Pin" name="Pin"
+                          placeholder="4 digit pin"
+                          #Pin = "ngModel" [ngClass]="{'is-invalid': f.submitted && (Pin.invalid || errormsg!='') }" required min = "1000" max = "9999"/>
+                          <div *ngIf="f.submitted && Pin.invalid" class="invalid-feedback">
+                            <div *ngIf="Pin.errors.required">4 digit Pin is required</div>
+                          </div>
+                          <div *ngIf="f.submitted && errormsg!=''" class="invalid-feedback">
+                            <div>{{errormsg}}</div>
+                          </div>
+                        </div>    
+                      <button class="btn btn-success btn-sm mx-10 w-20" (click) = "focus()">Save</button>
+                      <button class="btn btn-indigo btn-sm mx-10 w-20" (click)="Getdetails()">Reset</button>              
+                    </div>
+                    </section>
+                    </form>
+                </div>
+                </div>
+              </div>
+  

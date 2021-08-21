@@ -1,0 +1,33 @@
+.vertical-center {
+    margin: 0;
+    /* position: absolute; */
+    top: 50%;
+  }
+  .rotate{
+    -moz-transition: all 0.1s linear;
+    -webkit-transition: all 0.1s linear;
+    transition: all 0.1s linear;
+    display: inline-block
+    }
+    
+    .rotate.down{
+    -moz-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+    transform:rotate(90deg);
+    
+    }
+    .pointer{
+      cursor: pointer;
+}
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+  .input-clear {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    z-index: 1000;
+  }

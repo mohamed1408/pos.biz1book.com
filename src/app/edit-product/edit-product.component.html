@@ -1,0 +1,552 @@
+Main Content
+<div class="hk-pg-wrapper">
+  <!-- Breadcrumb -->
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page">
+        <i class="icon-note"></i> Manage
+      </li>
+    </ol>
+  </nav> -->
+  <!-- /Breadcrumb -->
+  <!-- Container -->
+  <div class="container">
+    <!-- Title -->
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">
+        <strong>{{products1.Name}}</strong>
+      </h4>
+    </div>
+    <form name="form" #f="ngForm" novalidate>
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-4">
+              <!-- <strong class="text-light">Product Basic Info</strong><br> -->
+              <div class="image-div">
+                <!-- liveimage -->
+                <img *ngIf="products1.ImgUrl!=null" class="mt-20" style="border-radius: 25px;"
+                  src="{{products1.ImgUrl}}" alt="{{products1.Description}}" height=auto width="350">
+                <button *ngIf="products1.ImgUrl!=null" class="btn" (click)="products1.ImgUrl = null">x</button>
+                <!-- droppedimage -->
+                <img id="droppedimage" *ngIf="blobimageurl!=null" class="mt-20" style="border-radius: 25px;"
+                  [src]=blobimageurl alt="{{products1.Description}}" height=auto width="350">
+                <button *ngIf="blobimageurl!=null" class="btn" type="button"
+                  (click)="blobimageurl = null;image = null">x</button>
+                <!-- emptyimage -->
+                <img id="noimage" *ngIf="(products1.ImgUrl==null || products1.ImgUrl=='')&&blobimageurl==null"
+                  class="mt-20" style="border: 10px solid white;border-radius: 25px;"
+                  src="assets/dist/img/img-thumb.jpg" alt="{{products1.Description}}" height=auto width="350"><br>
+              </div>
+              <div id="imageupload" class="fileupload" appDragDropFileUpload (click)="fileField.click()"
+                (fileDropped)="upload($event)">
+                <span class="ddinfo">Choose a file or drag here</span>
+                <input type="file" accept="image/*" name="avatars" #fileField (change)="upload($event.target.files)"
+                  hidden multiple>
+              </div><br>
+              <div class="text-center">
+                <ngx-barcode [bc-value]="products1.ProductCode" [bc-display-value]="true"></ngx-barcode>
+              </div>
+              <!-- <button class="btn btn-outline-danger w-100" (click)="clearimage()">Clear Image <i class="icon-trash"></i> </button> -->
+            </div>
+            <div class="col-xl-6">
+              <!-- <mat-radio-group [(ngModel)]="products1.ProductTypeId"[ngModelOptions]="{standalone: true}">
+                <mat-radio-button *ngFor="let item of productTypes" [value]="item.Id">
+                  {{item.Description}}
+                </mat-radio-button>
+              </mat-radio-group> -->
+              <div class="row">
+                <div class="col-md-3 mt-15" *ngFor="let item of productTypes">
+                  <div class="custom-control custom-radio mb-5">
+                    <input type="radio" [(ngModel)]="products1.ProductTypeId" [value]="item.Id" id="{{item.Id}}"
+                      name="{{item.Description}}" class="custom-control-input">
+                    <label class="custom-control-label" for="{{item.Id}}">{{item.Description}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">Product Name <span
+                      class="text-danger">*</span></strong></label>
+                <input type="text" class="form-control" placeholder="Enter Product Name" name="Name"
+                  [(ngModel)]="products1.Name" #Name="ngModel" [ngClass]="{'is-invalid': f.submitted && Name.invalid}"
+                  required />
+                <div *ngIf="f.submitted && Name.invalid" class="invalid-feedback">
+                  <div *ngIf="Name.errors.required">Product Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">Description <span
+                      class="text-danger">*</span></strong></label>
+                <!-- <input type="text" class="form-control" placeholder="Enter Product Name" name="Description"
+                  [(ngModel)]="products1.Description" #Description="ngModel"
+                  [ngClass]="{'is-invalid': f.submitted && Description.invalid}" required /> -->
+                <textarea class="form-control mt-15" name="Description" [(ngModel)]="products1.Description"
+                  #Description="ngModel" rows="3" placeholder="Textarea"></textarea>
+                <div *ngIf="f.submitted && Description.invalid" class="invalid-feedback">
+                  <div *ngIf="Description.errors.required">Description is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">Product Code</strong></label>
+                <input type="text" class="form-control" placeholder="Enter Product Code" name="ProductCode"
+                  [(ngModel)]="products1.ProductCode" #ProductCode="ngModel" />
+                <!-- <div *ngIf="f.submitted && ProductCode.invalid" class="invalid-feedback">
+                  <div *ngIf="ProductCode.errors.required">Product Name is required</div>
+                </div> -->
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">Category</strong></label>
+                <select class="form-control custom-select"
+                  (change)="openDetailpopup(PopUp);categoryId = $event.target.value" [(ngModel)]="products1.CategoryId"
+                  [ngModelOptions]="{standalone: true}" name="category"
+                  [ngClass]="{'is-invalid': f.submitted && products1.CategoryId == 0}">
+                  <option value="0">Select Category</option>
+                  <option *ngFor="let item of category" value="{{item.Id}}">{{item.Description}}</option>
+                </select>
+                <div *ngIf="f.submitted && products1.CategoryId == 0" class="invalid-feedback">
+                  <div *ngIf="products1.CategoryId == 0">Product Name is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">KOT Group</strong></label>
+                <select class="form-control custom-select" [(ngModel)]="products1.KOTGroupId"
+                  [ngModelOptions]="{standalone: true}">
+                  <option value=0>No KOT Group</option>
+                  <option *ngFor="let item of Kot" value="{{item.Id}}">{{item.Description}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">TaxGroup</strong></label>
+                <select class="form-control custom-select" [(ngModel)]="products1.TaxGroupId"
+                  [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let item of taxGroup" value="{{item.Id}}">{{item.Description}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="firstName"><strong class="text-light">Unit</strong></label>
+                <select class="form-control custom-select" [(ngModel)]="products1.UnitId"
+                  [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let item of units" value="{{item.Id}}">{{item.Description}}</option>
+                </select>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-xl-6">
+                  <strong class="text-light">Sort Order</strong>
+                  <input type="number" class="form-control" placeholder="Enter Product SortOrder" name="SortOrder"
+                    [(ngModel)]="products1.SortOrder" #SortOrder="ngModel" [ngClass]="{'is-invalid': SortOrder.invalid}"
+                    required />
+                  <div *ngIf="SortOrder.invalid" class="invalid-feedback">
+                    <div *ngIf="SortOrder.errors.required">SortOrder can't be empty!</div>
+                  </div>
+                </div>
+                <div class="form-group row" style="margin-left: 10px;">
+                  <div class="form-group">
+                    <strong class="text-light">Recommended</strong>
+                    <div class="col-sm-6" style="margin-top: 10px;margin-left: 30px;">
+                      <input type="checkbox" placeholder="Enter Product Recomended" name="Recomended"
+                        [(ngModel)]="products1.Recomended" #Recomended="ngModel" />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <strong class="text-light">&nbsp; IsSaleProdGroup</strong>
+                    <div class="col-sm-6" style="margin-top: 10px;margin-left: 30px;">
+                      <input type="checkbox" placeholder="Enter" name="IsSaleProdGroup"
+                        [(ngModel)]="products1.IsSaleProdGroup" #IsSaleProdGroup="ngModel" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col-xl-6">
+                  <strong class="text-light">Min Quantity</strong>
+                  <input type="number" class="form-control" placeholder="Enter Product minquantity" name="minquantity"
+                    [(ngModel)]="products1.minquantity" #minquantity="ngModel" />
+                </div>
+                <div class="form-group col-xl-6">
+                  <strong class="text-light">Min Block</strong>
+                  <input type="number" class="form-control" placeholder="Enter Product minblock" name="minblock"
+                    [(ngModel)]="products1.minblock" #minblock="ngModel" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div>
+                  <div class="form-group row">
+                    <div class="col-sm-3">
+                      <strong class="text-light">Dine Price</strong>
+                    </div>
+                    <div class="col-sm-3">
+                      <strong class="text-light">Takeaway Price</strong>
+                    </div>
+                    <div class="col-sm-3">
+                      <strong class="text-light">Delivery Price</strong>
+                    </div>
+                    <div class="col-sm-3">
+                      <strong class="text-light">Up Price</strong>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-group row">
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" placeholder="Enter Product Price" name="Price"
+                        [(ngModel)]="products1.Price" #Price="ngModel" [ngClass]="{'is-invalid': Price.invalid}"
+                        required />
+                      <div *ngIf="Price.invalid" class="invalid-feedback">
+                        <div *ngIf="Price.errors.required">Price can't be empty!</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" placeholder="Enter Product TakeawayPrice"
+                        name="TakeawayPrice" [(ngModel)]="products1.TakeawayPrice" #TakeawayPrice="ngModel"
+                        [ngClass]="{'is-invalid': TakeawayPrice.invalid}" required />
+                      <div *ngIf="TakeawayPrice.invalid" class="invalid-feedback">
+                        <div *ngIf="TakeawayPrice.errors.required">TakeawayPrice can't be empty!</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" placeholder="Enter Product DeliveryPrice"
+                        name="DeliveryPrice" [(ngModel)]="products1.DeliveryPrice" #DeliveryPrice="ngModel"
+                        [ngClass]="{'is-invalid': DeliveryPrice.invalid}" required />
+                      <div *ngIf="DeliveryPrice.invalid" class="invalid-feedback">
+                        <div *ngIf="DeliveryPrice.errors.required">DeliveryPrice can't be empty!</div>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control" placeholder="Enter Product UPPrice" name="UPPrice"
+                        [(ngModel)]="products1.UPPrice" #UPPrice="ngModel" [ngClass]="{'is-invalid': UPPrice.invalid}"
+                        required />
+                      <div *ngIf="UPPrice.invalid" class="invalid-feedback">
+                        <div *ngIf="UPPrice.errors.required">UPPrice can't be empty!</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form">
+                <ng-multiselect-dropdown #multiSelect [placeholder]="'Select OptionGroup'" [(ngModel)]="selectedItems"
+                  name="optionGroups" [data]="products.optionGroups" [settings]="settings" [disabled]="false"
+                  (onFilterChange)="onFilterChange($event)" (onSelect)="onItemSelect($event)"
+                  (onDeSelect)="onDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                  (onDeSelectAll)="onDeSelectAll($event)">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12 px-0 pt-20 text-right">
+            <button class="btn btn-secondary btn-sm mx-10 w-10" (click)="location.back()">Back</button>&nbsp;&nbsp;
+            <button type="submit" class="btn btn-success btn-sm mx-10 w-10"
+              (click)="focus();products1.CategoryId != 0&&f.form.valid && saveProduct()">Save Product</button>
+          </div>
+        </section>
+      </div>
+    </form>
+
+    <section class="hk-sec-wrapper">
+      <!-- <div class="row col-xl-12">
+        <div class="col-xl-6"> -->
+      <h4>Predefined Quantities</h4>
+      <!-- </div>
+        <div class="col-xl-6">
+          <button class="btn btn-sm btn-success pull-right" (click)="addPredefQty()">Add</button>
+        </div>
+      </div> -->
+      <!-- <div class="col-xl-12 row mt-30">
+        <div class="col-xl-3">
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="newpdquantity.QuantityText">
+        </div>
+        <div class="col-xl-3">
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="newpdquantity.Quantity">
+          <span *ngIf="newpdquantity.Quantity <= 0" class="error_msg font-12 text-danger">* <i>Quantity should be
+              greater thean 0</i></span>
+        </div>
+        <div class="col-xl-3">
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="newpdquantity.FreeQuantity">
+        </div>
+        <div class="col-xl-3">
+          <button class="btn btn-sm btn-success" (click)="addPredefQty()">Add</button>
+        </div>
+      </div> -->
+
+      <div class="col-xl-12 col-sm-12 row mt-30">
+        <div class="col-xl-3 col-sm-3">
+          <strong>Name</strong>
+        </div>
+        <div class="col-xl-3 col-sm-3">
+          <strong>Quantity</strong>
+        </div>
+        <div class="col-xl-3 col-sm-3">
+          <strong>FreeQuantity</strong>
+        </div>
+        <div class="col-xl-3 col-sm-3">
+          <input type="checkbox" (change)="selectAll($event.target.checked);">
+        </div>
+      </div>
+      <div class="row col-sm-12 col-xl-12 mt-15" *ngFor="let qty of cakeQuantities; let i = index">
+        <div class="col-xl-3 col-sm-3 py-2">
+          <span class="text-center">{{qty.QuantityText}}</span>
+        </div>
+        <div class="col-xl-3 col-sm-3 py-2">
+          <span class="text-center">{{qty.Quantity}}</span>
+        </div>
+        <div class="col-xl-3 col-sm-3 py-2">
+          <span class="text-center">{{qty.FreeQuantity}}</span>
+        </div>
+        <div class="col-xl-3 col-sm-3 py-2">
+          <input type="checkbox" class="pdqcb" [(ngModel)]="qty.saved" (change)="shiftpressed&&bulkSelect(i);">
+        </div>
+      </div>
+      <!-- <div class="col-xl-12 row mt-30" [class.deleted]="qty.isdeleted"
+        *ngFor="let qty of predefinedquantities; let i = index">
+        <div class="col-xl-3 py-2">
+          <span *ngIf="!qty.edit" class="text-center">{{qty.QuantityText}}</span>
+          <input *ngIf="qty.edit" type="text" class="form-control form-control-sm"
+            [(ngModel)]="qty.QuantityText">
+        </div>
+        <div class="col-xl-3 py-2">
+          <span *ngIf="!qty.edit" class="text-center">{{qty.Quantity}}</span>
+          <input *ngIf="qty.edit" type="number" class="form-control form-control-sm"
+            [(ngModel)]="qty.Quantity">
+          <span *ngIf="qty.Quantity <= 0&&qty.edit" class="error_msg font-12 text-danger">*
+            <i>Quantity should be
+              greater thean 0</i></span>
+        </div>
+        <div class="col-xl-3 py-2">
+          <span *ngIf="!qty.edit" class="text-center">{{qty.FreeQuantity}}</span>
+          <input *ngIf="qty.edit" type="number" class="form-control form-control-sm"
+            [(ngModel)]="qty.FreeQuantity">
+        </div>
+        <div class="col-xl-3 py-2">
+          <button *ngIf="!qty.isdeleted" class="btn btn-link text-danger" (click)="delPredefQty(i)"><i
+              class="fa fa-trash"></i></button>
+          <button *ngIf="qty.isdeleted" class="btn btn-link text-success" (click)="adDeleted(i)"><i
+              class="fa fa-plus"></i></button>
+          <button *ngIf="!qty.edit" class="btn btn-link text-warning" (click)="qty.edit = true"><i class="fa fa-edit"></i></button>
+          <button *ngIf="qty.edit" class="btn btn-link text-danger" (click)="qty.edit = false"><i class="fa fa-times"></i></button>
+        </div>
+      </div> -->
+
+      <div class="col-xl-12 px-0 pt-20 text-right">
+        <!-- <button class="btn btn-secondary btn-sm mx-10 w-10">Reset</button>&nbsp;&nbsp; -->
+        <button type="submit" class="btn btn-success btn-sm mx-10 w-10" (click)="savePredefQty()">Save</button>
+      </div>
+    </section>
+    <!-- <pre>{{products1 | json}}</pre> -->
+  </div>
+  <!-- /Row -->
+</div>
+
+<ng-template #contentDetail1 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Option Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <select #qwerty class="form-control custom-select" (change)="OptionGroupId1 = $event.target.value">
+            <option *ngFor="let item of getOptionGroups(); let pointIndex=index" value="{{item.Id}}"
+              id="{{pointIndex}}">{{item.Name}}</option>
+          </select>
+        </div>
+        <div class="modal-body" *ngFor="let item of getOptions(OptionGroupId1); let i=index">
+          <div class="col-sm-3">
+            <input type="checkbox" (change)="selectOption($event,item)" [checked]="item.checked" />
+            <strong class="text-light">{{item.Name}}</strong>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal"
+            (click)="modal.close('Save click')">Close</button>
+          <button class="btn btn-success btn-sm mx-10 w-20"
+            (click)="saveGroup(OptionGroupId1);modal.close('Save click')">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentDetail2 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Options</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <div class="custom-control custom-checkbox" *ngFor="let item of editOptions(optionGroupId)">
+                      <input type="checkbox" name="{{item.Id}}" class="custom-control-input" (change)="editOption($event,item)" [value]="item.Id" id="{{item.Id}}" [(ngModel)]="item.checked"/>
+                      <label class="custom-control-label" for="{{item.Id}}">{{item.Name}}</label>
+                    </div> -->
+          <div *ngFor="let item of editOptions(optionGroupId)">
+            <input type="checkbox" id="{{item.Id}}" (change)="editOption($event,item)" [(ngModel)]="item.checked">
+            <label for="{{item.Id}}">{{item.Name}}</label>
+            <br><br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentDetail3 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Addon Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <select #qwerty class="form-control custom-select" (change)="onChange1($event.target.value)">
+            <option *ngFor="let item of addonGroups; let pointIndex=index" value="{{item.Id}}" id="{{pointIndex}}">
+              {{item.Description}}</option>
+          </select>
+        </div>
+        <div class="modal-body" *ngFor="let item of addons; let i=index">
+          <div class="col-sm-3">
+            <input type="checkbox" (change)="toggleVisibility2($event,item.Id)" [checked]="item.valid" />
+            <strong class="text-light">{{item.Description}}</strong>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal"
+            (click)="modal.close('Save click')">Close</button>
+          <button class="btn btn-success btn-sm mx-10 w-20"
+            (click)="funcAddon(qwerty.value);modal.close('Save click')">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #contentDetail4 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Addon Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngFor="let item of addons1;let i=index">
+          <div class="col-sm-3">
+            <input type="checkbox" (change)="toggleVisibility3($event,item.Id)" [checked]="item.valid" />
+            <strong class="text-light">{{item.Description}}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- <ng-template #contentDetail3 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+      <div class="modal-dialog ma-0" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Add Addon Group</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                      <div class="col-sm">
+                        <div class="hk-row mt-3">
+                          <div class="col-lg-6 col-sm-6 col-sm-12" *ngFor="let item of products.addonGroups">
+                            <a class="d-block">
+                              <div class="card bg-light border">
+                                <div class="card-body p-2">
+                                  <h5 class="card-title mb-0 font-16 ">{{item.Description}}</h5>
+                                  <p class="card-text font-12 text-light">
+                                    Id-{{item.Id}}
+                                  </p>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')" >Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</ng-template> -->
+<!-- <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+      <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+          <div *ngIf="firstName.errors.required">First Name is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+      <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+          <div *ngIf="lastName.errors.required">Last Name is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+      <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Email is required</div>
+          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required minlength="6" />
+      <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+          <div *ngIf="password.errors.required">Password is required</div>
+          <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <button class="btn btn-primary">Register</button>
+  </div>
+</form> -->
+<ng-template #PopUp let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Warning!!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            (click)="modal.close('Save click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Do you want to overwrite Optiongroups?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger btn-sm mx-10 w-20" (click)="clear();modal.close('Save click')">No</button>
+          <button class="btn btn-success btn-sm mx-10 w-20"
+            (click)="categopt(categoryId);modal.close('Save click')">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,53 @@
+<div class="hk-pg-wrapper">
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Note</li>
+      </ol>
+    </nav> -->
+  
+    <div class="container">
+  
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="row">
+            <div class="col-xl-6  offset-xl-4">
+                <div class="form-group">
+                  <span>UserName</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="urban.UserName" name="UserName"/>
+                </div>
+                <div class="form-group">
+                  <span>ApiKey</span>
+                  <input style="width: 20em" type="text" class="form-control" [(ngModel)]="urban.ApiKey" name="ApiKey" />
+                </div>
+                <span>Enable the Channels</span>
+                <br>
+                <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Cus" type="checkbox" [(ngModel)]="urban.Zomato" name="Zomato" >
+                    <label class="custom-control-label" for="Cus">Zomato</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Cust" type="checkbox" [(ngModel)]="urban.Swiggy" name="Swiggy" >
+                    <label class="custom-control-label" for="Cust">Swiggy</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Customer" type="checkbox" [(ngModel)]="urban.FoodPanda" name="FoodPanda" >
+                    <label class="custom-control-label" for="Customer">FoodPanda</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Custo" type="checkbox" [(ngModel)]="urban.UberEats" name="UberEats" >
+                    <label class="custom-control-label" for="Custo">UberEats</label>
+                  </div>
+                  <div class="custom-control custom-checkbox form-group">
+                    <input class="custom-control-input" id="Custom" type="checkbox" [(ngModel)]="urban.UrbanPiper" name="UrbanPiper" >
+                    <label class="custom-control-label" for="Custom">UrbanPiper </label>
+                  </div>
+                <div class="form-group">
+                  <button type="submit" style="margin-left:30px" class="btn btn-primary" (click)="updateurban()">EnableUrbanPiper</button>
+              </div>  
+                </div>
+                </div>
+                </section>
+                </div>
+                </div>
+              </div>
+  

@@ -1,0 +1,65 @@
+<div class="hk-pg-wrapper">
+    <!-- Breadcrumb -->
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Company Management</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Payment Types</li>
+        </ol>
+    </nav>
+    <!-- /Breadcrumb -->
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+                            data-feather="archive"></i></span></span>Payment Types</h4>
+        </div>
+        <section class="hk-sec-wrapper">
+            <DIV class="ROW">
+                <h5 class="hk-sec-title">Regular Table</h5> <button class="text-success pull-right" mat-button>+ Add
+                    Type</button>
+            </DIV>
+
+            <p class="mb-40">Add class <code>.table</code> in table tag.</p>
+            <div class="row w-100">
+                <div class="col-sm">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Machine Id</th>
+                                        <th>Store</th>
+                                        <th>Is Active</th>
+                                        <th><span class="pl-20">Action</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let paymenttype of paymenttypes; index as i">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{paymenttype.Name}}</td>
+                                        <td><code>{{paymenttype.MachineId}}</code></td>
+                                        <td>{{paymenttype.Store.Name}}</td>
+                                        <td><input type="checkbox" [(ngModel)]="paymenttype.IsActive"></td>
+                                        <td>
+                                            <button mat-icon-button
+                                                aria-label="Example icon button with a vertical three dot icon"
+                                                class="antifocus text-warning">
+                                                <mat-icon class="font-18">edit</mat-icon>
+                                            </button>
+                                            <button mat-icon-button
+                                                aria-label="Example icon button with a vertical three dot icon"
+                                                class="antifocus text-danger">
+                                                <mat-icon class="font-18">delete_outline</mat-icon>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div class="hk-pg-wrapper">
+  <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+          data-feather="archive"></i></span></span> Pricebook</h4>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#product" role="tab" aria-controls="product" id="producttab">
+        Products</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#option" role="tab" aria-controls="option" id="optiontab">
+        Options</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="mt-4 mb-4 tab-pane fade show active" id="product" role="tabpanel">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <button type="submit" style="float:right" class="btn btn-primary" (click)="SavePrd()">Save</button>
+                <table class="table table-hover table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <!-- <th>#</th> -->
+                      <th>Products</th>
+                      <th>Price</th>
+                      <th>Takeaway Price</th>
+                      <th>Delivery Price</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of Pricedata.streprd | filter:term | paginate: { itemsPerPage: 5, currentPage: p } ;let i=index ">
+                      <td>{{item.Description}}</td>
+                      <td>
+                        <span class="input-group input-group-sm"><input type="number" id="Price{{item.Id}}"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.Price" *ngIf="item.priceE" (change)="item.Changed=true"
+                            (focusout)="item.priceE=false;"><span id="Price{{item.Id}}" (click)="item.priceE=true"
+                            *ngIf="!item.priceE">{{item.Price}}</span></span>
+                      </td>
+                      <td><span class="input-group input-group-sm"><input id="DeliveryPrice{{item.Id}}" type="number"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.DeliveryPrice" *ngIf="item.delpriceE" (change)="item.Changed=true"
+                            (focusout)="item.delpriceE=false;"><span id="DeliveryPrice{{item.Id}}"
+                            (click)="item.delpriceE=true" *ngIf="!item.delpriceE">{{item.DeliveryPrice}}</span></span>
+                      </td>
+                      <td><span class="input-group input-group-sm"><input id="TakeawayPrice{{item.Id}}" type="number"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.TakeawayPrice" *ngIf="item.takpriceE" (change)="item.Changed=true"
+                            (focusout)="item.takpriceE=false;"><span id="TakeawayPrice{{item.Id}}"
+                            (click)="item.takpriceE=true" *ngIf="!item.takpriceE">{{item.TakeawayPrice}}</span></span>
+                      </td>
+                    </tr>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 mb-4 tab-pane fade  " id="option" role="tabpanel">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <button type="submit" style="float:right" class="btn btn-primary" (click)="saveOpt()">Save</button>
+                <table class="table table-hover table-striped mb-0">
+                  <thead>
+                    <tr>
+                      <!-- <th>#</th> -->
+                      <th>Options</th>
+                      <th>Price</th>
+                      <th>Takeaway Price</th>
+                      <th>Delivery Price</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let item of Pricedata.streopt | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ;let i=index ">
+                      <td>{{item.Name}}</td>
+                      <td><span class="input-group input-group-sm"><input id="OPrice{{item.Id}}" type="number"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.Price" *ngIf="item.priceE" (change)="item.Changed=true;"
+                            (focusout)="item.priceE=false"><span id="OPrice{{item.Id}}" (click)="item.priceE=true"
+                            *ngIf="!item.priceE">{{item.Price}}</span></span></td>
+                      <td><span class="input-group input-group-sm"><input id="ODeliveryPrice{{item.Id}}" type="number"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.DeliveryPrice" *ngIf="item.delpriceE" (change)="item.Changed=true;"
+                            (focusout)="item.delpriceE=false"><span id="ODeliveryPrice{{item.Id}}"
+                            (click)="item.delpriceE=true" *ngIf="!item.delpriceE">{{item.DeliveryPrice}}</span></span>
+                      </td>
+                      <td><span class="input-group input-group-sm"><input id="OTakeawayPrice{{item.Id}}" type="number"
+                            class="form-control w-sm-25p" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                            [(ngModel)]="item.TakeawayPrice" *ngIf="item.takpriceE" (change)="item.Changed=true;"
+                            (focusout)="item.takpriceE=false"><span id="OTakeawayPrice{{item.Id}}"
+                            (click)="item.takpriceE=true" *ngIf="!item.takpriceE">{{item.TakeawayPrice}}</span></span>
+                      </td>
+                    </tr>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

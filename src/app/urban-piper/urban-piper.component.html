@@ -1,0 +1,280 @@
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> UrbanPiper</li>
+        </ol>
+    </nav>
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"> UrbanPiper Stores</h4>
+        </div>
+        <!-- <div class="row">
+            <div class="col-xl-4 text-right">
+                <input type="text" class="form-control" placeholder="Search UrbanPiper.." [(ngModel)]="term">
+            </div>
+        </div><br> -->
+        <div class="row">
+            <div class="col-xl-4 text-left">
+                <div class="btn-group">
+                    <div class="dropdown">
+                        <button aria-expanded="false" data-toggle="dropdown" class="btn btn-light dropdown-toggle "
+                            type="button">Action <span class="caret"></span></button>
+                        <div role="menu" class="dropdown-menu">
+                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#enable_disable" (click)="isenable=true">Enable</a>
+                            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                                data-target="#enable_disable" (click)="isenable=false">Disable</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a href="javascript:void(0)">
+                    <button (click)="bulk_sync()" class="btn btn-success btn-sm mx-10 w-20"><span class="btn-text">Bulk Sync</span>
+                    </button>
+                </a>
+                <a [routerLink]="['/urban/location']">
+                    <button class="btn btn-success btn-sm mx-10 w-20"><span class="btn-text">+ Add Location</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <!-- <form> -->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-sm">
+                                    <thead>
+                                        <tr style="background-color:rgb(217, 226, 250);">
+                                            <th><input type="checkbox" [(ngModel)]="All"
+                                                    (click)="select_all($event.target.checked)"></th>
+                                            <th class="font-12"><strong>Location Name</strong></th>
+                                            <th class="font-12"><strong>Brand</strong></th>
+                                            <th class="font-12"><strong>UpId</strong></th>
+                                            <th class="font-12"><strong>Zomato</strong></th>
+                                            <th class="font-12"><strong>Swiggy</strong></th>
+                                            <th class="font-12"><strong>Dunzo</strong></th>
+                                            <th class="font-12"><strong>UrbanPiper</strong></th>
+                                            <th class="font-12"><strong>Item Setting</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of Urbandata">
+                                            <td class="font-12"><input type="checkbox" [(ngModel)]="item.checked"></td>
+                                            <td>
+                                            <strong data-toggle="modal" data-target="#updatestore"
+                                                data-backdrop="static" (click)="storedetails(item)"><a
+                                                    href="javascript:void(0)"
+                                                    class="text-info font-13">{{item.LocationName}}</a></strong></td>
+                                            <td class="font-12">{{(item.Brand != null)? item.Brand.Name : '-'}}</td>
+                                            <td class="font-12">{{item.UPId}}</td>
+                                            <td class="font-12"><span
+                                                    *ngIf="item.IsZomato">{{(item.Zomato)?'Enabled':'Disabled'}}</span>
+                                                <span *ngIf="!item.IsZomato">-</span></td>
+                                            <td class="font-12"><span
+                                                    *ngIf="item.IsSwiggy">{{(item.Swiggy)?'Enabled':'Disabled'}}</span>
+                                                <span *ngIf="!item.IsSwiggy">-</span></td>
+                                            <td class="font-12"><span
+                                                    *ngIf="item.IsDunzo">{{(item.Dunzo)?'Enabled':'Disabled'}}</span>
+                                                <span *ngIf="!item.IsDunzo">-</span></td>
+                                            <td class="font-12"><span
+                                                    *ngIf="item.IsUrbanPiper">{{(item.UrbanPiper)?'Enabled':'Disabled'}}</span>
+                                                <span *ngIf="!item.IsUrbanPiper">-</span></td>
+                                            <td class="font-12">
+                                                <a href="javascript:void(0);">
+                                                    <i class="icons text-info" data-icon="j" style="color: grey"
+                                                        [routerLink]="['/itemaction',item.StoreId+'-'+item.BrandId]"></i>
+                                                </a> </td>
+                                        </tr>
+                                        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sales and Expences </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="bg-white shadow-bottom">
+                        <ul class="nav nav-light nav-tabs" role="tablist" id="myTab">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" role="tab" href="#enable"
+                                    aria-controls="enable" id="enabletab">Enable</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" role="tab" href="#disable">Disable</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="mt-4 mb-4 tab-pane fade show active" id="enable" role="tabpanel">
+                                <span *ngIf="!item.Zomato"><input type="checkbox"
+                                        (click)="enable($event.target.checked,'zomato')" name="Zomato">Zomato<br></span>
+                                <span *ngIf="!item.Swiggy"><input type="checkbox"
+                                        (click)="enable($event.target.checked,'swiggy')" name="Swiggy">Swiggy<br></span>
+                                <span *ngIf="!item.UberEats"><input type="checkbox"
+                                        (click)="enable($event.target.checked,'ubereats')"
+                                        name="UberEats">UberEats<br></span>
+                                <span *ngIf="!item.FoodPanda"><input type="checkbox"
+                                        (click)="enable($event.target.checked,'foodpanda')"
+                                        name="FoodPanda">FoodPanda<br></span>
+                                <span *ngIf="!item.UrbanPiper"><input type="checkbox"
+                                        (click)="enable($event.target.checked,'urbanpiper')"
+                                        name="UrbanPiper">UrbanPiper<br></span>
+
+                            </div>
+                            <div class="mt-4 mb-4 tab-pane fade show " id="disable" role="tabpanel">
+                                <span *ngIf="item.Zomato"><input type="checkbox"
+                                        (click)="disable($event.target.checked,'zomato')"
+                                        name="Zomato">Zomato<br></span>
+                                <span *ngIf="item.Swiggy"><input type="checkbox"
+                                        (click)="disable($event.target.checked,'swiggy')"
+                                        name="Swiggy">Swiggy<br></span>
+                                <span *ngIf="item.UberEats"><input type="checkbox"
+                                        (click)="disable($event.target.checked,'ubereats')"
+                                        name="UberEats">UberEats<br></span>
+                                <span *ngIf="item.FoodPanda"><input type="checkbox"
+                                        (click)="disable($event.target.checked,'foodpanda')"
+                                        name="FoodPanda">FoodPanda<br></span>
+                                <span *ngIf="item.UrbanPiper"><input type="checkbox"
+                                        (click)="disable($event.target.checked,'urbanpiper')"
+                                        name="UrbanPiper">UrbanPiper<br></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-secondary" (click)="modal.close()">Cancel</button>
+                    <button class="btn btn-outline-primary"
+                        (click)="platformAction(storeId);modal.close()">Enable/Disable</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<div class="modal fade" id="enable_disable" tabindex="-1" role="dialog" aria-labelledby="exampleModalForms"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" *ngIf="selectval()">
+            <div class="modal-header">
+                <h5 class="modal-title">{{(isenable)?'Enable Ordering?':'Disable Ordering?'}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Select the platforms for which you want to enabled ordering. <br><br>
+                <ul>
+                    <!-- <li><input type="checkbox" (change)="setplatform($event.target.checked,'All')">&nbsp; All</li> -->
+                    <li><input type="checkbox" [(ngModel)]="swiggy"
+                            (change)="setplatform($event.target.checked,'swiggy')">&nbsp; Swiggy</li>
+                    <li><input type="checkbox" [(ngModel)]="zomato"
+                            (change)="setplatform($event.target.checked,'zomato')">&nbsp; Zomato</li>
+                    <li><input type="checkbox" [(ngModel)]="urbanpiper"
+                            (change)="setplatform($event.target.checked,'urbanpiper')">&nbsp; UrbanPiper</li>
+                    <li><input type="checkbox" [(ngModel)]="dunzo"
+                            (change)="setplatform($event.target.checked,'dunzo')">&nbsp; Dunzo</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" id="modalclose" data-dismiss="modal"
+                    aria-label="Close">Back</button>
+                <button class="btn btn-sm" [disabled]="(!swiggy && !zomato && !dunzo && !urbanpiper)||(loading)"
+                    [ngClass]="{'btn-outline-primary':isenable,'btn-outline-danger':!isenable}" (click)="action()"><i
+                        *ngIf="loading" class="fa fa-circle-o-notch fa-spin"></i><span
+                        *ngIf="!loading">{{(isenable)?'Enable':'Disable'}}</span></button>
+            </div>
+        </div>
+        <div class="modal-content" *ngIf="!selectval()">
+            <div class="modal-header">
+                <h5 class="modal-title">Error!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                No locations are selected to enable ordering.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary btn-sm" data-dismiss="modal" aria-label="Close">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="errors" tabindex="-1" role="dialog" aria-labelledby="exampleModalForms" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Response</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let error of errors">
+                    <!-- <span style="color: red;">&#9888;</span> {{error.message}} -->
+                    <i class="fa fa-check-circle" *ngIf="error.status == 'success'" style="color: green;"></i><i
+                        class="fa fa-warning" *ngIf="error.status == 'error'" style="color: orange;"></i>
+                    {{error.message}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary btn-sm" data-dismiss="modal" aria-label="Close">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="storeDet != undefined" class="modal fade" id="updatestore" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLarge01" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Store - {{storeDet.LocationName}}</h5>
+                <button id="updatestoreclose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-xl-12 d-flex">
+                    <div class="col-xl-6">
+                        <strong>Store: </strong>{{storeDet.Store.Name}}<br>
+                    </div>
+                    <div class="col-xl-6 text-right">
+                        <strong>Brand: </strong>{{storeDet.Brand?storeDet.Brand.Name:'No Brand'}}
+                    </div>
+                </div>
+                <hr>
+                <strong>Location Name: </strong><input [(ngModel)]="storeDet.LocationName" type="text"
+                    class="form-control" placeholder="Enter Location Name" />
+                <hr>
+                <strong>Include Platforms: </strong> <br>
+                <input type="checkbox" [(ngModel)]="storeDet.IsZomato" name="zomato" id="zomato"><label
+                    for="zomato">&nbsp;Zomato</label>&nbsp;
+                <input type="checkbox" [(ngModel)]="storeDet.IsSwiggy" name="Swiggy" id="Swiggy"><label
+                    for="Swiggy">&nbsp;Swiggy</label>&nbsp;
+                <input type="checkbox" [(ngModel)]="storeDet.IsDunzo" name="Dunzo" id="Dunzo"><label
+                    for="Dunzo">&nbsp;Dunzo</label>&nbsp;
+                <input type="checkbox" [(ngModel)]="storeDet.IsUrbanPiper" name="UrbanPiper" id="UrbanPiper"><label
+                    for="UrbanPiper">&nbsp;UrbanPiper</label>&nbsp;
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger btn-sm mx-10 w-10" data-dismiss="modal" aria-label="Close">Cancel</button>
+                <button class="btn btn-success btn-sm  mx-10 w-10" (click)="savechanges(storeDet)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

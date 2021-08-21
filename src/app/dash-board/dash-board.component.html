@@ -1,0 +1,316 @@
+<!-- Preloader -->
+<!-- <button class="box hidden" (click)=loader()></button> -->
+<div id="dashloader" class="preloader-it">
+    <div class="loader-pendulums"></div>
+</div>
+
+<!-- /Preloader -->
+<div class="hk-pg-wrapper">
+    <!-- Container -->
+    <div class="container mt-xl-50 mt-sm-30 mt-15">
+        <!-- Title -->
+        <div class="hk-pg-header align-items-top">
+            <div>
+                <h2 class="hk-pg-title font-weight-600 mb-10">Sales Dashboard</h2>
+                <p>Questions about onboarding lead data? <a href="#">Learn more.</a></p>
+            </div>
+            <div class="d-flex">
+                <div id="reportrange" class="form-control form-control-sm text-truncate mr-15">
+                    <i class="fa fa-calendar text-light-40"></i>&nbsp;
+                    <span></span> <i class="fa fa-caret-down text-light-40 font-12 ml-10"></i>
+                </div>
+                <select id="store_select" class="form-control custom-select custom-select-sm"
+                    (change)="storechange($event.target.value)">
+                    <option *ngFor="let store of stores" value="{{store.Id}}">{{store.Name}}</option>
+                </select>
+            </div>
+        </div>
+        <!-- /Title -->
+
+        <!-- Row -->
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="hk-row">
+                    <div class="col-sm-12">
+                        <div class="card-group hk-dash-type-2 ">
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <strong>Bills</strong>
+                                        </div>
+                                    </div>
+                                    <div class="ml-1 row">
+                                        <sub>&#8377;</sub><span id="bills" class="d-block display-5 text-dark mb-5">
+                                            0.00
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <strong>Payments</strong> 
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-success font-14 font-weight-500">+12.5%</span>
+                                        </div> -->
+                                    </div>
+                                    <div class="ml-1 row">
+                                        <sub>&#8377;</sub><span id="payments" class="d-block display-5 text-dark mb-5">
+                                            <!-- <span class="counter-anim"> -->
+                                            0.00
+                                            <!-- </span> -->
+                                        </span>
+                                        <!-- <small class="d-block">472,458 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <strong>No Of Bills</strong>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-warning font-14 font-weight-500">-2.8%</span>
+                                        </div> -->
+                                    </div>
+                                    <div>
+                                        <span id="no_of_bills" class="d-block display-4 text-dark mb-5">0</span>
+                                        <!-- <small class="d-block">100 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <div>
+                                            <strong>New Customers</strong>
+                                        </div>
+                                        <!-- <div>
+                                            <span class="text-danger font-14 font-weight-500">-75%</span>
+                                        </div> -->
+                                    </div>
+                                    <div>
+                                        <span id="new_customers" class="d-block display-4 text-dark mb-5">0</span>
+                                        <!-- <small class="d-block">42:32 Targeted</small> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="storewisecard" class="card">
+                    <!-- <div class="card-header card-header-action">
+                        <h6>StoreWise Sales</h6>
+                        <div class="d-flex align-items-center card-action-wrap">
+                            <a href="#" class="inline-block refresh mr-15">
+                                <i class="ion ion-md-arrow-down"></i>
+                            </a>
+                            <a href="#" class="inline-block full-screen mr-15">
+                                <i class="ion ion-md-expand"></i>
+                            </a>
+                            <a class="inline-block card-close" href="#" data-effect="fadeOut">
+                                <i class="ion ion-md-close"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body pa-0">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Store</th>
+                                            <th>Bills</th>
+                                            <th>Payments</th>
+                                            <th>No. of Bils</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Kpm</td>
+                                            <td>&#8377;1,234</td>
+                                            <td>&#8377;1,234</td>
+                                            <td>50></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-action">
+                        <h6>Sales</h6>
+                    </div>
+                    <div id="bar_div" class="card-body">
+                        <!--<div class="hk-legend-wrap mb-20">
+                            <div class="hk-legend">
+                                <span class="d-10 bg-primary rounded-circle d-inline-block"></span><span>Sales</span>
+                            </div>
+                             <div class="hk-legend">
+                                <span
+                                    class="d-10 bg-neon-light-1 rounded-circle d-inline-block"></span><span>Sessions</span>
+                            </div> 
+                        </div>-->
+                        <div id="biz1_bar" class="echart" style="height:225px;"></div>
+                    </div>
+                </div>
+
+                <div class="hk-row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header card-header-action">
+                                <h6>Sales By OrderType</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="biz1_pie_1" class="echart" style="height:190px;"></div>
+                                <!-- <div class="hk-legend-wrap mt-10">
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-primary rounded-circle d-inline-block"></span><span>A-1</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-1 rounded-circle d-inline-block"></span><span>B-2</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-2 rounded-circle d-inline-block"></span><span>C-3</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header card-header-action">
+                                <h6>Sales By Customer</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="biz1_pie_3" class="echart" style="height:190px;"></div>
+                                <!-- <div class="hk-legend-wrap mt-10">
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-primary rounded-circle d-inline-block"></span><span>A-1</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-1 rounded-circle d-inline-block"></span><span>B-2</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-2 rounded-circle d-inline-block"></span><span>C-3</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header card-header-action">
+                                <h6>Sales By TransactionType</h6>
+                                <div class="d-flex align-items-center card-action-wrap">
+                                    <div class="inline-block dropdown">
+                                        <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#"
+                                            aria-expanded="false" role="button"><i class="ion ion-ios-more"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Separated link</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="biz1_pie_2" class="echart" style="height:190px;"></div>
+                                <!-- <div class="hk-legend-wrap mt-10">
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-primary rounded-circle d-inline-block"></span><span>A-1</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-1 rounded-circle d-inline-block"></span><span>B-2</span>
+                                    </div>
+                                    <div class="hk-legend">
+                                        <span
+                                            class="d-10 bg-neon-light-2 rounded-circle d-inline-block"></span><span>C-3</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div id="dash_top_prods" class="card">
+                            <!-- <div class="card-header card-header-action">
+                                <h6>Top Products</h6>
+                            </div>
+                            <div class="card-body pa-0">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th class="w-40">Sales</th>
+                                                    <th class="w-25">Qty</th>
+                                                    <th>FreeQty</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> -->
+                            <!-- <tr>
+                                                    <td>Assorted Sweets 1 Kg</td>
+                                                    <td>
+                                                        <div class="progress-wrap lb-side-left mnw-125p">
+                                                            <div class="progress-lb-wrap">
+                                                                <label
+                                                                    class="progress-label mnw-50p">&#8377;1,184</label>
+                                                                <div
+                                                                    class="progress progress-bar-rounded progress-bar-xs">
+                                                                    <div class="progress-bar bg-primary w-70"
+                                                                        role="progressbar" aria-valuenow="70"
+                                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>&#8377;1,234</td>
+                                                    <td>
+                                                         <div id="sparkline_1"></div>
+                                                    </td>
+                                                </tr> -->
+                            <!-- </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Row -->
+        <!-- <object data="http://localhost:4200/test" width="600" height="400">
+            <embed src="http://localhost:4200/test" width="600" height="400" />
+        </object> -->
+        <!-- <div #mapContainer id="map"></div> -->
+        <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+            (onAddressChange)="handleAddressChange($event)" /> -->
+        <!-- <div class="container1"></div> -->
+    </div>
+    <!-- /Container -->
+
+    <!-- Footer -->
+    <!-- /Footer -->
+</div>
+<!-- <script>
+    $(document).ready(function () {
+        // do some html stuff here
+
+        cb(start, end);
+    });
+</script> -->

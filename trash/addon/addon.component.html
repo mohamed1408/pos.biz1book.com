@@ -1,0 +1,141 @@
+<!-- <div class="hk-pg-wrapper">
+            <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> AddOn</li>
+                </ol>
+            </nav>
+  
+            <div class="container">
+                <div class="hk-pg-header">
+                    <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i data-feather="archive"></i></span></span>Addons Products</h4>
+                </div>
+  
+                <div class="row">
+                    <div class="col-xl-4 text-left">
+                        <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="term">
+                    </div>
+                    <div class="col-xl-8 mb-10 text-right">
+                        <a [routerLink]="['/createaddon']">
+                        <button class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg">
+                                <span class="icon-label"><span class="feather-icon"><i data-feather="plus"></i></span></span>
+                                <span class="btn-text">Add AddOn Group</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                    <div class="col-xl-12 pl-0 pr-0">
+                        <section class="hk-sec-wrapper">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <form>
+                                    <div class="table-wrap">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped mb-0">
+                                                <thead>
+                                                    <tr>                                                      
+                                                        <th>AddOn Group</th>
+                                                        <th>Addons</th> 
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                              
+                                                    <tr *ngFor="let item of addons | filter:term | paginate: { itemsPerPage: 5, currentPage: p } ">
+                                                        <td >{{item.AddonGroup}}</td>
+                                                        <td>{{item.Addons}}</td>
+                                                        <td>
+                                                            <a [routerLink]="['/editvariantgrp',item.Id]" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                                            <a (click)="getdelete(item.Id)" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                                        </td>
+                                                    </tr> 
+                                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                  </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>-->
+
+
+<div class="hk-pg-wrapper">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Addon</li>
+        </ol>
+    </nav>
+    <div class="container">
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i data-feather="archive"></i></span></span>Addon Products</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 text-left">
+                <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-8 mb-10 text-right">
+                <a [routerLink]="['/createaddon']">
+                    <button class="btn btn-primary btn-sm btn-wth-icon icon-wthot-bg btn-lg">
+                        <span class="icon-label"><span class="feather-icon"><i data-feather="plus"></i></span></span>
+                        <span class="btn-text">Add Addon</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <form>
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>AddOn Group</th>
+                                                <th>Addons</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let item of addons | filter:term | paginate: { itemsPerPage: 5, currentPage: p } ">
+                                                <td>{{item.AddonGroup}}</td>
+                                                <td>{{item.Addons}}</td>
+                                                <td>
+                                                    <a [routerLink]="['/editaddon',item.Id]" class="mr-25"
+                                                        data-toggle="tooltip" data-original-title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentDetail);deleteId = item.Id" data-toggle="tooltip"
+                                                        data-original-title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a>
+                                                </td>
+                                            </tr>
+                                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<ng-template #contentDetail let-modal>
+        <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+                <div class="modal-dialog ma-0" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Do You Really Want To Delete This AddonGroup</h5>
+                           <br> <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="getdelete(deleteId);modal.close()">Yes</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close()">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</ng-template>

@@ -1,0 +1,196 @@
+<div *ngIf="showloading" class="preloader-it">
+  <div class="loader-pendulums"></div>
+  </div>
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+        <!-- <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li> -->
+      </ol>
+    </nav>
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">Storewise</h4>
+    </div>
+
+    <div class="col-sm-14">
+      <div class="col-xl-12 pl-0 pr-0">
+        <section class="hk-sec-wrapper">
+          <div class="form-group row">
+            <div style="margin-left:20px;">
+              <label for="username"> Date</label>
+              <input type="text" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}" [(ngModel)]="selected" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showClearButton]="true"
+                (change)="date($event)" placeholder="Select Date..." class="form-control" />
+      
+            </div>
+            <div hidden style="margin-left:50px;">
+              <label for="username">Date</label>
+              <input type="text" ngxDaterangepickerMd [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+                [(ngModel)]="selected" [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                [linkedCalendars]="true" [showClearButton]="true" (change)="date($event)" placeholder="Select Date..."
+                class="form-control" />
+            </div>
+            <div style="margin-left:75px;margin-top:35px;">
+              <button  class="btn btn-success  btn-sm mx-10 w-100 pull-right" (click)="Submit()">Submit</button>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-sm">
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+                  <br>
+                  <table class="table mb-0 table-sm">
+                    <thead>
+                      <tr style ="background-color:rgb(217, 226, 250);">
+                        <th (click)="sortsettings('Name')"><strong><a class="font-12">Store Name</a></strong><i
+                            *ngIf="sortfield == 'Name' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Name' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('BillAmount')"><strong><a class="font-12">Bill Amount</a></strong><i
+                            *ngIf="sortfield == 'BillAmount' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'BillAmount' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('PaidAmount')"><strong><a class="font-12">Paid Amount</a></strong><i
+                            *ngIf="sortfield == 'PaidAmount' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'PaidAmount' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Tax')"><strong><a class="font-12">Tax</a></strong><i
+                            *ngIf="sortfield == 'Tax' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Tax' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('DiscAmount')"> <strong><a class="font-12">Disc
+                              Amount</a></strong><i *ngIf="sortfield == 'DiscAmount' && x == -1"
+                            class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'DiscAmount' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Pos')"><strong><a class="font-12">POS</a></strong><i
+                            *ngIf="sortfield == 'Pos' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Pos' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Swiggy')"><strong><a class="font-12">Swiggy</a></strong><i
+                            *ngIf="sortfield == 'Swiggy' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Swiggy' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                        <th (click)="sortsettings('Zomato')"><strong><a class="font-12">Zomato</a></strong><i
+                            *ngIf="sortfield == 'Zomato' && x == -1" class="icon-arrow-up  pull-right"></i>
+                          <i *ngIf="sortfield == 'Zomato' && x == 1" class="icon-arrow-down  pull-right"></i></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of sortData | filter:term  ">
+                        <td class="font-12" (click)="getData(contentdetail1,item.StoreId,2)">{{item.Name}}</td>
+                        <td class="font-12" (click)="getData(contentdetail1,item.StoreId,2)">&#8377;{{item.BillAmount| number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.PaidAmount | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.Tax | number: ".2"}}</td>
+                        <td class="font-12">&#8377;{{item.DiscAmount | number: ".2"}}</td>
+                        <td class="font-12" (click)="getData(contentdetail1,item.StoreId,0)">&#8377;{{item.Pos | number: ".2"}}</td>
+                        <td (click)="getData(contentdetail1,item.StoreId,2)" class="font-12">
+                          &#8377;{{item.Swiggy | number: ".2"}}</td>
+                        <td class="font-12" (click)="getData(contentdetail1,item.StoreId,3)">
+                          &#8377;{{item.Zomato | number: ".2"}}</td>
+                      </tr>
+                      <tr>
+                        <td class="font-14"><strong>Total </strong></td>
+                        <td class="font-14"><strong>&#8377;{{TotalBill | number: ".2"}} </strong></td>
+                        <td class="font-14"><strong>&#8377;{{TotalPaidAmt | number: ".2"}}</strong></td>
+                        <td class="font-14">
+                          <strong>&#8377;{{Tax | number: ".2"}}</strong></td>
+                        <td class="font-14" ><strong>&#8377;{{TotalDisc| number: ".2"}}</strong></td>
+                        <td class="font-14"><strong>&#8377;{{TotalPOS| number: ".2"}}</strong></td>
+                        <td class="font-14"><strong>&#8377;{{TotalSWIGGY| number: ".2"}}</strong></td>
+                        <td class="font-14"><strong>&#8377;{{TotalZomato| number: ".2"}}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+  <ul class="nav nav-tabs active" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#Product" role="tab" aria-controls="Selling" id="Sellingtab">
+        Product </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " data-toggle="tab" href="#Category" role="tab" aria-controls="Permission"
+        id="Permissiontab">Category</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="mt-4 mb-4 tab-pane active" id="Produt" role="tabpanel">
+      <div class="modal d-block position-static overflow-show active" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <td>Product</td>
+                    <td>Quantity</td>
+                    <td>TotalSales</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of prdstore.data">
+                    <td>{{item.Product}}</td>
+                    <td>{{item.Quantity}}</td>
+                    <td>&#8377;{{item.TotalSales | number:".2"}}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td> TotalQty</td>
+                    <td>{{ TotalPrdQty}}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td> TotalSales</td>
+                    <td>&#8377;{{TotalProductSale}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 mb-4 tab-pane  " id="Category" role="tabpanel">
+      <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <td>Category</td>
+                    <td>TotalSales</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of cat">
+                    <td>{{item.Category}}</td>
+                    <td>&#8377;{{item.TotalSales | number:".2"}}</td>
+                  </tr>
+                  <tr>
+                    <td> TotalSales</td>
+                    <td>&#8377;{{TotalPrdtSale}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-template>

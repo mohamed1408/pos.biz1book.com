@@ -1,0 +1,208 @@
+<!-- /Vertical Nav -->
+
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+  <div class="container">
+      
+      <div class="hk-pg-header">
+          <h4 class="hk-pg-title">&nbsp; Sale Prod Group</h4>
+      </div>
+      <div class="form-group row">
+       <div class="col-xl-4">    
+       <select class="form-control custom-select"
+         (change)="setSaleProductId($event.target.value)"       
+         >
+         <option value="0">Select Sale Prod Group</option>
+         <option *ngFor="let item of saleProducts" value="{{item.Id}}">{{item.Name}}</option>
+       </select>
+     
+      </div>
+       <div class="col-xl-6">
+        <button class="btn btn-success btn-sm mx-10 w-12"
+            (click)="addItem()">Add Item</button>
+            <button class="btn btn-success btn-sm mx-10 w-14"
+            (click)="searchAndAdd()">Search and Add</button>
+            <button class="btn btn-success btn-sm mx-10 w-10"
+            (click)="GetChildProds()">View</button>
+     
+            <button class="btn btn-success btn-sm mx-10 w-10"
+            (click)="save()">Save</button>
+     
+      </div>
+     </div>
+<div *ngIf="isSearchAndAdd">
+  <div class="row">
+    <div class="col-sm-3">
+      <!-- <label for="username">Category</label> -->
+        <select class="form-control custom-select" [(ngModel)]="CategoryId">
+          <option value="0" selected>Select Category</option>
+          <!-- <option value="0" selected>All</option> -->
+          <option value="{{item.Id}}" *ngFor="let item of categ">{{item.Description}}</option>
+        </select>
+      </div>
+        <div class="col-sm-3">
+        <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="productText">
+      </div>
+    </div>
+
+        <button class="btn btn-success btn-sm mx-10 w-14"
+            (click)="getoptionproduct('Search')">Search</button>
+
+      <!-- <div class="form-group" style="width: 10em;margin-left:20px;">
+        <label for="username">Source</label>
+        <select class="form-control custom-select" [(ngModel)]="sourceId" name="Source">
+          <option value="0">All</option>
+          <option value="1">POS</option>
+          <option value="2">Swiggy</option>
+          <option value="3">Zomato</option>
+          <option value="4">Food Panda</option>
+        </select>
+      </div> -->
+    </div>
+
+
+<div *ngIf="childProds.length">
+     <div class="row">
+        <div class="col-xl-4 text-right">
+            <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="term">
+        </div>      
+    </div>
+ 
+      <div class="col-xl-12 pl-0 pr-0" >
+        <section class="hk-sec-wrapper">
+            <div class="row">
+                <div class="col-sm">
+                    <!-- <form> -->
+                    <div class="table-wrap">
+                        <div class="table-responsive" #epltable>
+                            <table class="table mb-0 table-sm">
+                                <thead>
+                                    <tr style="background-color:rgb(217, 226, 250);">
+                                        <!-- <th>#</th> -->
+                                        <th> <strong><a class="font-12">Name</a></strong></th>
+                                         <th><strong class="font-12">Remove</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr
+                                        *ngFor="let item of childProds;let i=index"> -->
+                                        
+                                      <tr
+                                      *ngFor="let item of childProds | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ;let i=index ">
+                                      
+                                        <!-- <td>{{i+1}}</td> -->
+                                        <td class="font-13">
+                                              <strong><a href="javascript:void(0)"
+                                                    class="text-info font-13">{{item.StockProduct}}
+                                                </a></strong></td>
+                                       <td>
+                                        <span class="fa fa-remove" style="color:#b52236;" (click)="remove(item)"></span>
+
+                                            <!-- <a class="px-10">
+                                                <input type="checkbox" 
+                                                (click)="select(item.Id,item.OptionId,$event.target.checked)">
+                                        
+                                            </a> -->
+                                             </td>
+
+
+                                    </tr>
+                                    <br>
+                                    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+    <div>
+        <div class="form-group row" *ngIf="newItem.length">
+          <div class="col-sm-2"><span><strong>Product </strong> </span></div>
+          <div class="col-sm-2"><span><strong>Remove </strong> </span></div>
+        </div>
+        <div class="form-group row" *ngFor="let item1 of newItem; let i=index">
+       
+          <div class="col-sm-2">
+                <ng-autocomplete [data]="prod" style="width:10em;margin-left:30px;  
+                border-color: #c5d4d6;" [formControl]="myControl" [searchKeyword]="key" (selected)='selectEvent($event)'
+                  placeHolder="Select Product" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                  [(ngModel)]="all"></ng-autocomplete>
+                <ng-template #itemTemplate1 let-item>
+                  <a [innerHTML]="item.Name"></a>
+                </ng-template>
+        
+                <ng-template #notFoundTemplate1 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+           
+            <!-- <input type="text" class="form-control" [(ngModel)]="item.SortOrder" name="SortOrder{{i}}"> -->
+          </div>
+          <div class="col-sm-2">
+            <span class="glyphicon glyphicon-trash" (click)="delete(i)"></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-12 pl-0 pr-0" *ngIf="searchAndAddObj.length">
+        <div class="row">
+          <div class="col-xl-4 text-right">
+              <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="term1">
+          </div>      
+      </div>
+        <section class="hk-sec-wrapper">
+            <div class="row">
+                <div class="col-sm">
+                    <!-- <form> -->
+                    <div class="table-wrap">
+                        <div class="table-responsive" #epltable>
+                            <table class="table mb-0 table-sm">
+                                <thead>
+                                    <tr style="background-color:rgb(217, 226, 250);">
+                                        <!-- <th>#</th> -->
+                                        <th> <strong><a class="font-12">Name</a></strong></th>
+                                         <th><strong class="font-12">Select</strong>&nbsp;
+                                          <input type="checkbox" 
+                                          (click)="selectAll()">
+                                  
+                                  </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of searchAndAddObj | filter:term1  ;let i=index ">
+                                        <!-- <td>{{i+1}}</td> -->
+                                        <td class="font-13">  <strong><a href="javascript:void(0)"
+                                                    class="text-info font-13">{{item.Name}}
+                                                </a></strong></td>
+                                       <td>
+                                            <a class="px-10">
+                                                <!-- <input type="checkbox" value="{{item.checked}}"
+                                                (click)="select(item.Id,item.OptionId,$event.target.checked)">
+                                         -->
+                                         <input type="checkbox" (click)="select(item.Id,item.OptionId,$event.target.checked)"
+                                         [(ngModel)]="item.checked" [value]="item.value">
+
+                                            </a>
+                                             </td>
+
+
+                                    </tr>
+                                    <br>
+                                    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+      
+  </div>
+ </div>
+
+ 

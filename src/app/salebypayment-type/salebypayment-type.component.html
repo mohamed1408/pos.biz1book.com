@@ -1,0 +1,344 @@
+<div class="hk-pg-wrapper">
+  <!-- Breadcrumb -->
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item"><a href="javascript:void(0);">Company Management</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Sales By Payment Types</li>
+    </ol>
+  </nav>
+  <!-- /Breadcrumb -->
+  <div class="container">
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+              data-feather="archive"></i></span></span>Sales By Payment Types</h4>
+    </div>
+    <section class="hk-sec-wrapper">
+      <!-- <h5 class="hk-sec-title">Working Tab Example</h5> -->
+      <div class="row mb-20">
+        <div class="col-sm">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#home" (click)="clearsale()">Pos Sale</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#menu1" (click)="clearsale()">Online Sale</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+            </li> -->
+          </ul>
+
+          <!-- Tab panes -->
+
+          <div class="tab-content">
+            <br>
+            <div class="row">
+              <div style="margin-left:30px;width:30%  ">
+                <label for="username">Location</label>
+                <ng-autocomplete #auto [data]="stores" [searchKeyword]="key" (selected)='selectEvent($event)'
+                  placeHolder="Choose Location" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+                  (inputCleared)="focusAutocomplete()">
+                </ng-autocomplete>
+                <ng-template #itemTemplate1 let-item>
+                  <a [innerHTML]="item.Name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate1 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+              <div style="margin-left:50px ">
+                <label for="username">Date</label>
+                <input type="text" class="form-group" style="width:15em;margin-left:5px;" ngxDaterangepickerMd
+                  [(ngModel)]="selected" [locale]="{applyLabel: 'ok', format: 'DD/MM/YYYY'}"
+                  [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true"
+                  [showClearButton]="true" (change)="date($event)" placeholder="Select Date..." class="form-control" />
+              </div>
+              <div style="margin-left:100px;margin-top:35px;">
+                <button class="btn btn-success  btn-sm mx-10 w-100 " (click)="getstorepaymentsbytype()">Submit</button>
+              </div>
+            </div>
+            <div id="home" class="container tab-pane active"><br>
+              <!-- <h6>Pos Sale</h6> -->
+              <!-- <section class="hk-sec-wrapper"> -->
+
+
+              <!-- <p class="mb-40">Add class <code>.table</code> in table tag.</p> -->
+              <div *ngIf="storepayment.length > 0" class="row w-100 mt-3">
+                <div class="col-sm">
+                  <div class="table-wrap">
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <thead>
+                          <tr  style="background-color:rgb(217, 226, 250);">
+                            <th><strong>#</strong></th>
+                            <th><strong>Payment Type</strong></th>
+                            <th><strong>Amount</strong></th>
+                            <th><span class="pl-20"><strong>Action</strong></span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let sp of storepayment;let i = index ">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{sp.PaymentType}}</td>
+                            <td>{{sp.Amount}}</td>
+                            <td>
+                              <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                                class="antifocus text-success"
+                                (click)="gettransactionsbytype(0,sp.StorePaymentTypeId,sp)">
+                                <mat-icon class="font-18">get_app</mat-icon>
+                              </button>
+                              <!-- <button mat-icon-button
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        class="antifocus text-danger">
+                                                        <mat-icon class="font-18">delete_outline</mat-icon>
+                                                    </button> -->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <section *ngIf="transpayment.length > 0" class="hk-sec-wrapper">
+                  <p class="mb-40">POS Sale <code>{{transaction.PaymentType}}</code> transaction</p>
+                  <div class="row w-100 mt-3">
+                    <div class="col-sm">
+                      <div class="table-wrap">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <thead>
+                              <tr >
+                                <th><strong>#</strong></th>
+                                <th><strong>InvoiceNo</strong></th>
+                                <th><strong>Amount</strong></th>
+                                <th><strong>TransDateTime</strong></th>
+                                <th><span class="pl-20"><strong>Action</strong></span></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let trans of transpayment;let i = index ">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{trans.InvoiceNo}}</td>
+                                <td>{{trans.Amount}}</td>
+                                <td>{{trans.TransDateTime | date:'MMM d, y, h:mm:ss a'}}</td>
+                                <td>
+                                  <button mat-icon-button
+                                    aria-label="Example icon button with a vertical three dot icon"
+                                    class="antifocus text-warning" data-toggle="modal" data-target="#exampleModalCenter"
+                                    (click)="transaction = trans">
+                                    <mat-icon class="font-18">edit</mat-icon>
+                                  </button>
+
+
+                                  <!-- <button mat-icon-button
+                                                          aria-label="Example icon button with a vertical three dot icon"
+                            
+  }
+                              class="antifocus text-danger">
+                                                          <mat-icon class="font-18">delete_outline</mat-icon>
+                                                      </button> -->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalCenter" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">{{transaction.InvoiceNo}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <!-- <div class="modal-body"> -->
+                        <div class="form-group mr-4" style="width: 10em;margin-left:100px;">
+                          <label for="username">PaymentType</label>
+                          <select class="form-control custom-select" [(ngModel)]="transaction.StorePaymentTypeId"
+                            name="Source">
+                            <option *ngFor="let pt of paymenttype " value={{pt.Id}}>{{pt.Name}}</option>
+                          </select>
+                        </div>
+                        <!-- </div> -->
+                        <div class="form-group ml-2" style="width: 10em;margin-left:10px;">
+                          <label for="username">Amount</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">$</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="transaction.Amount"
+                              aria-label="Amount (to the nearest dollar)">
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatetransaction()">Save
+                          changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div id="menu1" class="container tab-pane fade"><br>
+              <!-- <h6>Menu 1</h6> -->
+              <div *ngIf="onlinepayment.length > 0" class="row w-100 mt-3">
+                <div class="col-sm">
+                  <div class="table-wrap">
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <thead>
+                          <tr  style="background-color:rgb(217, 226, 250);">
+                            <th><strong class="ml-2">#</strong></th>
+                            <th><strong>Source</strong></th>
+                            <th><strong>Amount</strong></th>
+                            <th><span class="pl-20"><strong>Action</strong></span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let op of onlinepayment;let i = index ">
+                            <th scope="row">
+                              <div *ngIf = "op.SourceId == 2" >
+                                <img src="assets/images/swiggy.png"  style="width: 15%;" >
+                            </div>
+                            <div *ngIf = "op.SourceId == 3" >
+                              <img src="assets/images/zomato.png"  style="width: 15%;" >
+                          </div>
+                            </th>
+                            <td>{{op.SourceId == 2? 'Swiggy' : 'Zomato'}}</td>
+                            <td>{{op.Amount}}</td>
+                            <td>
+                              <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                                class="antifocus text-success" (click)="gettransactionsbytype(op.SourceId,0,op)">
+                                <mat-icon class="font-18">get_app</mat-icon>
+                              </button>
+                              <!-- <button mat-icon-button
+                                                        aria-label="Example icon button with a vertical three dot icon"
+                                                        class="antifocus text-danger">
+                                                        <mat-icon class="font-18">delete_outline</mat-icon>
+                                                    </button> -->
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <section *ngIf="transpayment.length > 0" class="hk-sec-wrapper">
+                <p class="mb-40">Online Sale <code>{{transaction.SourceId == 2? 'Swiggy' : 'Zomato'}}</code>transaction
+                </p>
+                <div class="row w-100 mt-3">
+                  <div class="col-sm">
+                    <div class="table-wrap">
+                      <div class="table-responsive">
+                        <table class="table mb-0">
+                          <thead>
+                            <tr>
+                              <th><strong>#</strong></th>
+                              <th><strong>InvoiceNo</strong></th>
+                              <th><strong>Amount</strong></th>
+                              <th><strong>TransDateTime</strong></th>
+                              <!-- <th><span class="pl-20"><strong>Action</strong></span></th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let trans of transpayment;let i = index ">
+                              <th scope="row">
+                                <div *ngIf = "transaction.SourceId == 2" >
+                                  <img src="assets/images/swiggy.png"  style="width: 15%;" >
+                              </div>
+                              <div *ngIf = "transaction.SourceId == 3" >
+                                <img src="assets/images/zomato.png"  style="width: 15%;" >
+                            </div>
+                                </th>
+                              <td>{{trans.InvoiceNo}}</td>
+                              <td>{{trans.Amount}}</td>
+                              <td>{{trans.TransDateTime | date:'MMM d, y, h:mm:ss a'}}</td>
+                              <!-- <td>
+                                <button mat-icon-button aria-label="Example icon button with a vertical three dot icon"
+                                  class="antifocus text-warning" data-toggle="modal"
+                                  data-target="#onexampleModalCenter">
+                                  <mat-icon class="font-18">edit</mat-icon>
+                                </button>
+                              </td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!-- <div class="modal fade" id="onexampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenter" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="onmodal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="modal-body">
+                      <div class="form-group mr-4" style="width: 10em;margin-left:100px;">
+                        <label for="username">Source</label>
+                        <select class="form-control custom-select" name="Source">
+                          <option value="0">All</option>
+                          <option value="1">POS</option>
+                          <option value="2">Swiggy</option>
+                          <option value="3">Zomato</option>
+                          <option value="4">Food Panda</option>
+                        </select>
+                      </div>
+                      </div>
+                      <div class="form-group ml-2" style="width: 10em;margin-left:10px;">
+                        <label for="username">Amount</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+            </div>
+            <!-- <div id="menu2" class="container tab-pane fade"><br>
+              <h6>Menu 2</h6>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+                rem aperiam.</p>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+[0920/092812.799:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[1202/134039.440:ERROR:scoped_process_suspend.cc(31)] NtSuspendProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1202/134041.746:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1202/134041.746:ERROR:exception_snapshot_win.cc(98)] thread ID 8200 not found in process
+[1002/150137.880:ERROR:registration_protocol_win.cc(103)] CreateFile: The system cannot find the file specified. (0x2)
+[1002/150623.723:ERROR:registration_protocol_win.cc(103)] CreateFile: The system cannot find the file specified. (0x2)
+[1002/152534.037:ERROR:registration_protocol_win.cc(103)] CreateFile: The system cannot find the file specified. (0x2)

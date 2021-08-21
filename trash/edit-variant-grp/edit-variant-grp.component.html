@@ -1,0 +1,43 @@
+<div class="hk-pg-wrapper">
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Add Variant</li>
+    </ol>
+  </nav>
+
+  <div class="container">
+
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light">Add Variant </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="VatForm">
+              <div class="form-group">
+                <span>Variant Group</span>
+                <input type="text" style="width: 20em" class="form-control" formControlName="Description" />
+              </div>
+              {{json|json}}
+              <span>Variant</span>
+              <div formArrayName="Variants">
+                <div *ngFor="let comp of VatForm.get('Variants').controls; let i=index">
+                  <div class="form-group row" [formGroupName]="i">
+
+                    <input type="text" style="width: 20em;margin-left: 19px" formControlName="description"
+                      class="form-control"> &nbsp;&nbsp;&nbsp;
+                    <span class="glyphicon glyphicon-trash" (click)="deleteVariant(i)"></span>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-link sp-nav-button" (click)="addVar()"> + Add Variant</button>
+              <br>
+
+              <button type="button" (click)=" getformArray()" class="btn-primary">Update</button>
+              <br>
+              <br>
+              <a style="float: right" [routerLink]="['/variant']">GoBack</a>
+              <pre>{{VatForm.value | json}}</pre> 
+            </form>

@@ -1,0 +1,215 @@
+<!-- /Vertical Nav -->
+
+<!-- Main Content -->
+<div class="hk-pg-wrapper">
+    <!-- Breadcrumb -->
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light bg-transparent">
+                    <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+                </ol>
+            </nav> -->
+    <!-- /Breadcrumb -->
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Title -->
+        <div class="hk-pg-header">
+            <h4 class="hk-pg-title">&nbsp; Products</h4>
+        </div>
+        <!-- Row -->
+        <div class="row">
+            <div class="col-xl-3 text-right">
+                <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-7 mb-10 text-right">
+                <button class="btn btn-success btn-sm mx-10 w-10"
+                    (click)="openDetailpopup(contentdetail1)">Import</button>
+                <a [routerLink]="['/edit-product', 0]">&nbsp;
+                    <button class="btn btn-success btn-sm mx-10 w-18">
+                        <span class="btn-text"> + Add Product</span>
+                    </button>
+                </a>
+                <button class="btn btn-success btn-sm mx-10 w-15" (click)="exportToExcel()">Export</button>
+                <!-- <a style="width: 10em;margin-left:20px;">
+                    <label for="username">Show inactive </label>
+                    <input type="checkbox" class="mx-2" (change)="changefilter($event.target.checked)">
+                </a> -->
+
+            </div>
+            <div class="col-xl-2">
+                <a >
+                    <label for="username">Show inactive </label>
+                    <input type="checkbox" class="ml-10" (change)="changefilter($event.target.checked)">
+                </a>
+            </div>
+
+
+
+
+            <!-- <div class="col-md-8"> -->
+            <!-- <h1 class="text-center py-4">Export Data to Excel Sheet in Angular 8</h1> -->
+            <!-- <div class="col-md-12 table-responsive"> -->
+            <!-- <div style="padding-bottom: 10px;padding-top: 10px;"> -->
+            <!-- <div class="row"> -->
+            <!-- <div class="col-sm-12"> -->
+
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- <table class="table table-bordered">
+                   <thead class="thead-dark">
+                   <tr>
+                    <th>Position</th>
+                    <th>Club</th>
+                    <th>Played</th>
+                    <th>Won</th>
+                    <th>Drawn</th>
+                    <th>Lost</th>
+                    <th>Points</th>
+                   </tr>
+                  </thead>
+                  <tbody>
+                   <tr *ngFor="let club of clubs">
+                    <td>{{club.position}}</td>
+                    <td>{{club.name}}</td>
+                    <td>{{club.played}}</td>
+                    <td>{{club.won}}</td>
+                    <td>{{club.drawn}}</td>
+                    <td>{{club.lost}}</td>
+                    <td>{{club.points}}</td>
+                   </tr>
+                  </tbody>
+                 </table> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+
+        </div>
+        <!-- <div class="row">
+                    <div class="col-xl-4">
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="form-control text-truncate" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                            <span class="input-group-append">
+                                    <span class=" btn btn-primary btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span>
+                            <input type="file" name="...">
+                            </span>
+                            <a href="#" class="btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                            </span>
+                        </div>
+                    </div>
+                </div> -->
+        <div class="col-xl-12 pl-0 pr-0">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <!-- <form> -->
+                        <div class="table-wrap">
+                            <div class="table-responsive" #epltable>
+                                <table class="table mb-0 table-sm">
+                                    <thead>
+                                        <tr style="background-color:rgb(217, 226, 250);">
+                                            <!-- <th>#</th> -->
+                                            <th> <strong><a class="font-12">Name</a></strong></th>
+                                            <th> <strong><a class="font-12">Description</a></strong></th>
+                                            <th><strong><a class="font-12">Category</a></strong></th>
+                                            <th><strong><a class="font-12">Tax Group</a></strong></th>
+                                            <th><strong><a class="font-12">Price</a></strong></th>
+                                            <th><strong class="font-12">Active</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr
+                                            *ngFor="let item of prod | filter:term | paginate: { itemsPerPage: 10, currentPage: p } ;let i=index ">
+                                            <!-- <td>{{i+1}}</td> -->
+                                            <td class="font-13"><span *ngIf="item.ProductTypeId == 1"
+                                                    class="badge badge-success badge-outline mr-2"><span
+                                                        class="badge badge-success badge-indicator"></span></span>
+                                                <span *ngIf="item.ProductTypeId == 2"
+                                                    class="badge badge-danger badge-outline mr-2"><span
+                                                        class="badge badge-danger badge-indicator"></span></span>
+                                                <span *ngIf="item.ProductTypeId == 4"
+                                                    class="badge badge-secondary badge-outline mr-2"><span
+                                                        class="badge badge-secondary badge-indicator"></span></span>
+                                                <span *ngIf="item.ProductTypeId == 3"
+                                                    class="badge badge-warning badge-outline mr-2"><span
+                                                        class="badge badge-warning badge-indicator"></span></span>
+                                                <strong><a href="javascript:void(0)"
+                                                        [routerLink]="['/edit-product', item.Id]"
+                                                        class="text-info font-13">{{item.Name}}
+                                                    </a></strong>
+                                            </td>
+                                            <td class="font-12">{{item.Description}}</td>
+                                            <td class="font-12">{{item.Category.Description}}</td>
+                                            <td class="font-12">{{item.TaxGroup.Description}}</td>
+                                            <td class="font-12">&#8377;{{item.Price | number: ".2"}}</td>
+                                            <td>
+                                                <a class="px-10">
+                                                    <input type="checkbox" [(ngModel)]="item.isactive"
+                                                        (click)="active(item.Id,!item.isactive)">
+                                                </a>
+                                                <!-- <a [routerLink]="['/edit-product', item.Id]" class="mr-25"
+                                                        data-toggle="tooltip" title="Edit"> <i class="icon-pencil"></i>
+                                                    </a>
+                                                    <a (click)="openDetailpopup(contentdetail);deleteId = item.Id"
+                                                        data-toggle="tooltip" title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i>
+                                                    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+
+                                                <!-- <a [routerLink]="['/storesetting', item.Id]" class="mr-25" data-toggle="tooltip" data-original-title="Store"><i class="fa fa-cog" style="font-size:24px"></i></a> -->
+                                            </td>
+
+
+                                        </tr>
+                                        <br>
+                                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<ng-template #contentdetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete This Product? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="deleteProduct(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #contentdetail1 let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <input type="file" class="btn-text" accept=".csv" (change)="csv2Array($event)"
+                        placeholder="Upload file">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" (click)="Upload();modal.close()">Upload</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20" (click)="modal.close()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

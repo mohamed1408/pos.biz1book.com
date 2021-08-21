@@ -1,0 +1,126 @@
+<div *ngIf="showloading" class="preloader-it">
+    <div class="loader-pendulums"></div>
+</div>
+<div class="hk-pg-wrapper">
+    <!-- Breadcrumb -->
+    <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i> Manage</li>
+        </ol>
+    </nav> -->
+    <!-- /Breadcrumb -->
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title">&nbsp; Category</h4>
+    </div>
+    <!-- Container -->
+    <div class="container">
+        <!-- Row -->
+        <div class="row">
+            <div class="col-xl-3 text-right">
+                <input type="text" class="form-control" placeholder="Search category.." [(ngModel)]="term">
+            </div>
+            <div class="col-xl-7 mb-10 text-right">
+                <a href="add-category">
+                    <button class="btn btn-success btn-sm mx-10 w-20">
+                        <span class="btn-text">+ Add Category </span>
+                    </button>
+                </a>
+
+            </div>
+            <div class="col-xl-2">
+                <a >
+                    <label for="username">Show inactive </label>
+                    <input type="checkbox" class="mx-10" (change)="changefilter($event.target.checked)">
+                </a>
+            </div>
+
+            <!-- <div class="toggle-wrap">
+                <div class="toggle toggle-light toggle-bg-primary toggle2"></div>
+            </div> -->
+        </div>
+        <div class="col-xl-12 pl-0 pr-0 ">
+            <section class="hk-sec-wrapper">
+                <div class="row">
+                    <div class="col-sm">
+                        <!-- <form> -->
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table mb-0 table-sm">
+                                    <thead>
+                                        <tr style="background-color:rgb(217, 226, 250);">
+                                            <!-- <th>#</th> -->
+                                            <th (click)="sortsettings('Description')">
+                                                <strong><a class="font-12">Category</a></strong><i
+                                                    *ngIf="sortfield == 'Description' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'Description' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i>
+                                            </th>
+                                            <th (click)="sortsettings('ParentCat')">
+                                                <strong><a class="font-12">ParentCategory</a></strong><i
+                                                    *ngIf="sortfield == 'ParentCat' && x == -1"
+                                                    class="icon-arrow-up  pull-right"></i>
+                                                <i *ngIf="sortfield == 'ParentCat' && x == 1"
+                                                    class="icon-arrow-down  pull-right"></i>
+                                            </th>
+                                            <th><strong class="font-12">Active</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody
+                                        *ngFor="let item of sortData | filter:term | paginate: { itemsPerPage: 10, currentPage: p }">
+                                        <tr>
+                                            <!-- <td>{{item.Id}}</td> -->
+                                            <td class="font-12"> <strong><a href="javascript:void(0)"
+                                                        [routerLink]="['/edit-category',item.Id]"
+                                                        class="text-info">{{item.Description}}</a></strong></td>
+                                            <td class="font-12"> {{(item.ParentCat=='')?"-":item.ParentCat}}
+                                            </td>
+                                            <td>
+                                                <a class="px-10">
+                                                    <input type="checkbox" [(ngModel)]="item.isactive"
+                                                        (click)="active(item.Id,!item.isactive)">
+                                                </a>
+
+                                                <!-- <a href="#" [routerLink]="['/edit-category',item.Id]" class="mr-25"
+                                                        data-toggle="tooltip" data-placement="top"title="Edit"> <i
+                                                            class="icon-pencil"></i> </a>
+                                                    <a (click)="openDetailpopup(contentDetail);deleteId = item.Id"
+                                                        data-toggle="tooltip"title="Delete"> <i
+                                                            class="icon-trash txt-danger"></i> </a>&nbsp;&nbsp;&nbsp; -->
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                    <br>
+
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /Row -->
+</div>
+<ng-template #contentDetail let-modal>
+    <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+        <div class="modal-dialog ma-0" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Do You Really Want To Delete This Category?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="Delete1(deleteId);modal.close()">Yes</button>
+                    <button class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close()">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

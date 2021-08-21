@@ -1,0 +1,53 @@
+<div class="hk-pg-wrapper">
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item active" aria-current="page"><i class="icon-note"></i>Edit AdditionalCharges</li>
+    </ol>
+  </nav> -->
+
+  <div class="container">
+
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-xl-4">
+            <strong class="text-light">Edit AdditionalCharges </strong>
+          </div>
+          <div class="col-xl-6  offset-xl-4">
+            <form [formGroup]="AddForm">
+              <div class="form-group">
+                <span style="font-weight: bold;">Description</span>
+                <input style="width: 20em" type="text" class="form-control" formControlName="Description" />
+              </div>
+              <div class="form-group" style="width: 20em">
+                <span style="font-weight: bold;">ChargeType</span>
+                <!-- <input style="width: 20em" type="number" class="form-control" formControlName="ChargeType" /> -->
+                <select [(ngModel)]="chrgtype" class="form-control custom-select" formControlName="ChargeType" >
+                  <!-- <option > </option> -->
+                  <option value="1" >Percentage</option>
+                  <option value="2" >Cash</option>
+              </select>                 
+              </div>
+              <div class="form-group">
+                <span style="font-weight: bold;">ChargeValue</span>
+                <input style="width: 20em" type="number" class="form-control" formControlName="ChargeValue" />
+              </div>
+             
+                <div class="form-group"  style="width: 20em">
+                    <select  class="form-control custom-select" formControlName="TaxGroupId" >
+                        <!-- <option > </option> -->
+                        <option value="{{item.Id}}" *ngFor="let item of tax" 
+                        [selected]="item.Id===taxgrp">{{item.Description}}</option>
+                    </select>                 
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-danger btn-sm mx-10 w-20"(click)="location.back()">Cancel</button>&nbsp;
+                    <button class="btn btn-success btn-sm mx-10 w-20" (click)="UpdateAddCharge()">Save</button>
+            </div>  
+            </form>
+              </div>
+              </div>
+              </section>
+              </div>
+              </div>
+            </div>
