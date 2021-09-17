@@ -55,12 +55,12 @@ export class OrderWiseSalesRptComponent implements OnInit {
   charge: any;
   ordcharges: any;
   discount: number;
-  sourceId =0;
+  sourceId = 0;
   sortfield: any;
   x: number;
   y: number;
-  pricetot =0;
-  constructor(private Auth: AuthService, private modalService: NgbModal,public loaderService: LoaderService
+  pricetot = 0;
+  constructor(private Auth: AuthService, private modalService: NgbModal, public loaderService: LoaderService
   ) {
     this.alwaysShowCalendars = true;
     // var userinfo = localStorage.getItem("userinfo");
@@ -92,12 +92,13 @@ export class OrderWiseSalesRptComponent implements OnInit {
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
 
-    this.Auth.GetSalesRpt1(this.storeId, frmdate, todate, this.CompanyId,this.sourceId).subscribe(data => {
+    this.Auth.GetSalesRpt1(this.storeId, frmdate, todate, this.CompanyId, this.sourceId).subscribe(data => {
       this.orderwiserpt = data;
       console.log(this.orderwiserpt)
       this.TotalPayments = 0;
       this.TotalSales = 0;
       for (let i = 0; i < this.orderwiserpt.Order.length; i++) {
+        console.log(this.orderwiserpt.Order[i].ItemJson)
         this.orderwiserpt.Order[i].OrderedDate = moment(this.orderwiserpt.Order[i].OrderedDate).format('LLL');
         this.TotalPayments = this.TotalPayments + this.orderwiserpt.Order[i].PaidAmount;
         this.TotalSales = this.TotalSales + this.orderwiserpt.Order[i].BillAmount;
@@ -123,30 +124,34 @@ export class OrderWiseSalesRptComponent implements OnInit {
     this.sgst = 0;
     this.cgst = 0;
     this.subtotal = 0;
-    var itemarray = JSON.parse(itemjson)
-    console.log( itemarray)
-    itemarray.forEach(kot => {
-      kot.item.forEach(item => {
+    if (itemjson) {
+
+      var itemarray = JSON.parse(itemjson)
+      console.log(itemarray)
+      itemarray.forEach(item => {
         item.OptionGroup.forEach(optgrp => {
           optgrp.Option.forEach(opt => {
             item.Price = item.Price + opt.Price
             item.Product = item.Product + '/' + opt.Name
           });
         });
-        item.Price = item.Price*item.Quantity - item.DiscAmount
+        item.Price = item.Price * item.Quantity - item.DiscAmount
         this.receipt.push(item);
         this.cgst = this.cgst + item.Tax1
         this.sgst = this.sgst + item.Tax2
         // console.log(this.subtotal)
         this.subtotal = this.subtotal + item.Price
+        // });
       });
-    });
-    this.total = this.subtotal + this.sgst + this.cgst;
-    console.log(chargejson)
-    var chargejson = JSON.parse(ChargeJson);
-    chargejson.forEach(charge => {
-      this.total = this.total + charge.ChargeValue
-    });
+      this.total = this.subtotal + this.sgst + this.cgst;
+      console.log(chargejson)
+      var chargejson = JSON.parse(ChargeJson);
+      if (chargejson)
+        chargejson.forEach(charge => {
+          this.total = this.total + charge.ChargeValue
+        });
+    }
+
     this.openDetailpopup(modal)
   }
   filter1(Id) {
@@ -156,7 +161,7 @@ export class OrderWiseSalesRptComponent implements OnInit {
     this.sgst = 0;
     this.cgst = 0;
     this.subtotal = 0;
-    this.pricetot =0;
+    this.pricetot = 0;
     this.discount = this.orderwiserpt.Order.filter(x => x.Id == Id)[0].DiscAmount
     orderitem.forEach(element => {
       this.pricetot = element.Price * element.Quantity;
@@ -180,7 +185,7 @@ export class OrderWiseSalesRptComponent implements OnInit {
 
     var frmdate = moment().format("YYYY-MM-DD  00:00:00");
     var todate = moment().format("YYYY-MM-DD  23:59:59");
-    this.Auth.GetSalesRpt1(this.storeId, frmdate, todate, this.CompanyId,this.sourceId).subscribe(data => {
+    this.Auth.GetSalesRpt1(this.storeId, frmdate, todate, this.CompanyId, this.sourceId).subscribe(data => {
       this.orderwiserpt = data;
       console.log(this.orderwiserpt)
       this.TotalPayments = 0;
@@ -189,7 +194,7 @@ export class OrderWiseSalesRptComponent implements OnInit {
         this.orderwiserpt.Order[i].OrderedDate = moment(this.orderwiserpt.Order[i].OrderedDate).format('LLL');
         // this.orderwiserpt.Order[i].ItemJson = JSON.parse(this.orderwiserpt.Order[i].ItemJson);
         // this.orderwiserpt.Order[i].ChargeJson = JSON.parse(this.orderwiserpt.Order[i].ChargeJson);
-        
+
         this.TotalPayments = this.TotalPayments + this.orderwiserpt.Order[i].PaidAmount;
         this.TotalSales = this.TotalSales + this.orderwiserpt.Order[i].BillAmount;
       }
@@ -199,6 +204,38 @@ export class OrderWiseSalesRptComponent implements OnInit {
       // this.loaderService.hide();
       this.showloading = false;
     })
+  }
+  strMatch(string, substring) {
+    return string.toLowerCase().includes(substring)
+  }
+  filter(order) {
+    const term = this.term.toLowerCase()
+    if (term == '') return true
+    // else if (
+    //   this.strMatch(order.InvoiceNo, term)
+    //   || this.strMatch(order.OrderedDate, term)
+    //   || this.strMatch(order.Store, term)
+    //   || this.strMatch(order.TotalTax.toString(), term)
+    //   || this.strMatch(order.DiscAmount.toString(), term)
+    //   || this.strMatch(order.BillAmount.toString(), term)
+    //   || this.strMatch(order.PaidAmount.toString(), term)
+    // ) return true
+    // else return false
+    var ismatching = false
+    Object.keys(order).forEach(key => {
+      if (typeof (order[key]) == 'string') this.strMatch(order[key], term) ? ismatching = true : null
+      if (typeof (order[key]) == 'number') this.strMatch(order[key].toString(), term) ? ismatching = true : null
+    })
+    return ismatching
+  }
+  calculate() {
+    this.TotalSales = 0
+    this.TotalPayments = 0
+    this.orderwiserpt.Order.filter(x => this.filter(x)).forEach(order => {
+      this.TotalSales += order.BillAmount
+      this.TotalPayments += order.PaidAmount
+    });
+    console.log(this.term, this.orderwiserpt.Order.filter(x => this.filter(x)).length)
   }
   GetStore() {
     this.Auth.GetStoreName3(this.CompanyId).subscribe(data => {
@@ -216,11 +253,11 @@ export class OrderWiseSalesRptComponent implements OnInit {
 
     })
   }
-  
+
   sortsettings(field) {
-    if(this.sortfield == field) {
-      this.x = this.x*-1;
-      this.y = this.y*-1;
+    if (this.sortfield == field) {
+      this.x = this.x * -1;
+      this.y = this.y * -1;
     } else {
       this.sortfield = field;
       this.x = -1;
@@ -249,8 +286,7 @@ export class OrderWiseSalesRptComponent implements OnInit {
   }
 
 
-  openDetailpopup(contentdetail)
-   {
+  openDetailpopup(contentdetail) {
     const modalRef = this.modalService
       .open(contentdetail, {
         ariaLabelledBy: "modal-basic-title",
