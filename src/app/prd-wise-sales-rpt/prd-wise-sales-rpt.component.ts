@@ -41,7 +41,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'report.xlsx');
   }
-  productrpt: any=[];
+  productrpt: any = [];
   CompanyId: number;
   startdate: any;
   enddate: any;
@@ -96,9 +96,9 @@ export class PrdWiseSalesRptComponent implements OnInit {
   errorMsg: string = '';
   salespercent: number;
   tags: any;
-  tagId=0;
-  isactive : boolean;
-  constructor(private Auth: AuthService, private modalService: NgbModal,public loaderService: LoaderService) {
+  tagId = 0;
+  isactive: boolean;
+  constructor(private Auth: AuthService, private modalService: NgbModal, public loaderService: LoaderService) {
     this.alwaysShowCalendars = true;
     // var userinfo = localStorage.getItem("userinfo");
     // var userinfoObj = JSON.parse(userinfo);
@@ -116,7 +116,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
     // this.startdate = {"year":date.getFullYear(),"month":date.getMonth()+1,"day":date.getDate()};
     // this.enddate = {"year":date.getFullYear(),"month":date.getMonth()+1,"day":date.getDate()};
     // this.submit1();
-    this.All();
+    this.Submit();
     this.getCategory();
     this.gettags();
   }
@@ -154,7 +154,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
   Submit() {
     // this.loaderService.show();
     this.show = true;
-    if (this.startdate.hasOwnProperty("month")) {
+    if (this.startdate && this.startdate.hasOwnProperty("month")) {
       this.startdate.month = this.startdate.month - 1;
       this.enddate.month = this.enddate.month - 1;
     }
@@ -162,20 +162,21 @@ export class PrdWiseSalesRptComponent implements OnInit {
     var todate = moment(this.enddate).format("YYYY-MM-DD");
     // console.log('this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId,this.tagId'
     // ,this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId,this.tagId);
-    
-    this.Auth.GetproductRpt(this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId,this.tagId, this.datatype? 2 : 1).subscribe(data => {
+
+    this.Auth.GetproductRpt(this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId, this.tagId, this.datatype ? 2 : 1).subscribe(data => {
+      this.showloading = false
       this.data = data;
       this.productrpt = this.data.data;
       console.log(this.productrpt)
-      if(this.productrpt==null)this.productrpt=[];
+      if (this.productrpt == null) this.productrpt = [];
       this.Auth.GetOptions(this.CompanyId).subscribe(data => {
-        this.options = data;      
+        this.options = data;
         this.productrpt.forEach(element => {
           console.log(element.Options)
-          if(element.OptionJson != undefined){
+          if (element.OptionJson != undefined) {
             element.OptionJson = JSON.parse(element.OptionJson);
-          } else{
-            element.OptionJson = {"quantity":element.Quantity,"amount":element.TotalSales,"key":"","options":[]}
+          } else {
+            element.OptionJson = { "quantity": element.Quantity, "amount": element.TotalSales, "key": "", "options": [] }
           }
           element.OptionJson.options.forEach(opt => {
             opt.Quantity = element.Quantity;
@@ -184,13 +185,13 @@ export class PrdWiseSalesRptComponent implements OnInit {
         });
         // this.group_data();
       });
-      console.log(this.productrpt)
+      // console.log(this.productrpt)
       this.TotalSale = 0;
       this.Quantity = 0;
       this.FreeQty = 0;
       this.Totalqty = 0;
       this.percent = 0;
-      console.log(this.productrpt)
+      // console.log(this.productrpt)
       for (let i = 0; i < this.productrpt.length; i++) {
         // this.productrpt[i].OrderedDate = moment(this.productrpt[i].OrderedDate).format('LL');
         this.TotalSale = this.TotalSale + this.productrpt[i].TotalSales;
@@ -249,17 +250,17 @@ export class PrdWiseSalesRptComponent implements OnInit {
   All() {
     this.startdate = moment().format("YYYY-MM-DD  00:00:00");
     this.enddate = moment().format("YYYY-MM-DD  23:59:59");
-    this.Auth.GetproductRpt(0, this.startdate, this.enddate, this.CompanyId, this.CategoryId, this.sourceId,this.tagId,this.datatype? 2 : 1).subscribe(data => {
+    this.Auth.GetproductRpt(0, this.startdate, this.enddate, this.CompanyId, this.CategoryId, this.sourceId, this.tagId, this.datatype ? 2 : 1).subscribe(data => {
       this.data = data;
-      console.log( this.data)
+      console.log(this.data)
       this.productrpt = this.data.data;
       this.Auth.GetOptions(this.CompanyId).subscribe(data => {
         this.options = data;
         this.productrpt.forEach(element => {
-          if(element.OptionJson != undefined){
+          if (element.OptionJson != undefined) {
             element.OptionJson = JSON.parse(element.OptionJson);
-          } else{
-            element.OptionJson = {"quantity":element.Quantity,"amount":element.TotalSales,"key":"","options":[]}
+          } else {
+            element.OptionJson = { "quantity": element.Quantity, "amount": element.TotalSales, "key": "", "options": [] }
           }
           element.OptionJson.options.forEach(opt => {
             opt.Quantity = element.Quantity;
@@ -289,11 +290,13 @@ export class PrdWiseSalesRptComponent implements OnInit {
       this.sgst = +(this.sgst.toFixed(2))
       this.subtotal = +(this.subtotal.toFixed(2));
       for (let i = 0; i < this.productrpt.length; i++) {
+        console.log(this.productrpt[1].Product + "        " + this.productrpt[1].Quantity)
         this.TotalSale = this.TotalSale + this.productrpt[i].TotalSales;
         this.Quantity = this.Quantity + this.productrpt[i].Quantity;
         this.FreeQty = this.FreeQty + this.productrpt[i].FreeQty;
         this.Totalqty = this.Totalqty + this.productrpt[i].Totalqty;
       }
+      console.log(this.productrpt[1].Product + "        " + this.productrpt[1].Quantity)
       this.TotalSale = +(this.TotalSale.toFixed(2))
       this.Quantity = +(this.Quantity.toFixed(2))
       this.FreeQty = +(this.FreeQty.toFixed(2))
@@ -311,6 +314,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
       }
       this.showloading = false
       // this.loaderService.hide();
+      console.log(this.productrpt[1].Product + "        " + this.productrpt[1].Quantity)
     })
   }
 
@@ -342,8 +346,10 @@ export class PrdWiseSalesRptComponent implements OnInit {
     this.tagId = tagId;
   }
   date(e) {
-    this.startdate = e.startDate.format('YYYY-MM-DD')
-    this.enddate = e.endDate.format('YYYY-MM-DD')
+    if (e.startDate && e.endDate) {
+      this.startdate = e.startDate.format('YYYY-MM-DD')
+      this.enddate = e.endDate.format('YYYY-MM-DD')
+    }
   }
   getCategory() {
     this.Auth.getcat(this.CompanyId).subscribe(data => {
@@ -358,7 +364,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
     console.log(productId)
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
-    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, productId,this.tagId).subscribe(data => {
+    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, productId, this.tagId).subscribe(data => {
       this.storewiserpt = data;
       console.log(this.storewiserpt);
       this.storeprd = data;

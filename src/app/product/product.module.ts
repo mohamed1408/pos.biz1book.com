@@ -207,7 +207,7 @@ export class PredefinedQuantityModule {
   CakeQuantityId: number
   isdeleted: boolean
   edit: boolean
-
+  Price: number
   constructor(obj) {
     this.Id = 0
     this.QuantityText = ''
@@ -218,5 +218,6 @@ export class PredefinedQuantityModule {
     this.CompanyId = obj.companyid
     this.isdeleted = false
     this.edit = false
+    this.Price = 0
   }
 }

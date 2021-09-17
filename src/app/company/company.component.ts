@@ -18,7 +18,7 @@ export class CompanyComponent implements OnInit {
   resetData: Object;
   StoreId: number;
   comp: any;
-  errormsg ="";
+  errormsg = "";
   account: any;
   name: any;
   errorMsg: string = '';
@@ -33,7 +33,7 @@ export class CompanyComponent implements OnInit {
   pin: any;
   userinfo: any;
   constructor(private Auth: AuthService, private _fb: FormBuilder, private el: ElementRef) {
-    this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+    this.userinfo = JSON.parse(localStorage.getItem("userinfo")) || [];
 
     // this.CompanyId = userinfoObj[0].CompanyId;
     var logInfo = JSON.parse(localStorage.getItem("loginInfo"));
@@ -61,24 +61,24 @@ export class CompanyComponent implements OnInit {
   }
   saveData() {
     this.submitted = true;
-    var pinchk=false
+    var pinchk = false
     this.errormsg = ""
     this.userinfo.forEach(element => {
       if (this.userdata.user.Pin == element.Pin && element.Id != this.userdata.user.Id) {
         this.errormsg = "Pin Already Taken"
-        pinchk=true;
+        pinchk = true;
         return;
       }
     });
-if(pinchk){
-  return
-}
+    if (pinchk) {
+      return
+    }
     console.log(this.userdata);
     var postdata = { objData: JSON.stringify(this.userdata) };
     console.log(postdata);
     this.Auth.saveCompany(postdata).subscribe(data => {
       this.userinfo.filter(x => x.Id == this.userdata.user.Id)[0].Pin = this.userdata.user.Pin;
-      localStorage.setItem("userinfo",JSON.stringify(this.userinfo))
+      localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
       var response: any = data
       if (response.status == 0) {
         this.errorMsg = response.msg;
@@ -91,7 +91,7 @@ if(pinchk){
 
       }
 
-     });
+    });
 
 
   }

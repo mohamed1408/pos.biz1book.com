@@ -123,11 +123,14 @@
     <div>
         <div class="form-group row" *ngIf="newItem.length">
           <div class="col-sm-2"><span><strong>Product </strong> </span></div>
+          <div class="col-sm-2"><span><strong>Factor </strong> </span></div>
+          <div class="col-sm-2"><span><strong>Sort Order </strong> </span></div>
+          <div class="col-sm-2"><span><strong>IsOnline </strong> </span></div>
           <div class="col-sm-2"><span><strong>Remove </strong> </span></div>
         </div>
         <div class="form-group row" *ngFor="let item1 of newItem; let i=index">
        
-          <div class="col-sm-2">
+          <!-- <div class="col-sm-2"> -->
                 <ng-autocomplete [data]="prod" style="width:10em;margin-left:30px;  
                 border-color: #c5d4d6;" [formControl]="myControl" [searchKeyword]="key" (selected)='selectEvent($event)'
                   placeHolder="Select Product" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
@@ -141,7 +144,23 @@
                 </ng-template>
            
             <!-- <input type="text" class="form-control" [(ngModel)]="item.SortOrder" name="SortOrder{{i}}"> -->
-          </div>
+          <!-- </div> -->
+          <div class="col-sm-2">
+            <input type="text" class="form-control" placeholder="Factor" (change)="onchangeFactor($event.target.value,i)">
+        </div>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" placeholder="SortOrder" (change)="onchangeSortOrder($event.target.value,i)">
+      </div>
+      <div class="col-sm-2">
+        <a class="px-10">
+            <!-- <input type="checkbox" 
+                (click)="onClickOnline($event.target.value,i)"> -->
+                <input type="checkbox" 
+                (click)="onClickOnline($event.target.checked,i)"  
+                />
+           
+        </a>
+      </div>
           <div class="col-sm-2">
             <span class="glyphicon glyphicon-trash" (click)="delete(i)"></span>
           </div>

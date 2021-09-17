@@ -60,9 +60,11 @@ this.getCategory();
     })
   }
   addItem() {
-    this.Reset();
-
-    this.newItem.push({ProductId:0,Description:''});
+    // this.Reset();
+    this.isSearchAndAdd=false;
+    this.searchAndAddObj=[];
+    this.childProds=[];
+    this.newItem.push({ProductId:0,Description:'',Factor:1});
     // this.childProds=[];
     // this.isSearchAndAdd=false;
     // this.searchAndAddObj=[];
@@ -139,7 +141,7 @@ this.Reset();
       let prodsNoptions=response.prod;
       prodsNoptions.push(...response.productOption)
       this.prod=prodsNoptions;
-      console.log('op',this.prod.filter(x => !x.Name));
+      console.log('op1',this.prod,this.prod.filter(x => !x.Name));
 
       if (response.status == 0) {
         this.errorMsg = response.msg;
@@ -150,9 +152,11 @@ this.Reset();
   }
   selectEvent(e) {
     if(typeof(e.OptionId)=='undefined') e.OptionId=null;
+    if(typeof(e.SortOrder)=='undefined') e.SortOrder=null;
+    if(typeof(e.IsOnline)=='undefined') e.IsOnline=null;
 
     console.log(e)
-    var obj = { StockProductId: e.Id ,OptionId:e.OptionId};
+    var obj = { StockProductId: e.Id ,OptionId:e.OptionId,SortOrder:e.SortOrder,IsOnline:e.IsOnline};
     this.items.push(obj);
     console.log(this.items)
 
@@ -167,11 +171,25 @@ this.Reset();
     }
   else{
     this.searchAndAddObj.forEach(val => { val.checked = true ;
-      var obj = { StockProductId: val.Id ,OptionId:val.OptionId};
+      var obj = { StockProductId: val.Id ,OptionId:val.OptionId,SortOrder:val.SortOrder
+            ,IsOnline:val.IsOnline};
       this.items.push(obj);  
     });
 console.log(this.items)
   }
+
+  }
+  onchangeFactor(value,index){
+    console.log(111111,value,index,this.items[0])
+    this.items[index].Factor=value;
+  }
+  onchangeSortOrder(value,index){
+    console.log(111111,value,index,this.items[0])
+    this.items[index].SortOrder=value;
+  }
+  onClickOnline(val,index){
+console.log(val,index)
+this.items[index].IsOnline=val;
 
   }
   select(stockProductId,optionId, ischecked) {
@@ -180,7 +198,7 @@ console.log(this.items)
       let index = this.items.findIndex(x => x.StockProductId === stockProductId && x.OptionId== optionId);
       this.items.splice(index, 1);
     } else {
-      var obj = { StockProductId: stockProductId ,OptionId:optionId};
+      var obj = { StockProductId: stockProductId ,OptionId:optionId,Factor:1,SortOrder:null,IsOnline:null};
       this.items.push(obj)
     }
     console.log('items', this.items);
@@ -188,7 +206,7 @@ console.log(this.items)
   save(){
     var obj={saleProductId:this.saleProductId,companyId:this.CompanyId, item: this.items,removeStockProds:this.removeStockProds}
 var postdata = {objData: JSON.stringify(obj) };
-console.log(obj);
+console.log('obj',obj);
 
     this.Auth.saveSaleProdGroup(postdata).subscribe(data => {
       console.log(data)

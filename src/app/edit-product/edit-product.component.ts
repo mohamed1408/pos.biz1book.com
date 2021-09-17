@@ -195,6 +195,7 @@ export class EditProductComponent implements OnInit {
     this.cakeQuantities.forEach(cqty => {
       if (this.predefinedquantities.some(x => x.CakeQuantityId == cqty.Id && x.isdeleted == false)) {
         cqty.saved = true
+        cqty.Price = this.predefinedquantities.filter(x => x.CakeQuantityId == cqty.Id)[0].Price
       } else {
         cqty.saved = false
       }
@@ -359,8 +360,11 @@ export class EditProductComponent implements OnInit {
           this.newpdquantity.Quantity = cq.Quantity
           this.newpdquantity.FreeQuantity = cq.FreeQuantity
           this.newpdquantity.TotalQuantity = cq.TotalQuantity
+          this.newpdquantity.Price = cq.Price
           this.predefinedquantities.push(Object.assign({}, this.newpdquantity))
           this.newpdquantity = new PredefinedQuantityModule({ companyid: this.CompanyId, productid: this.prodId })
+        } else {
+          this.predefinedquantities.filter(x => x.CakeQuantityId == cq.Id)[0].Price = cq.Price
         }
       } else {
         if (this.predefinedquantities.some(x => x.CakeQuantityId == cq.Id)) {
@@ -370,6 +374,14 @@ export class EditProductComponent implements OnInit {
             this.predefinedquantities = this.predefinedquantities.filter(x => x.CakeQuantityId == cq.Id)
         }
       }
+    })
+  }
+  basePriceAlgo(ckqty){
+    console.log(ckqty)
+    var factor = 1/ckqty.Quantity
+    var base_price = ckqty.Price*factor
+    this.cakeQuantities.forEach(cq => {
+      cq.Price = base_price*cq.Quantity
     })
   }
   selectAll(select) {

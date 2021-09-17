@@ -150,7 +150,7 @@
                       <tr *ngFor="let item1 of productrpt | filter:term  ">
                         <!-- <td>{{item.Name}}</td>  -->
                         <td class="font-13 pr-0">
-                          <span (click)="openDetailpopup(contentdetail1,item1.Id)">{{item1.Product}}</span>
+                          <span (click)="openDetailpopup(contentdetail1,item1.Id)">{{item1.Product}}--{{item1.Quantity}}</span>
                           <button *ngIf="item1.Options &&!item1.showoption"
                             (click)="item1.showoption = !item1.showoption" type="button"
                             class="btn btn-link font-13 pull-right"><i class="fa fa-plus-circle"
@@ -175,7 +175,6 @@
                             <span class="text-info font-13" *ngFor="let option of item1.OptionJson.options">
                               <hr *ngIf="item1.showoption"> {{option.Quantity | number:".2"}}
                               <br *ngIf="item1.showoption">
-
                             </span>
                           </span>
                         </td>

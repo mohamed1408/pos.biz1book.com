@@ -271,7 +271,8 @@ Main Content
 
       <div class="col-xl-12 col-sm-12 row mt-30">
         <div class="col-xl-3 col-sm-3">
-          <strong>Name</strong>
+          <input type="checkbox" (change)="selectAll($event.target.checked);">
+          <strong class="ml-2">Name</strong>
         </div>
         <div class="col-xl-3 col-sm-3">
           <strong>Quantity</strong>
@@ -280,12 +281,13 @@ Main Content
           <strong>FreeQuantity</strong>
         </div>
         <div class="col-xl-3 col-sm-3">
-          <input type="checkbox" (change)="selectAll($event.target.checked);">
+          <strong>Price</strong>
         </div>
       </div>
       <div class="row col-sm-12 col-xl-12 mt-15" *ngFor="let qty of cakeQuantities; let i = index">
         <div class="col-xl-3 col-sm-3 py-2">
-          <span class="text-center">{{qty.QuantityText}}</span>
+          <input type="checkbox" class="pdqcb" [(ngModel)]="qty.saved" (change)="shiftpressed&&bulkSelect(i);">
+          <span class="text-center ml-2">{{qty.QuantityText}}</span>
         </div>
         <div class="col-xl-3 col-sm-3 py-2">
           <span class="text-center">{{qty.Quantity}}</span>
@@ -294,7 +296,14 @@ Main Content
           <span class="text-center">{{qty.FreeQuantity}}</span>
         </div>
         <div class="col-xl-3 col-sm-3 py-2">
-          <input type="checkbox" class="pdqcb" [(ngModel)]="qty.saved" (change)="shiftpressed&&bulkSelect(i);">
+          <div class="input-group">
+            <input type="text" class="form-control form-control-sm" placeholder="Price" [(ngModel)]="qty.Price">
+            <div class="input-group-append">
+              <button class="btn btn-light btn-sm" (click)="basePriceAlgo(qty)" type="button">base</button>
+            </div>
+          </div>
+          <!-- <input type="number" class="form-control">
+          <button class="btn btn-sm btn-success">use this as base price</button> -->
         </div>
       </div>
       <!-- <div class="col-xl-12 row mt-30" [class.deleted]="qty.isdeleted"
