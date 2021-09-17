@@ -26,13 +26,13 @@ export class CategoryWiseRptComponent implements OnInit {
   enddate: any;
   show: boolean = true;
   categorywiserpt: any;
-  prdstore:any;
-  filtprd:any;
+  prdstore: any;
+  filtprd: any;
   ParentCategoryId: any;
   parentcategory: any = [];
   TotalSales = 0;
-  TotalProductSale =0;
-  TotalPrdQty =0;
+  TotalProductSale = 0;
+  TotalPrdQty = 0;
   showloading = true;
   term;
   p;
@@ -55,7 +55,7 @@ export class CategoryWiseRptComponent implements OnInit {
   x: number;
   y: number;
 
-  constructor(private Auth: AuthService,private modalService: NgbModal) {
+  constructor(private Auth: AuthService, private modalService: NgbModal) {
     this.alwaysShowCalendars = true;
     var logInfo = JSON.parse(localStorage.getItem("loginInfo"));
     this.CompanyId = logInfo.CompanyId;
@@ -92,10 +92,36 @@ export class CategoryWiseRptComponent implements OnInit {
       console.log(this.enddate);
     })
   }
+  strMatch(string, substring) {
+    // console.log(string, substring)
+    return string.toLowerCase().includes(substring)
+  }
+  filter(obj) {
+    const term = this.term.toLowerCase()
+    if (term == '') return true
+    var ismatching = false
+    Object.keys(obj).forEach(key => {
+      if (typeof (obj[key]) == 'string') {
+        this.strMatch(obj[key], term) ? ismatching = true : null
+      }
+      if (typeof (obj[key]) == 'number') this.strMatch(obj[key].toString(), term) ? ismatching = true : null
+      if (typeof (obj[key]) == 'object') this.filter(obj[key]) ? ismatching = true : null
+    })
+    return ismatching
+  }
+
+  calculate() {
+    this.TotalSales = 0;
+    this.categorywiserpt.Order.filter(x => this.filter(x)).forEach(pd => {
+      this.TotalSales += pd.TotalSales;
+    });
+    this.TotalSales = +this.TotalSales.toFixed(2)
+  }
+
   sortsettings(field) {
-    if(this.sortfield == field) {
-      this.x = this.x*-1;
-      this.y = this.y*-1;
+    if (this.sortfield == field) {
+      this.x = this.x * -1;
+      this.y = this.y * -1;
     } else {
       this.sortfield = field;
       this.x = -1;
@@ -104,10 +130,10 @@ export class CategoryWiseRptComponent implements OnInit {
   }
   get sortData() {
     return this.categorywiserpt.Order.sort((a, b) => {
-    if (a[this.sortfield] < b[this.sortfield]) return this.x;
-    else if (a[this.sortfield] > b[this.sortfield]) return this.y;
-    else return 0;
-  });
+      if (a[this.sortfield] < b[this.sortfield]) return this.x;
+      else if (a[this.sortfield] > b[this.sortfield]) return this.y;
+      else return 0;
+    });
   }
 
   All() {
@@ -165,35 +191,35 @@ export class CategoryWiseRptComponent implements OnInit {
       console.log(this.parentcategory)
     })
   }
-  openDetailpopup(contentdetail,Id) {
+  openDetailpopup(contentdetail, Id) {
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
-    console.log(this.CompanyId,this.storeId,frmdate,todate,Id,this.sourceId)
-    this.Auth.Getprddata(this.storeId,frmdate,todate,this.CompanyId,this.sourceId,Id,0).subscribe(data=>{
-this.prdstore =data;
-this.filtprd =data;
-console.log(this.prdstore);
-    console.log(this.filtprd)
-    this.TotalProductSale =0;
-    this.TotalPrdQty =0;
-    for (let i = 0; i < this.filtprd.data.length; i++) {
-      this.TotalProductSale = this.TotalProductSale + this.filtprd.data[i].TotalSales;
-      this.TotalPrdQty = this.TotalPrdQty + this.filtprd.data[i].Totalqty;
-    }
-    this.TotalProductSale = +(this.TotalProductSale.toFixed(2))
-    this.TotalPrdQty = +(this.TotalPrdQty.toFixed(2))
-    console.log(this.TotalProductSale, this.TotalPrdQty)
-    const modalRef = this.modalService
-      .open(contentdetail, {
-        ariaLabelledBy: "modal-basic-title",
-        centered: true
-      })
-      .result.then(
-        result => {
-        },
-        reason => {
-        }
-      );
+    console.log(this.CompanyId, this.storeId, frmdate, todate, Id, this.sourceId)
+    this.Auth.Getprddata(this.storeId, frmdate, todate, this.CompanyId, this.sourceId, Id, 0).subscribe(data => {
+      this.prdstore = data;
+      this.filtprd = data;
+      console.log(this.prdstore);
+      console.log(this.filtprd)
+      this.TotalProductSale = 0;
+      this.TotalPrdQty = 0;
+      for (let i = 0; i < this.filtprd.data.length; i++) {
+        this.TotalProductSale = this.TotalProductSale + this.filtprd.data[i].TotalSales;
+        this.TotalPrdQty = this.TotalPrdQty + this.filtprd.data[i].Totalqty;
+      }
+      this.TotalProductSale = +(this.TotalProductSale.toFixed(2))
+      this.TotalPrdQty = +(this.TotalPrdQty.toFixed(2))
+      console.log(this.TotalProductSale, this.TotalPrdQty)
+      const modalRef = this.modalService
+        .open(contentdetail, {
+          ariaLabelledBy: "modal-basic-title",
+          centered: true
+        })
+        .result.then(
+          result => {
+          },
+          reason => {
+          }
+        );
     });
 
   }

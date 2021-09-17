@@ -211,16 +211,6 @@ export class OrderWiseSalesRptComponent implements OnInit {
   filter(order) {
     const term = this.term.toLowerCase()
     if (term == '') return true
-    // else if (
-    //   this.strMatch(order.InvoiceNo, term)
-    //   || this.strMatch(order.OrderedDate, term)
-    //   || this.strMatch(order.Store, term)
-    //   || this.strMatch(order.TotalTax.toString(), term)
-    //   || this.strMatch(order.DiscAmount.toString(), term)
-    //   || this.strMatch(order.BillAmount.toString(), term)
-    //   || this.strMatch(order.PaidAmount.toString(), term)
-    // ) return true
-    // else return false
     var ismatching = false
     Object.keys(order).forEach(key => {
       if (typeof (order[key]) == 'string') this.strMatch(order[key], term) ? ismatching = true : null
@@ -235,7 +225,7 @@ export class OrderWiseSalesRptComponent implements OnInit {
       this.TotalSales += order.BillAmount
       this.TotalPayments += order.PaidAmount
     });
-    console.log(this.term, this.orderwiserpt.Order.filter(x => this.filter(x)).length)
+    // console.log(this.term, this.orderwiserpt.Order.filter(x => this.filter(x)).length)
   }
   GetStore() {
     this.Auth.GetStoreName3(this.CompanyId).subscribe(data => {

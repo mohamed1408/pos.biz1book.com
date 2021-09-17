@@ -218,6 +218,42 @@ export class PrdWiseSalesRptComponent implements OnInit {
       // this.loaderService.hide();
     })
   }
+  strMatch(string, substring) {
+    // console.log(string, substring)
+    return string.toLowerCase().includes(substring)
+  }
+  filter(obj) {
+    const term = this.term.toLowerCase()
+    if (term == '') return true
+    var ismatching = false
+    Object.keys(obj).forEach(key => {
+      if (typeof (obj[key]) == 'string') {
+        this.strMatch(obj[key], term) ? ismatching = true : null
+      }
+      if (typeof (obj[key]) == 'number') this.strMatch(obj[key].toString(), term) ? ismatching = true : null
+      if (typeof (obj[key]) == 'object') this.filter(obj[key]) ? ismatching = true : null
+    })
+    return ismatching
+  }
+
+  calculate() {
+    this.TotalSale = 0;
+    this.Quantity = 0;
+    this.FreeQty = 0;
+    this.Totalqty = 0;
+    this.percent = 0;
+    this.productrpt.filter(x => this.filter(x)).forEach(pd => {
+      this.TotalSale += pd.TotalSales;
+      this.Quantity += pd.Quantity;
+      this.FreeQty += pd.FreeQty;
+      this.Totalqty += pd.Totalqty;
+    });
+    this.TotalSale = +this.TotalSale.toFixed(2)
+    this.Quantity = +this.Quantity.toFixed(2)
+    this.FreeQty = +this.FreeQty.toFixed(2)
+    this.Totalqty = +this.Totalqty.toFixed(2)
+    // console.log(this.term, this.productrpt.filter(x => this.filter(x)))
+  }
   report = [];
   group_data() {
     this.report = [];

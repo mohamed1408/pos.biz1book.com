@@ -109,8 +109,14 @@
             <div class="col-sm">
               <div class="table-wrap">
                 <div class="table-responsive">
-                  <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
+                  <input type="text" class="form-control" (input)="calculate()" placeholder="Search Report.." [(ngModel)]="term">
                   <br>
+                  <div class="float-right">
+                    <strong>TotalSale: </strong>{{TotalSale | number: ".2"}} <br>
+                    <strong>Quantity: </strong>{{Quantity | number: ".2"}} <br>
+                    <strong>FreeQty: </strong>{{FreeQty | number: ".2"}} <br>
+                    <strong>Totalqty: </strong>{{Totalqty | number: ".2"}} <br>
+                  </div>
                   <table #TABLE class="table mb-0 table-sm">
                     <thead>
                       <tr style="background-color:rgb(217, 226, 250);">
@@ -150,7 +156,7 @@
                       <tr *ngFor="let item1 of productrpt | filter:term  ">
                         <!-- <td>{{item.Name}}</td>  -->
                         <td class="font-13 pr-0">
-                          <span (click)="openDetailpopup(contentdetail1,item1.Id)">{{item1.Product}}--{{item1.Quantity}}</span>
+                          <span (click)="openDetailpopup(contentdetail1,item1.Id)">{{item1.Product}}</span>
                           <button *ngIf="item1.Options &&!item1.showoption"
                             (click)="item1.showoption = !item1.showoption" type="button"
                             class="btn btn-link font-13 pull-right"><i class="fa fa-plus-circle"
