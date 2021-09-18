@@ -70,7 +70,7 @@ export class StorewiseRptComponent {
   selected: any = { startDate: moment(), endDate: moment() };
   invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
   tags: any;
-  tagId=0;
+  tagId = 0;
   isInvalidDate = (m: moment.Moment) => {
     return this.invalidDates.some(d => d.isSame(m, 'day'))
   }
@@ -115,7 +115,7 @@ export class StorewiseRptComponent {
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
 
-    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, this.productId,this.tagId).subscribe(data => {
+    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, this.productId, this.tagId).subscribe(data => {
       this.storewiserpt = data;
       console.log(this.storewiserpt);
       this.TotalSales = 0;
@@ -138,7 +138,7 @@ export class StorewiseRptComponent {
   All() {
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
-    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, this.productId,this.tagId).subscribe(data => {
+    this.Auth.GetSalesRpt6(this.categoryId, frmdate, todate, this.CompanyId, this.sourceId, this.productId, this.tagId).subscribe(data => {
       this.storewiserpt = data;
       console.log(this.storewiserpt);
       this.TotalSales = 0;
@@ -220,12 +220,39 @@ export class StorewiseRptComponent {
   setTagId(tagId) {
     this.tagId = tagId;
   }
+  strMatch(string, substring) {
+    return string.toLowerCase().includes(substring)
+  }
+  filter(order) {
+    const term = this.term.toLowerCase()
+    if (term == '') return true
+    var ismatching = false
+    Object.keys(order).forEach(key => {
+      if (typeof (order[key]) == 'string') this.strMatch(order[key], term) ? ismatching = true : null
+      if (typeof (order[key]) == 'number') this.strMatch(order[key].toString(), term) ? ismatching = true : null
+    })
+    return ismatching
+  }
+  calculate() {
+    this.TotalSales = 0
+    this.Quantity = 0
+    this.FreeQty = 0
+    this.Totalqty = 0
+    this.storewiserpt.Order.filter(x => this.filter(x)).forEach(order => {
+      this.TotalSales += order.TotalSales;
+      this.Quantity += order.Quantity;
+      this.FreeQty += order.FreeQty;
+      this.Totalqty += order.Totalqty;
+    });
+    // console.log(this.term, this.orderwiserpt.Order.filter(x => this.filter(x)).length)
+  }
+
   openDetailpopup(contentdetail, Id) {
-    console.log('contentdetail',contentdetail)
+    console.log('contentdetail', contentdetail)
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
     console.log(this.CompanyId, this.categoryId, frmdate, todate, Id, this.sourceId)
-    this.Auth.Getprddata(Id, frmdate, todate, this.CompanyId, this.sourceId, this.categoryId,this.tagId).subscribe(data => {
+    this.Auth.Getprddata(Id, frmdate, todate, this.CompanyId, this.sourceId, this.categoryId, this.tagId).subscribe(data => {
       this.prdstore = data;
       this.filtprd = data;
       var array = []

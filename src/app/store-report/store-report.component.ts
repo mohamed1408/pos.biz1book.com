@@ -138,6 +138,38 @@ export class StoreReportComponent implements OnInit {
       this.showloading = false
     });
   }
+  strMatch(string, substring) {
+    return string.toLowerCase().includes(substring)
+  }
+  filter(order) {
+    const term = this.term.toLowerCase()
+    if (term == '') return true
+    var ismatching = false
+    Object.keys(order).forEach(key => {
+      if (typeof (order[key]) == 'string') this.strMatch(order[key], term) ? ismatching = true : null
+      if (typeof (order[key]) == 'number') this.strMatch(order[key].toString(), term) ? ismatching = true : null
+    })
+    return ismatching
+  }
+  calculate() {
+    this.TotalBill = 0;
+    this.TotalPaidAmt = 0;
+    this.Tax = 0;
+    this.TotalDisc = 0;
+    this.TotalPOS = 0;
+    this.TotalSWIGGY = 0;
+    this.TotalZomato = 0;
+    this.storewiserpt.Order.filter(x => this.filter(x)).forEach(order => {
+      this.TotalBill += order.BillAmount;
+      this.TotalPaidAmt += order.PaidAmount;
+      this.Tax += order.Tax;
+      this.TotalDisc += order.DiscAmount;
+      this.TotalPOS += order.Pos;
+      this.TotalSWIGGY += order.Swiggy;
+      this.TotalZomato += order.Zomato;
+    });
+    // console.log(this.term, this.orderwiserpt.Order.filter(x => this.filter(x)).length)
+  }
 
   sortsettings(field) {
     if (this.sortfield == field) {
@@ -161,7 +193,7 @@ export class StoreReportComponent implements OnInit {
     var frmdate = moment(this.startdate).format("YYYY-MM-DD");
     var todate = moment(this.enddate).format("YYYY-MM-DD");
     console.log(this.CompanyId, this.categoryId, frmdate, todate, Id, storeId)
-    this.Auth.Getprddata(storeId, frmdate, todate, this.CompanyId, Id, this.categoryId,0).subscribe(data => {
+    this.Auth.Getprddata(storeId, frmdate, todate, this.CompanyId, Id, this.categoryId, 0).subscribe(data => {
       this.prdstore = data;
       console.log(this.prdstore)
       this.TotalProductSale = 0;
