@@ -1,0 +1,8 @@
+.drawer-control {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    right: 0;
+    bottom: 20%;
+    z-index: 1000;
+}

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { Route } from "@angular/compiler/src/core";
 import { ok } from 'assert';
@@ -14,6 +14,7 @@ export class AuthService {
   //base_url = "http://192.168.2.66:8000/";
   base_url1 = "https://localhost:44383/api/";
   base_url = "https://biz1pos.azurewebsites.net/api/";
+  pos_url = "http://localhost:2357/";
   //base_url=URL+'att';
   get isLoggedIn() {
     return this.loggedStatus;
@@ -982,15 +983,40 @@ export class AuthService {
     return this.http.get(formURL);
 
   }
-  TimeSalesRpt(Id, frmdate, todate, starttime, endtime, interval, sourceId, productId, categoryId) {
-    console.log(Id, frmdate, todate, starttime, endtime, interval, sourceId)
-    // var formURL = this.base_url;
-    var formURL =
+  getParams(raw_obj) {
+    let params = new HttpParams();
+    params.set("_id", "q7we7eq")
+    Object.keys(raw_obj).forEach(key => {
+      // console.log(key, raw_obj[key])
+      if (raw_obj[key])
+        params.set(key, raw_obj[key])
+      console.log(key, raw_obj[key], params.get(key))
+    })
+    return params
+  }
+  TimeSalesRpt(storeId, frmdate, todate, fromTime, toTime, interval, sourceId, productId, categoryId, saleproductgroupid, companyid) {
+    console.log(storeId, frmdate, todate, fromTime, toTime, interval, sourceId, productId, categoryId)
+    // let params = new BizParams({ storeId, frmdate, todate, fromTime, toTime, interval, sourceId, productId, categoryId })
+    const formURL =
       this.base_url +
-      "TimeWiseRpt/GetRpt?frmdate=" + frmdate + "&todate=" + todate + "&fromTime=" + starttime + "&toTime=" + endtime + "&storeId=" + Id + "&interval=" + interval + "&sourceId=" + sourceId + "&productId=" + productId + "&categoryId=" + categoryId;
+      "TimeWiseRpt/GetRpt?frmdate=" + frmdate + "&todate=" + todate + "&fromTime=" + fromTime + "&toTime=" + toTime + "&storeId=" + storeId + "&interval=" + interval + "&sourceId=" + sourceId + "&productId=" + productId + "&categoryId=" + categoryId + '&saleproductgroupid=' + saleproductgroupid + "&companyid=" + companyid;
+    // console.log(params_obj, this.getParams(params_obj).toString())
+    // const url = this.base_url + "TimeWiseRpt/GetRpt"
+    // const formURL = this.base_url1 + "TimeWiseRpt/GetRpt" + params.stringify()
     return this.http.get(formURL);
   }
 
+  getTimeWiseProducts(storeId, frmdate, todate, fromTime, toTime, sourceId, productId, saleproductgroupid, companyid) {
+    const formURL =
+      this.base_url +
+      "TimeWiseRpt/GetReportProducts?frmdate=" + frmdate + "&todate=" + todate + "&fromTime=" + fromTime + "&toTime=" + toTime + "&storeId=" + storeId + "&sourceId=" + sourceId + "&productId=" + productId + '&saleproductgroupid=' + saleproductgroupid + "&companyid=" + companyid;
+    return this.http.get(formURL);
+  }
+
+  OrderTypeRreport(fromDate, toDate, storeId, companyId, ordertypeid) {
+    const url = this.base_url + "Report/OrderTypeReport?fromDate=" + fromDate + "&toDate=" + toDate + "&storeId=" + storeId + "&companyId=" + companyId + "&ordertypeid=" + ordertypeid
+    return this.http.get(url)
+  }
 
   MonthSalesRpt(Id, frmdate, todate, sourceId, grpby, companyId, categoryId, productId) {
     console.log(Id, frmdate, todate, sourceId)
@@ -1152,7 +1178,7 @@ export class AuthService {
   getSaleProducts(companyid) {
     return this.http.get(this.base_url + "SaleProductGroup/GetSaleProducts?companyid=" + companyid)
   }
-  getproductsNoptions(companyid,catId,desc) {
+  getproductsNoptions(companyid, catId, desc) {
     return this.http.get(this.base_url + `SaleProductGroup/GetProductsNoptions?companyid=${companyid}&catId=${catId}&desc=${desc}`);
   }
   saveSaleProdGroup(formdata) {
@@ -1161,36 +1187,40 @@ export class AuthService {
     // console.log(body);
     return this.http.post(this.base_url + "SaleProductGroup/Save", body);
   }
-  GetSaleProdGroupRpt(Id, frmdate, todate, compId, sourceId,saleProdId) {
+  GetSaleProdGroupRpt(Id, frmdate, todate, compId, sourceId, saleProdId) {
     var formURL = this.base_url;
     var formURL =
       this.base_url +
-      "SaleProductGroupwise/GetRpt?frmdate=" + frmdate + "&todate=" + todate + "&Id=" + Id + "&compId=" + compId  + "&sourceId=" + sourceId+"&saleProdId="+saleProdId;
+      "SaleProductGroupwise/GetRpt?frmdate=" + frmdate + "&todate=" + todate + "&Id=" + Id + "&compId=" + compId + "&sourceId=" + sourceId + "&saleProdId=" + saleProdId;
     return this.http.get(formURL);
 
   }
-  
-  GetStockPrdwise(frmdate, todate,saleProdId, compId,sourceId,storeId,type) {
+
+  GetStockPrdwise(frmdate, todate, saleProdId, compId, sourceId, storeId, type) {
     var formURL = this.base_url;
     var formURL =
       this.base_url +
-      "SaleProductGroupwise/GetStockPrdwise?frmdate=" + frmdate + "&todate=" + todate +"&saleProdId="+saleProdId +
-      "&compId=" + compId+"&sourceId="+sourceId+"&storeId="+storeId+"&type="+type;
+      "SaleProductGroupwise/GetStockPrdwise?frmdate=" + frmdate + "&todate=" + todate + "&saleProdId=" + saleProdId +
+      "&compId=" + compId + "&sourceId=" + sourceId + "&storeId=" + storeId + "&type=" + type;
     return this.http.get(formURL);
 
   }
   fetchDenominationEntries(storeid, date, companyid, entrytypeid) {
     return this.http.get(this.base_url + `Denomination/getDenomEntry?storeid=${storeid}&date=${date}&companyid=${companyid}&entrytypeid=${entrytypeid}`)
   }
-  GetChildProds(saleProdId,compId){
+  GetChildProds(saleProdId, compId) {
     return this.http.get(this.base_url + `SaleProductGroup/GetChildProds?saleProdId=${saleProdId}&compId=${compId}`);
 
   }
-  DeliveryOrderReport(storeid, companyid, fromdate, todate,invoiceno) {
+  DeliveryOrderReport(storeid, companyid, fromdate, todate, invoiceno) {
     return this.http.get(this.base_url + `Report/DeliveryOrderReport?storeid=${storeid}&companyid=${companyid}&fromdate=${fromdate}&todate=${todate}&invoiceno=${invoiceno}`);
   }
-  savepredefinedqtys(prodid, qtys){
+  savepredefinedqtys(prodid, qtys) {
     return this.http.post(this.base_url + `Product/UpdatePredefQtys?productid=${prodid}`, qtys);
+  }
+
+  getlocalorders() {
+    return this.http.post(this.pos_url + "getdbdata", ["tableorders", "loginfo"])
   }
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
@@ -1212,4 +1242,25 @@ export class AuthService {
   //     this.base_url +
   //     "Product/GetById?id="+id+"&compId="+compId+"&storeId="+storeId;
   //   return this.http.get(formURL);
+}
+
+class BizParams {
+  paramas: any
+  constructor(paramobj = {}) {
+    this.paramas = paramobj
+    console.log(this.paramas)
+  }
+
+  set(key: string, value: any) {
+    this.paramas[key] = value.toString()
+  }
+
+  stringify() {
+    var paramString = '?'
+    Object.keys(this.paramas).forEach((key, ind, keys) => {
+      console.log(key, this.paramas[key], paramString)
+      paramString = paramString + key + '=' + this.paramas[key] + (ind == keys.length - 1) ? '' : '&'
+    })
+    return paramString
+  }
 }

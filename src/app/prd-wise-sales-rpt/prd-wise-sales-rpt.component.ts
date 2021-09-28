@@ -98,6 +98,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
   tags: any;
   tagId = 0;
   isactive: boolean;
+  islocal: boolean = false
   constructor(private Auth: AuthService, private modalService: NgbModal, public loaderService: LoaderService) {
     this.alwaysShowCalendars = true;
     // var userinfo = localStorage.getItem("userinfo");
@@ -107,7 +108,8 @@ export class PrdWiseSalesRptComponent implements OnInit {
     this.CompanyId = logInfo.CompanyId;
     this.StoreId = logInfo.storeId;
   }
-
+  localOrders = []
+  localOrderItems = []
   ngOnInit() {
     // this.loaderService.show();
     setHeightWidth();
@@ -119,6 +121,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
     this.Submit();
     this.getCategory();
     this.gettags();
+    this._localorders()
   }
   getBase64Image(img) {
     console.log(img);
@@ -283,6 +286,57 @@ export class PrdWiseSalesRptComponent implements OnInit {
     console.log(this.report)
   }
   options;
+  localOrderReport = []
+  localOrderTotal = { quantity: 0, freequantity: 0, amount: 0 }
+  localOrderTerm: string = ''
+  _localorders() {
+    this.localOrderTotal = { quantity: 0, freequantity: 0, amount: 0 }
+    this.localOrderItems = []
+    this.localOrderReport = []
+    this.Auth.getlocalorders().subscribe(data => {
+      console.log(data)
+      this.localOrders = data["tableorders"]
+      this.localOrders.forEach(order => {
+        this.localOrderItems = [...this.localOrderItems, ...order.Items]
+      })
+      console.log(this.localOrders, this.localOrderItems)
+      this.localOrderItems.forEach(item => {
+        this.localOrderTotal.quantity += item.Quantity
+        this.localOrderTotal.freequantity += item.ComplementryQty
+        this.localOrderTotal.amount += item.TotalAmount
+        if (this.localOrderReport.some(x => x.ProductKey == item.ProductKey)) {
+          this.localOrderReport.filter(x => x.ProductKey == item.ProductKey)[0].Quantity += item.Quantity
+          this.localOrderReport.filter(x => x.ProductKey == item.ProductKey)[0].ComplementryQty += item.ComplementryQty
+          this.localOrderReport.filter(x => x.ProductKey == item.ProductKey)[0].TotalAmount += item.TotalAmount
+        } else {
+          this.localOrderReport.push(item)
+        }
+      })
+    })
+  }
+
+  _filter(obj) {
+    const term = this.localOrderTerm.toLowerCase()
+    if (term == '') return true
+    var ismatching = false
+    Object.keys(obj).forEach(key => {
+      if (typeof (obj[key]) == 'string') {
+        this.strMatch(obj[key], term) ? ismatching = true : null
+      }
+      if (typeof (obj[key]) == 'number') this.strMatch(obj[key].toString(), term) ? ismatching = true : null
+      if (typeof (obj[key]) == 'object') this._filter(obj[key]) ? ismatching = true : null
+    })
+    return ismatching
+  }
+
+  calculateLocalOrder() {
+    this.localOrderTotal = { quantity: 0, freequantity: 0, amount: 0 }
+    this.localOrderReport.filter(x => this._filter(x)).forEach(report => {
+      this.localOrderTotal.quantity += report.Quantity
+      this.localOrderTotal.freequantity += report.ComplementryQty
+      this.localOrderTotal.amount += report.TotalAmount
+    })
+  }
   All() {
     this.startdate = moment().format("YYYY-MM-DD  00:00:00");
     this.enddate = moment().format("YYYY-MM-DD  23:59:59");
