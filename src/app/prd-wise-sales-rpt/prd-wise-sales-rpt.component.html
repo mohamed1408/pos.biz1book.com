@@ -31,7 +31,8 @@
                                             </div>
                                             <ul *ngIf="islocal" class="navbar-nav align-items-center flex-row">
                                                 <li class="nav-item">
-                                                    <a class="nav-link" (click)="_localorders()" href="javascript:void(0)"><i class="font-22 zmdi zmdi-refresh"></i></a>
+                                                    <a class="nav-link" (click)="_localorders()" href="javascript:void(0)"><i
+                                                            class="font-22 zmdi zmdi-refresh"></i></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -70,9 +71,9 @@
                         <div class="form-group" style="width: 10em;margin-left:10px  ">
                             <label for="username">Category</label>
                             <select class="form-control custom-select" [(ngModel)]="CategoryId">
-                <option value="0" selected>All</option>
-                <option value="{{item.Id}}" *ngFor="let item of categ">{{item.Description}}</option>
-              </select>
+                                <option value="0" selected>All</option>
+                                <option value="{{item.Id}}" *ngFor="let item of categ">{{item.Description}}</option>
+                            </select>
                             <div class="invalid-feedback">
                                 <div>Select Category</div>
                             </div>
@@ -101,19 +102,19 @@
                         <div class="form-group" style="width: 10em;margin-left:20px;">
                             <label for="username">Source</label>
                             <select class="form-control custom-select" [(ngModel)]="sourceId" name="Source">
-                <option value="0">All</option>
-                <option value="1">POS</option>
-                <option value="2">Swiggy</option>
-                <option value="3">Zomato</option>
-                <option value="4">Food Panda</option>
-              </select>
+                                <option value="0">All</option>
+                                <option value="1">POS</option>
+                                <option value="2">Swiggy</option>
+                                <option value="3">Zomato</option>
+                                <option value="4">Food Panda</option>
+                            </select>
                         </div>
                         <div class="form-group" style="width: 10em;margin-left:20px;">
-                            <label for="username">Tag</label>
-                            <select class="form-control custom-select" (change)="setTagId($event.target.value)">
-                <option value="0">All</option>
-                <option *ngFor="let item of tags" value="{{item.Id}}">{{item.Description}}</option>
-              </select>
+                            <label for="username">Sale Product Group</label>
+                            <select class="form-control custom-select" [(ngModel)]="tagId">
+                                <option value="0">All</option>
+                                <option *ngFor="let item of saleProducts" value="{{item.Id}}">{{item.Name}}</option>
+                            </select>
                         </div>
                         <div class="form-group" style="width: 10em;margin-left:20px;">
                             <label for="username">Display Option</label>
@@ -127,7 +128,7 @@
                         <a style="margin-left:100px;padding-top:38px;">
                             <button class="btn btn-success btn-sm w-20 " (click)="Submit()">Submit</button>
                             <button class="btn btn-success  btn-sm mx-5 w-20 " (click)="ExportTOExcel()">Export
-              </button>
+                            </button>
                         </a>
                     </div>
                     <br>
@@ -147,27 +148,32 @@
                                         <thead>
                                             <tr style="background-color:rgb(217, 226, 250);">
                                                 <th class="pr-0" (click)="sortsettings('Product')"> <strong> <a
-                              class="font-12 ">Item</a></strong><i *ngIf="sortfield == 'Product' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                            class="font-12 ">Item</a></strong><i *ngIf="sortfield == 'Product' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'Product' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
                                                 <th class="px-0" (click)="sortsettings('Quantity')"> <strong> <a
-                              class="font-12">Quantity</a></strong><i *ngIf="sortfield == 'Quantity' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                            class="font-12">Quantity</a></strong><i *ngIf="sortfield == 'Quantity' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'Quantity' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
+                                                <th *ngIf="showfactor">Factor</th>
+                                                <th *ngIf="showfactor">FQuantity</th>
                                                 <th class="px-0" (click)="sortsettings('TotalSales')"> <strong> <a
-                              class="font-12">Amount</a></strong><i *ngIf="sortfield == 'TotalSales' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                            class="font-12">Amount</a></strong><i *ngIf="sortfield == 'TotalSales' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'TotalSales' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
-                                                <th class="px-0" (click)="sortsettings('percentage')"> <strong> <a class="font-12">Sales
-                              Percentage</a></strong><i *ngIf="sortfield == 'percentage' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                <th class="px-0" (click)="sortsettings('percentage')"> <strong> <a
+                                                            class="font-12">Sales
+                                                            Percentage</a></strong><i *ngIf="sortfield == 'percentage' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'percentage' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
-                                                <th class="px-0" (click)="sortsettings('FreeQty')"><strong><a class="font-12">Free
-                              Qty</a></strong><i *ngIf="sortfield == 'FreeQty' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                <th class="px-0" (click)="sortsettings('FreeQty')"><strong><a
+                                                            class="font-12">Free
+                                                            Qty</a></strong><i *ngIf="sortfield == 'FreeQty' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'FreeQty' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
-                                                <th class="px-0" (click)="sortsettings('Totalqty')"> <strong><a class="font-12">Total
-                              Qty</a></strong><i *ngIf="sortfield == 'Totalqty' && x == -1" class="icon-arrow-up  pull-right"></i>
+                                                <th class="px-0" (click)="sortsettings('Totalqty')"> <strong><a
+                                                            class="font-12">Total
+                                                            Qty</a></strong><i *ngIf="sortfield == 'Totalqty' && x == -1" class="icon-arrow-up  pull-right"></i>
                                                     <i *ngIf="sortfield == 'Totalqty' && x == 1" class="icon-arrow-down  pull-right"></i>
                                                 </th>
                                             </tr>
@@ -177,16 +183,18 @@
                                                 <!-- <td>{{item.Name}}</td>  -->
                                                 <td class="font-13 pr-0">
                                                     <span (click)="openDetailpopup(contentdetail1,item1.Id)">{{item1.Product}}</span>
-                                                    <button *ngIf="item1.Options &&!item1.showoption" (click)="item1.showoption = !item1.showoption" type="button" class="btn btn-link font-13 pull-right"><i class="fa fa-plus-circle"
-                              aria-hidden="true"></i></button>
-                                                    <button *ngIf="item1.Options &&item1.showoption" (click)="item1.showoption = !item1.showoption" type="button" class="btn btn-link font-13 pull-right"><i class="fa fa-minus-circle"
-                              aria-hidden="true"></i></button><br>
+                                                    <button *ngIf="item1.Options &&!item1.showoption" (click)="item1.showoption = !item1.showoption" type="button" class="btn btn-link font-13 pull-right"><i
+                                                            class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                                    <button *ngIf="item1.Options &&item1.showoption" (click)="item1.showoption = !item1.showoption" type="button" class="btn btn-link font-13 pull-right"><i
+                                                            class="fa fa-minus-circle"
+                                                            aria-hidden="true"></i></button><br>
                                                     <span *ngIf="item1.showoption">
-                            <span class="text-info " *ngFor="let option of item1.Options">
-                              <hr>
-                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -
-                              {{option.Name }} X {{option.Quantity}} <br>
-                            </span>
+                                                        <span class="text-info " *ngFor="let option of item1.Options">
+                                                            <hr>
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; -
+                                                            {{option.Name }} X {{option.Quantity}} <br>
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <!-- <td>
@@ -194,52 +202,63 @@
                         <td>{{item.Description1}}</td> -->
                                                 <td class="font-12 px-0">{{item1.Quantity | number:".2"}}
                                                     <span *ngIf="item1.showoption">
-                            <span class="text-info font-13" *ngFor="let option of item1.OptionJson.options">
-                              <hr *ngIf="item1.showoption"> {{option.Quantity | number:".2"}}
-                              <br *ngIf="item1.showoption">
-                            </span>
+                                                        <span class="text-info font-13"
+                                                            *ngFor="let option of item1.OptionJson.options">
+                                                            <hr *ngIf="item1.showoption"> {{option.Quantity |
+                                                            number:".2"}}
+                                                            <br *ngIf="item1.showoption">
+                                                        </span>
                                                     </span>
                                                 </td>
+                                                <td *ngIf="showfactor">{{item1.Factor | number:".2"}}</td>
+                                                <td *ngIf="showfactor">{{item1.Quantity*item1.Factor | number:".2"}}</td>
                                                 <td class="font-12 px-0">&#8377;{{item1.TotalSales | number: ".2"}}
                                                     <span *ngIf="item1.showoption">
-                            <span class="text-info font-13" *ngFor="let option of item1.OptionJson.options">
-                              <hr *ngIf="item1.showoption">&#8377;{{option.Amount | number: ".2"}}
-                              <br *ngIf="item1.showoption">
-                            </span>
+                                                        <span class="text-info font-13"
+                                                            *ngFor="let option of item1.OptionJson.options">
+                                                            <hr *ngIf="item1.showoption">&#8377;{{option.Amount |
+                                                            number: ".2"}}
+                                                            <br *ngIf="item1.showoption">
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td class="font-12 px-0">{{item1.percentage}}%
                                                     <span *ngIf="item1.showoption">
-                            <span *ngFor="let option of item1.OptionJson.options">
-                              <hr *ngIf="item1.showoption">
-                              <br *ngIf="item1.showoption">
-                            </span>
+                                                        <span *ngFor="let option of item1.OptionJson.options">
+                                                            <hr *ngIf="item1.showoption">
+                                                            <br *ngIf="item1.showoption">
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td class="font-12 px-0">{{item1.FreeQty | number:".2" }}
                                                     <span *ngIf="item1.showoption">
-                            <span *ngFor="let option of item1.OptionJson.options">
-                              <hr *ngIf="item1.showoption">
-                              <br *ngIf="item1.showoption">
-                            </span>
+                                                        <span *ngFor="let option of item1.OptionJson.options">
+                                                            <hr *ngIf="item1.showoption">
+                                                            <br *ngIf="item1.showoption">
+                                                        </span>
                                                     </span>
                                                 </td>
                                                 <td class="font-12 px-0">{{item1.Totalqty | number:".2"}}
                                                     <span *ngIf="item1.showoption">
-                            <span *ngFor="let option of item1.OptionJson.options">
-                              <hr *ngIf="item1.showoption">
-                              <br *ngIf="item1.showoption">
-                            </span>
+                                                        <span *ngFor="let option of item1.OptionJson.options">
+                                                            <hr *ngIf="item1.showoption">
+                                                            <br *ngIf="item1.showoption">
+                                                        </span>
                                                     </span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="font-14 pr-0"><strong>Total</strong></td>
-                                                <td class="font-14 px-0"><strong>{{Quantity | number:".2"}}</strong></td>
-                                                <td class="font-14  px-0"><strong>&#8377;{{TotalSale | number:".2"}}</strong></td>
-                                                <td class="font-14  px-0"><strong>{{percent | number:".2" }}%</strong></td>
-                                                <td class="font-14  px-0"><strong>{{FreeQty | number:".2"}}</strong></td>
-                                                <td class="font-14  px-0"><strong>{{Totalqty | number:".2"}}</strong></td>
+                                                <td class="font-14 px-0"><strong>{{Quantity | number:".2"}}</strong>
+                                                </td>
+                                                <td class="font-14  px-0"><strong>&#8377;{{TotalSale |
+                                                        number:".2"}}</strong></td>
+                                                <td class="font-14  px-0"><strong>{{percent | number:".2" }}%</strong>
+                                                </td>
+                                                <td class="font-14  px-0"><strong>{{FreeQty | number:".2"}}</strong>
+                                                </td>
+                                                <td class="font-14  px-0"><strong>{{Totalqty | number:".2"}}</strong>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

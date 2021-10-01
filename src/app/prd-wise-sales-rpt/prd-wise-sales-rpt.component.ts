@@ -99,6 +99,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
   tagId = 0;
   isactive: boolean;
   islocal: boolean = false
+  showfactor: boolean = false
   constructor(private Auth: AuthService, private modalService: NgbModal, public loaderService: LoaderService) {
     this.alwaysShowCalendars = true;
     // var userinfo = localStorage.getItem("userinfo");
@@ -122,6 +123,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
     this.getCategory();
     this.gettags();
     this._localorders()
+    this.getSaleProducts()
   }
   getBase64Image(img) {
     console.log(img);
@@ -168,6 +170,8 @@ export class PrdWiseSalesRptComponent implements OnInit {
 
     this.Auth.GetproductRpt(this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId, this.tagId, this.datatype ? 2 : 1).subscribe(data => {
       this.showloading = false
+      if(this.tagId > 0) this.showfactor = true 
+      else this.showfactor = false
       this.data = data;
       this.productrpt = this.data.data;
       console.log(this.productrpt)
@@ -237,6 +241,15 @@ export class PrdWiseSalesRptComponent implements OnInit {
       if (typeof (obj[key]) == 'object') this.filter(obj[key]) ? ismatching = true : null
     })
     return ismatching
+  }
+  saleProducts = []
+  getSaleProducts() {
+    this.Auth.getSaleProducts(this.CompanyId).subscribe(data => {
+      console.log(data)
+      var response: any = data
+
+      this.saleProducts = response.products;
+    });
   }
 
   calculate() {

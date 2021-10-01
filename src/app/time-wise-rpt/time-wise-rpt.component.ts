@@ -131,8 +131,8 @@ export class TimeWiseRptComponent implements OnInit {
   GetStore() {
     this.Auth.GetStoreName(this.CompanyId).subscribe(data => {
       this.stores = data;
-      // var obj = { Id: 0, Name: "All", ParentStoreId: null, ParentStore: null, IsMainStore: false }
-      // this.stores.push(obj);
+      var obj = { Id: 0, Name: "All", ParentStoreId: null, ParentStore: null, IsMainStore: false }
+      this.stores.unshift(obj);
       this.storeId = this.stores[0].Id
       this.str = this.stores[0].Name
       console.log(this.stores);
@@ -217,7 +217,7 @@ export class TimeWiseRptComponent implements OnInit {
     this.Auth.getcatprd(this.CompanyId).subscribe(data => {
       this.product = data;
       var obj = { Id: 0, Name: "All", ParentCategoryId: null }
-      this.product.push(obj);
+      this.product.unshift(obj);
       console.log(this.product)
     })
   }
