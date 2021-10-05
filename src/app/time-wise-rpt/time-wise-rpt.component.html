@@ -125,7 +125,7 @@
                     </div> -->
                         <div style="margin-top:35px;width:70px;height: 38px;float:right;margin-left: 35px;" class="pull-right">
                             <button class="btn btn-success  btn-sm mx-100 w-300 " (click)="Submit()">Submit</button>
-                            <!-- <button class="btn btn-success  btn-sm mx-100 w-300 " (click)="openDrawer()">settings</button> -->
+                            <button class="btn btn-success  btn-sm mx-100 w-300 " (click)="openTimeIntervalModal()">timeInterval</button>
                         </div>
                     </div>
 
@@ -133,16 +133,22 @@
                         <div class="col-sm">
                             <div class="table-wrap">
                                 <div class="table-responsive">
+                                    <!-- <div style="position: relative;" class="mx-30">
+                                        <output style="transform: translate(-50%); position: absolute; z-index: 10;" id="bubble" class="irs-single text-white px-5 shadow">{{sliderVal |
+                                            slidertime}}</output>
+                                        <output style="transform: translate(-50%);" class="bg-white text-white">{{sliderVal | slidertime}}</output>
+                                        <input type="range" min="0" max="1440" value="0" [(ngModel)]="sliderVal" class="w-100 slider" id="myRange" step="30" (input)="setBubble()">
+                                    </div> -->
                                     <input type="text" class="form-control" placeholder="Search Report.." [(ngModel)]="term">
                                     <br>
                                     <table *ngIf="salesrpt" class="table mb-0 table-sm">
                                         <thead>
                                             <tr style="background-color:rgb(217, 226, 250);">
-                                                <th> <strong><a class="font-12">Store Name </a></strong></th>
-                                                <th> <strong><a class="font-12">StartTime</a></strong></th>
-                                                <th> <strong><a class="font-12">EndTime</a></strong></th>
-                                                <th> <strong><a class="font-12">Quantity</a></strong></th>
-                                                <th> <strong><a class="font-12">TotalSales</a></strong></th>
+                                                <th> <strong><a class="font-12">Store Name </a></strong> </th>
+                                                <th> <strong><a class="font-12">StartTime</a></strong> </th>
+                                                <th> <strong><a class="font-12">EndTime</a></strong> </th>
+                                                <th> <strong><a class="font-12">Quantity</a></strong> </th>
+                                                <th> <strong><a class="font-12">TotalSales</a></strong> </th>
                                                 <th> </th>
                                             </tr>
                                         </thead>
@@ -293,6 +299,45 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <!-- </div> -->
+</ng-template>
+
+<ng-template #timeintervalmodal let-modal>
+    <!-- <div class="modal-dialog modal-lg" role="document"> -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Set Time Intervals</h5>
+            <button type="button" (click)="modalS.dismissAll()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body" style="max-height: 70vh; overflow: auto;">
+            <ul class="list-group">
+                <!-- <li class="list-group-item">This is a regular list group item</li>
+                <li class="list-group-item list-group-item-primary">This is a primary list group item</li>
+                <li class="list-group-item list-group-item-secondary">This is a secondary list group item</li>
+                <li class="list-group-item list-group-item-success">This is a success list group item</li>
+                <li class="list-group-item list-group-item-danger">This is a danger list group item</li>
+                <li class="list-group-item list-group-item-warning">This is a warning list group item</li>
+                <li class="list-group-item list-group-item-info">This is a info list group item</li>
+                <li class="list-group-item list-group-item-light">This is a light list group item</li> -->
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center" *ngFor="let lap of timeintervals">
+                    {{lap | slidertime}}
+                    <button class="btn btn-link">
+                        <i class="ion ion-md-trash text-light font-22"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <div style="position: relative;" class="mx-30 w-100">
+                <output style="transform: translate(-50%); position: absolute; z-index: 10;" id="bubble" class="irs-single text-white px-5 shadow">{{sliderVal | slidertime}}</output>
+                <output style="transform: translate(-50%);" class="bg-white text-white">{{sliderVal |
+                    slidertime}}</output>
+                <input type="range" min="0" max="1440" value="0" (keyup.enter)="addInterval()" [(ngModel)]="sliderVal" class="w-100 slider" id="myRange" step="30" (input)="setBubble()">
+            </div>
         </div>
     </div>
     <!-- </div> -->

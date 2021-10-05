@@ -13,6 +13,7 @@ declare function setHeightWidth(): any;
 })
 export class TimeWiseRptComponent implements OnInit {
   @ViewChild('productmodal', { static: false }) private productmodal: ElementRef
+  @ViewChild('timeintervalmodal', { static: false }) private timeintervalmodal: ElementRef
 
   model: any = {};
   value = "na";
@@ -76,10 +77,11 @@ export class TimeWiseRptComponent implements OnInit {
     'This Month': [moment().startOf('month'), moment().endOf('month')],
     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
   }
-  selected: any = { startDate: moment().subtract(1, 'days'), endDate: moment().subtract(1, 'days') };
+  selected: any = { startDate: moment(), endDate: moment() };
   invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
   select;
   key4;
+  sliderVal = 0
   isInvalidDate = (m: moment.Moment) => {
     return this.invalidDates.some(d => d.isSame(m, 'day'))
   }
@@ -101,8 +103,8 @@ export class TimeWiseRptComponent implements OnInit {
     this.getCategory();
     this.getSaleProducts()
     var date = new Date();
-    this.startdate = moment().subtract(1, 'days')
-    this.enddate = moment().subtract(1, 'days')
+    this.startdate = moment()
+    this.enddate = moment()
     this.All();
   }
   saleProductId = 0
@@ -326,5 +328,18 @@ export class TimeWiseRptComponent implements OnInit {
   openDrawer() {
     let doc = document.getElementsByClassName('hk-wrapper')[0]
     doc.classList.toggle("hk-settings-toggle")
+  }
+
+  setBubble() {
+    let percentage = (this.sliderVal / 1440) * 100
+    document.getElementById("bubble").style.left = `calc(${percentage}% - 0px)`
+  }
+  timeintervals = []
+  openTimeIntervalModal() {
+    this.modalS.open(this.timeintervalmodal)
+  }
+
+  addInterval() {
+    this.timeintervals.push(this.sliderVal)
   }
 }

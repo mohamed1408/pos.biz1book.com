@@ -119,13 +119,16 @@ export class OrderWiseSalesRptComponent implements OnInit {
     this.storeId = e.Id;
 
   }
-  itemdetails(modal, itemjson, ChargeJson) {
+  itemdetails(modal, itemjson, ChargeJson, sourceId) {
     this.receipt = [];
     this.sgst = 0;
     this.cgst = 0;
     this.subtotal = 0;
     if (itemjson) {
-
+      if (sourceId != 1) {
+        this.onlineOrderDetails(modal, itemjson, ChargeJson, sourceId)
+        return
+      }
       var itemarray = JSON.parse(itemjson)
       console.log(itemarray)
       itemarray.forEach(item => {
@@ -153,6 +156,43 @@ export class OrderWiseSalesRptComponent implements OnInit {
     }
 
     this.openDetailpopup(modal)
+  }
+  onlineOrderDetails(modal, itemjson, ChargeJson, sourceId) {
+    var itemarray = JSON.parse(itemjson)
+    console.log(itemarray)
+    itemarray.forEach(item => {
+      item.Price = item.total - item.discount
+      item.Product = item.title
+      item.Quantity = item.quantity
+      item.options_to_add.forEach(opt => {
+        item.Product = item.Product + '/' + opt.title
+        // optgrp.Option.forEach(opt => {
+        //   item.Price = item.Price + opt.Price
+        //   item.Product = item.Product + '/' + opt.Name
+        // });
+      });
+      // item.Price = item.Price - item.DiscAmount
+      this.receipt.push(item);
+      item.Tax1 = item.taxes[0]? item.taxes[0].value : 0
+      item.Tax2 = item.taxes[1]? item.taxes[1].value : 0
+      this.cgst = this.cgst + item.Tax1
+      this.sgst = this.sgst + item.Tax2
+      // console.log(this.subtotal)
+      this.subtotal = this.subtotal + item.Price
+      // });
+    });
+    this.total = this.subtotal + this.sgst + this.cgst;
+    console.log(chargejson)
+    if (ChargeJson) {
+      var chargejson = JSON.parse(ChargeJson);
+      chargejson.forEach(charge => {
+        this.total = this.total + charge.ChargeValue
+      });
+    }
+
+
+    this.openDetailpopup(modal)
+
   }
   filter1(Id) {
     var orderitem = this.orderwiserpt.order1.filter(x => x.OrderId == Id)

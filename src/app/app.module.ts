@@ -112,6 +112,7 @@ import { SaleProdGroupComponent } from './sale-prod-group/sale-prod-group.compon
 import { SaleprodgroupwiseRptComponent } from './saleprodgroupwise-rpt/saleprodgroupwise-rpt.component';
 import { DenominationsComponent } from './denominations/denominations.component';
 import { DeliveryorderRptComponent } from './deliveryorder-rpt/deliveryorder-rpt.component';
+import { TimePipe } from './pipes/time.pipe';
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -213,7 +214,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     SaleProdGroupComponent,
     SaleprodgroupwiseRptComponent,
     DenominationsComponent,
-    DeliveryorderRptComponent
+    DeliveryorderRptComponent,
+    TimePipe
 
     
   ],

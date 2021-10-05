@@ -127,6 +127,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([""]);
   }
   lockAcc() {
+    console.log("removing loginInfo from header component")
     localStorage.removeItem("loginInfo");
     this.router.navigate(["/unlockscreen"]);
   }

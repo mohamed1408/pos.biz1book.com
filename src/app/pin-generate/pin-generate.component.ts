@@ -45,6 +45,7 @@ export class PinGenerateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("removing loginInfo from pin generate component")
     localStorage.removeItem("loginInfo");
     var strarray = this.company.Name.split(' ');
     strarray.forEach((element, index) => {

@@ -27,6 +27,7 @@ export class LocsService {
   }
 
   RemoveKey(Key) {
+    console.log(`removing ${Key} from loc.service component`)
     localStorage.removeItem(Key);
   }
 
