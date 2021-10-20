@@ -1,10 +1,18 @@
 import * as moment from "moment";
 import { AuthService } from '../auth.service';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AmazingTimePickerService, AmazingTimePickerModule } from 'amazing-time-picker';
 import { dangertoast } from 'src/assets/dist/js/toast-data';
 declare function setHeightWidth(): any;
+
+export enum KEY_CODE {
+  UP_ARROW = 38,
+  DOWN_ARROW = 40,
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37,
+  // SPACE = 32
+}
 
 @Component({
   selector: 'app-time-wise-rpt',
@@ -15,6 +23,17 @@ export class TimeWiseRptComponent implements OnInit {
   @ViewChild('productmodal', { static: false }) private productmodal: ElementRef
   @ViewChild('timeintervalmodal', { static: false }) private timeintervalmodal: ElementRef
 
+  @HostListener('window:keydown', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (this.sliderControl && Object.values(KEY_CODE).includes(event.keyCode)) {
+      var timeSlider = document.getElementById("timeSlider")
+      timeSlider.focus()
+    } else if(this.sliderControl && (event.keyCode == 90 && event.ctrlKey) || event.keyCode == 46) {
+      this.timeintervals.pop()
+    }
+  }
+
+  sliderControl: boolean
   model: any = {};
   value = "na";
   CompanyId: number;
@@ -335,11 +354,41 @@ export class TimeWiseRptComponent implements OnInit {
     document.getElementById("bubble").style.left = `calc(${percentage}% - 0px)`
   }
   timeintervals = []
+  fromInt: number = null;
+  toInt: number = null;
   openTimeIntervalModal() {
-    this.modalS.open(this.timeintervalmodal)
+    const modalRef = this.modalS.open(this.timeintervalmodal)
+    this.sliderControl = true
+    modalRef.result.then((data) => {
+      // on close
+      // console.log(data)
+      this.sliderControl = false
+    }, (reason) => {
+      // on dismiss
+      // console.log(reason)
+      this.sliderControl = false
+    });
   }
 
   addInterval() {
-    this.timeintervals.push(this.sliderVal)
+    if (this.fromInt == null) this.fromInt = this.sliderVal
+    else if (this.fromInt > 0 && this.sliderVal <= this.fromInt) this.fromInt = this.sliderVal
+    else this.toInt = this.sliderVal
+
+    if (this.fromInt && this.toInt) {
+      if (!this.timeintervals.includes({ from: this.fromInt, to: this.toInt }))
+        this.timeintervals.push({ from: this.fromInt, to: this.toInt })
+      this.fromInt = null
+      this.toInt = null
+    }
+    console.log(this.timeintervals)
+    // if (!this.timeintervals.includes(this.sliderVal))
+    //   this.timeintervals.push(this.sliderVal)
+    // this.timeintervals = this.timeintervals.sort((a, b) => a - b)
+  }
+
+  deleteInterval(interval) {
+    this.timeintervals = this.timeintervals.filter(x => x != interval)
+    this.timeintervals = this.timeintervals.sort((a, b) => a - b)
   }
 }

@@ -155,7 +155,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
       else return 0;
     });
   }
-
+  factoredQuantity = 0
   Submit() {
     // this.loaderService.show();
     this.show = true;
@@ -170,7 +170,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
 
     this.Auth.GetproductRpt(this.StoreId, frmdate, todate, this.CompanyId, this.CategoryId, this.sourceId, this.tagId, this.datatype ? 2 : 1).subscribe(data => {
       this.showloading = false
-      if(this.tagId > 0) this.showfactor = true 
+      if (this.tagId > 0) this.showfactor = true
       else this.showfactor = false
       this.data = data;
       this.productrpt = this.data.data;
@@ -198,6 +198,7 @@ export class PrdWiseSalesRptComponent implements OnInit {
       this.FreeQty = 0;
       this.Totalqty = 0;
       this.percent = 0;
+      this.factoredQuantity = 0;
       // console.log(this.productrpt)
       for (let i = 0; i < this.productrpt.length; i++) {
         // this.productrpt[i].OrderedDate = moment(this.productrpt[i].OrderedDate).format('LL');
@@ -205,6 +206,8 @@ export class PrdWiseSalesRptComponent implements OnInit {
         this.Quantity = this.Quantity + this.productrpt[i].Quantity;
         this.FreeQty = this.FreeQty + this.productrpt[i].FreeQty;
         this.Totalqty = this.Totalqty + this.productrpt[i].Totalqty;
+        this.factoredQuantity += this.productrpt[i].FactoredQty
+        console.log(this.productrpt[i].Quantity, this.productrpt[i].Factor, this.factoredQuantity)
       }
       this.TotalSale = +(this.TotalSale.toFixed(2))
       this.Quantity = +(this.Quantity.toFixed(2))

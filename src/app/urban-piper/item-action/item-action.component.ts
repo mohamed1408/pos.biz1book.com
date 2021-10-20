@@ -46,7 +46,7 @@ export class ItemActionComponent implements OnInit {
   // categ: { ref_id: any; name: any; description: any; sort_order: number; active: boolean; img_url: any; };
   // item: { ref_id: any; title: any; description: any; available: boolean; sold_at_store: boolean; price: any; current_stock: number; recommended: boolean; category_ref_ids: any; food_type: any };
   constructor(private Auth: AuthService, private _avRoute: ActivatedRoute, private modalService: NgbModal,
-    private ups: UrbanPipeService,public location: Location) {
+    private ups: UrbanPipeService, public location: Location) {
     var logInfo = JSON.parse(localStorage.getItem("loginInfo"));
     this.CompanyId = logInfo.CompanyId;
     this.StoreId = Number(this._avRoute.snapshot.params["Id"].split('-')[0]);
@@ -54,7 +54,7 @@ export class ItemActionComponent implements OnInit {
     this.BrandId = (this.BrandId) ? this.BrandId : null;
     console.log(this.StoreId, this.BrandId);
   }
-  
+
 
   ngOnInit() {
     setHeightWidth();
@@ -297,6 +297,32 @@ export class ItemActionComponent implements OnInit {
     }
     return platforms;
   }
+
+  charges() {
+    return {
+      "code": "PC_P",
+      "title": "Packaging Charge",
+      "description": "Fixed Packing Charge per Item Quantity",
+      "active": true,
+      "structure": {
+        "applicable_on": "item.quantity",
+        "value": 5.0
+      },
+      "fulfillment_modes": [
+        "delivery"
+      ],
+      "excluded_platforms": ["zomato"],
+      "item_ref_ids": [
+        "all"
+      ],
+      // "location_ref_ids": [
+      //   "all"
+      // ],
+      // "clear_items": false,
+      // "clear_locations": false
+    }
+  }
+
   sync() {
     var category = [];
     var items = [];
@@ -317,14 +343,24 @@ export class ItemActionComponent implements OnInit {
           }
           category.push(catObj);
         }
-        this.itemObj = { ref_id: element.ProductId, title: element.Name.replace('**', ''), available: element.Available, sort_order: element.SortOrder, description: element.Description, price: element.UPPrice, external_price: element.UPPrice, current_stock: -1, recommended: element.Recommended, food_type: element.ProductTypeId, category_ref_ids: [element.CategoryId.toString()], fulfillment_modes: ["pickup","delivery"], img_url: element.ImgUrl, tags: {}, included_platforms: this.includedplatforms(), translations: [] };
+        this.itemObj = { ref_id: element.ProductId, title: element.Name.replace('**', ''), available: element.Available, sort_order: element.SortOrder, description: element.Description, price: element.UPPrice, external_price: element.UPPrice, current_stock: -1, recommended: element.Recommended, food_type: element.ProductTypeId, category_ref_ids: [element.CategoryId.toString()], fulfillment_modes: ["pickup", "delivery"], img_url: element.ImgUrl, tags: {}, included_platforms: this.includedplatforms(), translations: [] };
         if (this.itemObj.img_url == null || this.itemObj.img_url == '') {
           delete this.itemObj['img_url'];
         }
         items.push(this.itemObj);
       }
     });
-    var data = { categories: category, flush_items: true, items: items, flush_option_groups: true, option_groups: this.optionGroup(), flush_options: true, options: this.option(), taxes: this.tax() };
+    var data = {
+      categories: category,
+      flush_items: true, items: items,
+      flush_option_groups: true,
+      option_groups: this.optionGroup(),
+      flush_options: true,
+      options: this.option(),
+      taxes: this.tax(),
+      charges: [this.charges()]
+    };
+
     console.log(JSON.stringify(data));
     // return;
     this.Auth.catalogue({ catalogue: JSON.stringify(data) }, this.StoreId, this.BrandId).subscribe(data => {
@@ -459,7 +495,7 @@ export class ItemActionComponent implements OnInit {
     });
   }
   selectdeselect(value, catId) {
-    console.log(value, catId,this.Products.filter(x => x.CategoryId == catId))
+    console.log(value, catId, this.Products.filter(x => x.CategoryId == catId))
     this.Products.filter(x => x.CategoryId == catId).forEach(x => x.selected = value)
   }
   getproducts(categoryId) {
@@ -469,5 +505,5 @@ export class ItemActionComponent implements OnInit {
     }
     return obj;
   }
-  
+
 }

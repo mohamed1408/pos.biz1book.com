@@ -6,9 +6,9 @@ import * as moment from 'moment'
 export class TimePipe implements PipeTransform {
 
   transform(minutes: number, args?: any): any {
-    console.log(minutes)
+    // console.log(minutes)
 
-    return moment().startOf('day').add(minutes, 'minutes').format('hh:mm A');
+    return minutes == null ? '--' : moment().startOf('day').add(minutes, 'minutes').format('hh:mm A');
   }
 
 }

@@ -113,6 +113,7 @@ import { SaleprodgroupwiseRptComponent } from './saleprodgroupwise-rpt/saleprodg
 import { DenominationsComponent } from './denominations/denominations.component';
 import { DeliveryorderRptComponent } from './deliveryorder-rpt/deliveryorder-rpt.component';
 import { TimePipe } from './pipes/time.pipe';
+import { OptionQtyGroupComponent } from './option-qty-group/option-qty-group.component';
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -215,7 +216,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     SaleprodgroupwiseRptComponent,
     DenominationsComponent,
     DeliveryorderRptComponent,
-    TimePipe
+    TimePipe,
+    OptionQtyGroupComponent
 
     
   ],
@@ -333,7 +335,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
       { path: "sale-prod-group", component: SaleProdGroupComponent, canActivate: [RoleGuard] },
       { path: "saleprodgroupwiserpt", component: SaleprodgroupwiseRptComponent, canActivate: [RoleGuard] },
       { path: "denomination", component: DenominationsComponent, canActivate: [RoleGuard] },
-      { path: "deliveryorder-rpt", component: DeliveryorderRptComponent, canActivate: [RoleGuard] }
+      { path: "deliveryorder-rpt", component: DeliveryorderRptComponent, canActivate: [RoleGuard] },
+      { path: "option-qty-groups", component: OptionQtyGroupComponent, canActivate: [RoleGuard] },
 
 
 

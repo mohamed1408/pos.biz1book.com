@@ -14,6 +14,7 @@ declare function setHeightWidth(): any;
 })
 export class CategoryComponent implements OnInit {
   category: any;
+  categoryList = []
   CompanyId: number;
   status: number;
   errorMsg: any;
@@ -88,6 +89,7 @@ export class CategoryComponent implements OnInit {
           this.category[i].ParentCat = "";
         }
       }
+      this.categoryList = this.category
       var response: any = data;
       if (response.status == 0) {
         this.status = 0;
@@ -127,7 +129,9 @@ export class CategoryComponent implements OnInit {
       this.y = 1;
     }
   }
-
+  isSelected() {
+    return !this.categoryList.some(x => x.selected)
+  }
   get sortData() {
     return this.category.sort((a, b) => {
       if (a[this.sortfield] < b[this.sortfield]) return this.x;
@@ -173,12 +177,18 @@ export class CategoryComponent implements OnInit {
   }
   changefilter(bool) {
     console.log(bool)
-    if(bool){
-      this.category = this.category.filter(x => !x.isactive);
+    if (bool) {
+      this.categoryList = this.category;
     } else {
-      this.category = this.category.filter(x => x.isactive);
+      this.categoryList = this.category.filter(x => x.isactive);
     }
     console.log(this.category.length)
   }
-
+  copyToSPG() {
+    let selectedIds = this.categoryList.filter(x => x.selected).map(x => x.Id)
+    console.log(selectedIds)
+    this.Auth.copyCategoryToSaleProductGroup(this.CompanyId, selectedIds).subscribe(data => {
+      console.log(data)
+    })
+  }
 }

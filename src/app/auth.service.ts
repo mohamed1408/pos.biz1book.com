@@ -1002,7 +1002,7 @@ export class AuthService {
       "TimeWiseRpt/GetRpt?frmdate=" + frmdate + "&todate=" + todate + "&fromTime=" + fromTime + "&toTime=" + toTime + "&storeId=" + storeId + "&interval=" + interval + "&sourceId=" + sourceId + "&productId=" + productId + "&categoryId=" + categoryId + '&saleproductgroupid=' + saleproductgroupid + "&companyid=" + companyid;
     // console.log(params_obj, this.getParams(params_obj).toString())
     // const url = this.base_url + "TimeWiseRpt/GetRpt"
-    // const formURL = this.base_url1 + "TimeWiseRpt/GetRpt" + params.stringify()
+    // const formURL = this.base_url + "TimeWiseRpt/GetRpt" + params.stringify()
     return this.http.get(formURL);
   }
 
@@ -1221,6 +1221,10 @@ export class AuthService {
 
   getlocalorders() {
     return this.http.post(this.pos_url + "getdbdata", ["tableorders", "loginfo"])
+  }
+
+  copyCategoryToSaleProductGroup(companyid, selectedIds) {
+    return this.http.post(this.base_url + "Category/CopyToSaleProductGroup?companyId=" + companyid, selectedIds)
   }
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
