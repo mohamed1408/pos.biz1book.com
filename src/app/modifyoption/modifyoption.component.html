@@ -1,13 +1,13 @@
 <div class="hk-pg-wrapper">
-  <div class="hk-pg-header">
-    <h4 class="hk-pg-title">&nbsp;Option Products</h4>
-  </div>
+    <div class="hk-pg-header">
+        <h4 class="hk-pg-title">&nbsp;Option Products</h4>
+    </div>
 
-  <div class="container">
-    <form name="form" (ngSubmit)="f.form.valid && saveOption()" #f="ngForm" novalidate>
-      <!-- <div class="col-xl-12 pl-0 pr-0"> -->
-      <section class="hk-sec-wrapper">
-        <!-- <div class="row">
+    <div class="container">
+        <form name="form" (ngSubmit)="f.form.valid && saveOption()" #f="ngForm" novalidate>
+            <!-- <div class="col-xl-12 pl-0 pr-0"> -->
+            <section class="hk-sec-wrapper">
+                <!-- <div class="row">
             <div class="col-md-3 mt-15" >
               <div class="custom-control custom-radio mb-5">
                   <input  type="radio"    [value]="Variant"    name="Variant" class="custom-control-input">
@@ -15,77 +15,136 @@
               </div>
             </div>
           </div> -->
-        <div class="row">
-          <div class="col-md-3 mt-15" *ngFor="let item of OptionGroupType">
-            <div class="custom-control custom-radio mb-5">
-              <input type="radio" [(ngModel)]="OptionGroup.OptionGroupType" [value]="item.Id" id="{{item.Id}}"
-                name="{{item.Name}}" class="custom-control-input">
-              <label class="custom-control-label" for="{{item.Id}}">{{item.Name}}</label>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="form-group" style="width: 20em;">
-            <span><strong> OptionGroup</strong> </span>
-            <input type="text" [(ngModel)]="OptionGroup.Name" name="OGName" class="form-control" #OGName="ngModel"
-              [ngClass]="{'is-invalid': f.submitted && OGName.invalid}" required />
-            <div *ngIf="f.submitted && OGName.invalid" class="invalid-feedback">
-              <div *ngIf="OGName.errors.required">OptionGroup Name is required</div>
-            </div>
-          </div>&nbsp;&nbsp;
-          <div class="form-group" style="width: 20em;">
-            <span><strong>Description </strong> </span>
-            <input type="text" [(ngModel)]="OptionGroup.Description" name="OGDes" class="form-control" #OGDes="ngModel"
-              [ngClass]="{'is-invalid': f.submitted && OGName.invalid}" required />
-          </div>
-        </div>
-        <!-- <div class="form-group row" *ngFor="let item of optionPoints.controls; let pointIndex=index"> -->
-        <div>
-          <div class="form-group row">
-            <div class="col-sm-2"><span><strong>Option </strong> </span></div>
-            <div class="col-sm-2"><span><strong>Description </strong> </span></div>
-            <div class="col-sm-2"> <strong>Price </strong><span></span></div>
-            <div class="col-sm-2"><span> <strong>Order </strong> </span></div>
-          </div>
-          <div class="form-group row" *ngFor="let item of OptionGroup.Options; let i=index">
-            <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="item.Name" name="Name{{i}}" #Name{{i}}="ngModel"
-                [ngClass]="{'is-invalid': f.submitted && item.Name==''}" required />
-              <div *ngIf="f.submitted && item.Name==''" class="invalid-feedback">
-                <div *ngIf="item.Name==''">Option Name is required</div>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="item.Description">
-            </div>
-            <div class="col-sm-2">
-              <input type="number" class="form-control" [(ngModel)]="item.Price" name="Price{{i}}" #Price{{i}}="ngModel"
-                [ngClass]="{'is-invalid': f.submitted && item.Price<1}" />
-              <div *ngIf="f.submitted && item.Price<1" class="invalid-feedback">
-                <div *ngIf="item.Price<1">Option price is required</div>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="item.SortOrder" name="SortOrder{{i}}">
-            </div>
-            <div class="col-sm-2">
-              <span class="glyphicon glyphicon-trash" (click)="deleteOption(i)"></span>
-            </div>
-          </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-3 mt-15" *ngFor="let item of OptionGroupType">
+                        <div class="custom-control custom-radio mb-5">
+                            <input type="radio" [(ngModel)]="OptionGroup.OptionGroupType" [value]="item.Id" id="{{item.Id}}" name="{{item.Name}}" class="custom-control-input">
+                            <label class="custom-control-label" for="{{item.Id}}">{{item.Name}}</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="form-group" style="width: 20em;">
+                        <span><strong> OptionGroup</strong> </span>
+                        <input type="text" [(ngModel)]="OptionGroup.Name" name="OGName" class="form-control" #OGName="ngModel" [ngClass]="{'is-invalid': f.submitted && OGName.invalid}" required />
+                        <div *ngIf="f.submitted && OGName.invalid" class="invalid-feedback">
+                            <div *ngIf="OGName.errors.required">OptionGroup Name is required</div>
+                        </div>
+                    </div>&nbsp;&nbsp;
+                    <div class="form-group" style="width: 20em;">
+                        <span><strong>Description </strong> </span>
+                        <input type="text" [(ngModel)]="OptionGroup.Description" name="OGDes" class="form-control" #OGDes="ngModel" [ngClass]="{'is-invalid': f.submitted && OGName.invalid}" required />
+                    </div>
+                </div>
+                <!-- <div class="form-group row" *ngFor="let item of optionPoints.controls; let pointIndex=index"> -->
+                <div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"><span><strong>Option </strong> </span></div>
+                        <div class="col-sm-2"><span><strong>Description </strong> </span></div>
+                        <div class="col-sm-2"> <strong>Price </strong><span></span></div>
+                        <div class="col-sm-2"><span> <strong>Order </strong> </span></div>
+                    </div>
+                    <div class="form-group row" *ngFor="let item of OptionGroup.Options; let i=index">
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" [(ngModel)]="item.Name" name="Name{{i}}" #Name{{i}}="ngModel" [ngClass]="{'is-invalid': f.submitted && item.Name==''}" required />
+                            <div *ngIf="f.submitted && item.Name==''" class="invalid-feedback">
+                                <div *ngIf="item.Name==''">Option Name is required</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" [(ngModel)]="item.Description">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" [(ngModel)]="item.Price" name="Price{{i}}" #Price{{i}}="ngModel" [ngClass]="{'is-invalid': f.submitted && item.Price<1}" />
+                            <div *ngIf="f.submitted && item.Price<1" class="invalid-feedback">
+                                <div *ngIf="item.Price<1">Option price is required</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" [(ngModel)]="item.SortOrder" name="SortOrder{{i}}">
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="glyphicon glyphicon-trash" (click)="deleteOption(i)"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+                <!-- </div> -->
+                <div>
+                    <button type="button" class="btn btn-link sp-nav-button" (click)="addOption()">+ Add Option</button>
+                </div>
+                <button class="btn btn-danger btn-sm mx-10 w-10" (click)="location.back()">Cancel</button>
+                <button class="btn btn-success btn-sm mx-10 w-10" (click)="focus()">Save</button>
+                <!-- </div> -->
+                <!-- </div> -->
+            </section>
+        </form>
         <!-- </div> -->
-        <!-- </div> -->
-        <div>
-          <button type="button" class="btn btn-link sp-nav-button" (click)="addOption()">+ Add Option</button>
-        </div>
-        <button class="btn btn-danger btn-sm mx-10 w-10"
-          (click)="location.back()">Cancel</button>
-        <button class="btn btn-success btn-sm mx-10 w-10" (click)="focus()">Save</button>
-        <!-- </div> -->
-        <!-- </div> -->
-      </section>
-    </form>
-    <!-- </div> -->
-  </div>
+        <section class="hk-sec-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h5>Unmapped Products</h5>
+                        <input type="text" autocomplete="off" name="q-5" class="form-control left multiselect-search" placeholder="Search..." [(ngModel)]="term"><br>
+                        <!-- dropdown cat -->
+                        <div class="form-group" style="width: 20em">
+                            <select class="form-control custom-select" [(ngModel)]="unmappedCatId" style="width: 22em" name="ParentCategoryId">
+                <option value=0>All</option>
+                <option *ngFor="let cat of category" value={{cat.Id}}>{{cat.Description}}</option>
+              </select>
+                        </div>
+                        <!-- select product -->
+                        <select style="width: 350px;height: 300px;" name="cars" id="cars" multiple>
+              <option (dblclick)="movedblclick('right', item)"
+                *ngFor="let item of unmappedProducts | filter:term | categoryfilter:unmappedCatId:pipeTrigger"
+                [class.item-selected]="item.selected" (click)="toggleSelection(item, 1)"> {{item.Product}}
+
+              </option>
+            </select>
+                    </div>
+                    <!-- button -->
+                    <div class="col-xs-4" style="margin-left: 10px; margin-top: 50px;">
+                        <br><br><br><br>
+                        <button type="button" style="background-color: rgb(175, 171, 171);width: 150px;" (click)="moveAll('right')" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+
+                        <button type="button" style="background-color: rgb(175, 171, 171);width: 150px;" (click)="moveSelected('right')" class="btn btn-block"><i
+                class="glyphicon glyphicon-chevron-right"></i></button>
+
+                        <button type="button" style="background-color: rgb(175, 171, 171);width: 150px;" (click)="moveSelected('left')" class="btn btn-block"><i
+                class="glyphicon glyphicon-chevron-left"></i></button>
+
+                        <button type="button" style="background-color: rgb(175, 171, 171);width: 150px;" (click)="moveAll('left')" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+
+                        <button type="button" style="background-color: rgb(175, 171, 171);width: 150px;" (click)="getOpgMappedProducts()" class="btn btn-block"><i
+                class="glyphicon glyphicon-refresh"></i></button><br>
+
+                        <button type="button" style="width: 150px;" (click)="bulksave()" class="btn btn-success">Save</button>
+
+                    </div>
+                    <!-- Mapped Product -->
+                    <div class="col-xs-4" style="margin-left: 15px;">
+                        <h5>Mapped Products</h5>
+                        <input type="text" autocomplete="off" name="q-5" class="form-control left multiselect-search" placeholder="Search..." [(ngModel)]="p"><br>
+
+                        <!-- dropdon cat -->
+                        <div class="form-group" style="width: 20em">
+                            <select class="form-control custom-select" [(ngModel)]="mappedCatId" style="width: 22em" name="ParentCategoryId">
+                <option value=0>All</option>
+                <option *ngFor="let cat of category" value={{cat.Id}}>{{cat.Description}}</option>
+              </select>
+                        </div>
+                        <!-- select product -->
+                        <select style="width: 350px;height: 300px;" name="cars" id="cars" multiple>
+              <option (dblclick)="movedblclick('left', item)"
+                *ngFor="let item of mappedProducts | filter:p | categoryfilter:mappedCatId:pipeTrigger"
+                [class.item-selected]="item.selected" (click)="toggleSelection(item, 2)">{{item.Product}}
+              </option>
+            </select>
+                    </div>
+                </div><br>
+            </div>
+        </section>
+
+    </div>
 </div>

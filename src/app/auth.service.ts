@@ -1226,6 +1226,15 @@ export class AuthService {
   copyCategoryToSaleProductGroup(companyid, selectedIds) {
     return this.http.post(this.base_url + "Category/CopyToSaleProductGroup?companyId=" + companyid, selectedIds)
   }
+
+  pogBulkSave(opgid, companyid, productids) {
+    return this.http.post(this.base_url + "OptionGroup/BulkSave?OptionGroupId=" + opgid + "&CompanyId=" + companyid, productids)
+  }
+
+  getOpgMappedProducts(CompanyId, OptionGroupId) {
+    return this.http.get(this.base_url + "OptionGroup/getMapedProducts?CompanyId=" + CompanyId + "&OptionGroupId=" + OptionGroupId);
+  }
+
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
   //   var formURL =

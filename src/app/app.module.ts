@@ -114,6 +114,7 @@ import { DenominationsComponent } from './denominations/denominations.component'
 import { DeliveryorderRptComponent } from './deliveryorder-rpt/deliveryorder-rpt.component';
 import { TimePipe } from './pipes/time.pipe';
 import { OptionQtyGroupComponent } from './option-qty-group/option-qty-group.component';
+import { ObjectPipe } from './pipes/object.pipe';
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -217,7 +218,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     DenominationsComponent,
     DeliveryorderRptComponent,
     TimePipe,
-    OptionQtyGroupComponent
+    OptionQtyGroupComponent,
+    ObjectPipe
 
     
   ],

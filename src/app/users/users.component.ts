@@ -38,7 +38,7 @@ y: number;
     var logInfo = JSON.parse(localStorage.getItem("loginInfo"));
     this.CompanyId = logInfo.CompanyId;
     this.userData.CompanyId = this.CompanyId;
-    this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
+    // this.userinfo = JSON.parse(localStorage.getItem("userinfo"));
   }
 
   ngOnInit() {
@@ -150,6 +150,7 @@ y: number;
     })
   }
   GetUser() {
+    this.show = false
     this.Auth.getUser(this.CompanyId).subscribe(user => {
       this.getuser = user;
       console.log(this.getuser);
@@ -175,7 +176,7 @@ y: number;
     console.log(data);
     this.Auth.formuser(data, this.CompanyId).subscribe(data => {
       // this.router.navigate(['users'])
-      this.userinfo.filter(x => x.Id == this.userData.Id)[0] = this.userData;
+      // this.userinfo.filter(x => x.Id == this.userData.Id)[0] = this.userData;
       console.log(this.userData);
       var response: any = data
       if (response.status == 0) {
@@ -188,15 +189,16 @@ y: number;
         this.GetUser()
         this.show = false;
         var obj = { Id: response.user.Id, Name: response.user.Name, Pin: response.user.Pin, RoleId: response.user.RoleId, Role: this.getrole.filter(x => x.Id == response.user.RoleId)[0].Name, CompanyId: response.user.CompanyId }
-        var index = this.userinfo.findIndex(x => x.Id == obj.Id);
-        if (index >= 0) {
-          this.userinfo[index] = obj;
-        } else {
-          this.userinfo.push(obj);
-        }
-        localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
+        // var index = this.userinfo.findIndex(x => x.Id == obj.Id);
+        // if (index >= 0) {
+        //   // this.userinfo[index] = obj;
+        // } else {
+        //   // this.userinfo.push(obj);
+        // }
+        // localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
         this.clear();
       }
+      this.GetUser()
     });
   }
   deleteuser(Id) {
@@ -211,10 +213,10 @@ y: number;
       else {
         this.errorMsg = response.msg;
         console.log(toast(this.errorMsg));
-        var index = this.userinfo.findIndex(x => x.Id == Id);
-        this.userinfo.splice(index, 1);
-        console.log(this.userinfo, index)
-        localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
+        // var index = this.userinfo.findIndex(x => x.Id == Id);
+        // this.userinfo.splice(index, 1);
+        // console.log(this.userinfo, index)
+        // localStorage.setItem("userinfo", JSON.stringify(this.userinfo))
       }
     });
   }

@@ -17,13 +17,17 @@ declare function setHeightWidth(): any;
 })
 export class ModifyoptionComponent implements OnInit {
   public OptionForm: FormGroup;
+  term: any
+  p: any
   OptId: any;
   prefdata: any;
-  CompanyId: number;
+  CompanyId: number = 0;
   optiongrp: any;
   errorMsg: string = '';
   status: number;
-
+  unmappedCatId: number = 0
+  mappedCatId: number = 0
+  category: any = []
   OptionGroup = { Id: 0, Name: "", OptionGroupType: 1, Description: '', Options: [{ Id: 0, Name: "", Description: "", Price: 0, SortOrder: -1, OptionGroupId: 0, CompanyId: this.CompanyId }], CompanyId: this.CompanyId, MinimumSelectable: 1, MaximumSelectable: 1, Del: [{ Id: 0 }] };
   OptionGroupType = [{ Id: 1, Name: "Variant" }, { Id: 2, Name: "Addon" }];
   constructor(public http: HttpClient, private Auth: AuthService, private _fb: FormBuilder, private toaster: Toaster,
@@ -56,6 +60,8 @@ export class ModifyoptionComponent implements OnInit {
         });
       });
     }
+    this.getOpgMappedProducts()
+    this.getCategory()
   }
   saveOption() {
     if (this.OptionGroup.OptionGroupType == 1) {
@@ -65,7 +71,7 @@ export class ModifyoptionComponent implements OnInit {
       this.OptionGroup.MinimumSelectable = 0;
       this.OptionGroup.MaximumSelectable = -1;
     }
-      console.log(this.OptionGroup)
+    console.log(this.OptionGroup)
     if (this.OptionGroup.Id == 0) {
       var data = { data: JSON.stringify(this.OptionGroup) }
       this.Auth.saveoption(data).subscribe(data => {
@@ -119,6 +125,80 @@ export class ModifyoptionComponent implements OnInit {
     }
 
   }
+  pipeTrigger: boolean = true
+  public toggleSelection(data) {
+    data.selected = !data.selected;
+  }
+  movedblclick(direction, product) {
+    product.selected = true
+    this.moveSelected(direction)
+  }
+  public moveSelected(direction) {
+    console.log(direction)
+    if (direction === 'left') {
+      console.log(direction === 'left')
+      this.mappedProducts.forEach((item, i) => {
+        if (item.selected) {
+          console.log(item)
+          this.unmappedProducts.push(item);
+          this.mappedProducts = this.mappedProducts.filter(x => !x.selected)
+          item.selected = false;
+        }
+      });
+    } else if (direction === 'right') {
+      console.log(direction === 'right')
+      this.unmappedProducts.forEach((item, i) => {
+        if (item.selected) {
+          console.log(item)
+          this.mappedProducts.push(item);
+          this.unmappedProducts = this.unmappedProducts.filter(x => !x.selected)
+          item.selected = false;
+        }
+      });
+    }
+    this.pipeTrigger = !this.pipeTrigger
+  }
+  public moveAll(direction) {
+    if (direction === 'left') {
+      this.mappedProducts.forEach(item => item.selected = false)
+      this.unmappedProducts = [...this.unmappedProducts, ...this.mappedProducts.filter(x => x.CategoryId == this.mappedCatId || this.mappedCatId == 0)];
+      this.mappedProducts = this.mappedCatId == 0 ? [] : this.mappedProducts.filter(x => x.CategoryId != this.mappedCatId);
+    } else {
+      this.unmappedProducts.forEach(item => item.selected = false)
+      this.mappedProducts = [...this.mappedProducts, ...this.unmappedProducts.filter(x => x.CategoryId == this.unmappedCatId || this.unmappedCatId == 0)];
+      this.unmappedProducts = this.unmappedCatId == 0 ? [] : this.unmappedProducts.filter(x => x.CategoryId != this.unmappedCatId);
+    }
+  }
+  mappedProducts = []
+  unmappedProducts = []
+  getOpgMappedProducts() {
+    this.Auth.getOpgMappedProducts(this.CompanyId, this.OptId).subscribe(data => {
+      this.mappedProducts = data["Products"].filter(x => x.Mapped)
+      this.unmappedProducts = data["Products"].filter(x => !x.Mapped)
+      console.log(this.mappedProducts, this.unmappedProducts)
+    })
+  }
+  bulksave() {
+    let productids = this.mappedProducts.map(x => x.ProductId)
+    console.log(productids)
+    this.Auth.pogBulkSave(this.OptId, this.CompanyId, productids).subscribe(data => {
+      console.log(data)
+      this.getOpgMappedProducts()
+    })
+  }
+  // mapped unmapped category
+  getCategory() {
+    this.Auth.getcat(this.CompanyId).subscribe(data => {
+      this.category = data;
+      console.log(this.category)
+    });
+  }
+  active(id, act,) {
+    this.Auth.updateactive(id, act, this.CompanyId).subscribe(data => {
+      this.getCategory()
+    });
+  }
+
   // get optionPoints() {
   //   return this.OptionForm.get('Options') as FormArray;
   // }
