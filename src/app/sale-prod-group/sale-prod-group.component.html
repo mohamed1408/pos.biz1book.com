@@ -10,9 +10,9 @@
         <div class="form-group row">
             <div class="col-xl-4">
                 <select class="form-control custom-select" (change)="setSaleProductId($event.target.value)">
-         <option value="0">Select Sale Prod Group</option>
-         <option *ngFor="let item of saleProducts" value="{{item.Id}}">{{item.Name}}</option>
-       </select>
+                    <option value="0">Select Sale Prod Group</option>
+                    <option *ngFor="let item of saleProducts" value="{{item.Id}}">{{item.Name}}</option>
+                </select>
 
             </div>
             <div class="col-xl-6">
@@ -29,10 +29,10 @@
                 <div class="col-sm-3">
                     <!-- <label for="username">Category</label> -->
                     <select class="form-control custom-select" [(ngModel)]="CategoryId">
-          <option value="0" selected>Select Category</option>
-          <!-- <option value="0" selected>All</option> -->
-          <option value="{{item.Id}}" *ngFor="let item of categ">{{item.Description}}</option>
-        </select>
+                        <option value="0" selected>Select Category</option>
+                        <!-- <option value="0" selected>All</option> -->
+                        <option value="{{item.Id}}" *ngFor="let item of categ">{{item.Description}}</option>
+                    </select>
                 </div>
                 <div class="col-sm-3">
                     <input type="text" class="form-control" placeholder="Search Products.." [(ngModel)]="productText">
@@ -86,8 +86,9 @@
                                                 <!-- <td>{{i+1}}</td> -->
                                                 <td class="font-13">
                                                     <strong><a href="javascript:void(0)"
-                                                    class="text-info font-13">{{item.StockProduct}}
-                                                </a></strong></td>
+                                                            class="text-info font-13">{{item.StockProduct}}
+                                                        </a></strong>
+                                                </td>
                                                 <td class="font-12">
 
                                                     <input type="text" class="form-control" [(ngModel)]="item.Factor" placeholder="Factor" (input)="item.changed = true">
@@ -186,8 +187,8 @@
                                         <tr *ngFor="let item of searchAndAddObj | filter:term1  ;let i=index ">
                                             <!-- <td>{{i+1}}</td> -->
                                             <td class="font-13"> <strong><a href="javascript:void(0)"
-                                                    class="text-info font-13">{{item.Name}}
-                                                </a></strong></td>
+                                                        class="text-info font-13">{{item.Name}}
+                                                    </a></strong></td>
                                             <td>
                                                 <a class="px-10">
                                                     <!-- <input type="checkbox" value="{{item.checked}}"

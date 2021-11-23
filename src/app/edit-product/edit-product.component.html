@@ -101,7 +101,10 @@ Main Content
                   [ngModelOptions]="{standalone: true}" name="category"
                   [ngClass]="{'is-invalid': f.submitted && products1.CategoryId == 0}">
                   <option value="0">Select Category</option>
-                  <option *ngFor="let item of category" value="{{item.Id}}">{{item.Description}}</option>
+                  <option *ngFor="let item of category" value="{{item.Id}}">
+                    {{item.IsUPCategory ? '⭐️' : ''}}{{item.Description}}
+                    <!-- <img src="../../assets/images/up-category-indicator.svg" alt="up"> -->
+                  </option>
                 </select>
                 <div *ngIf="f.submitted && products1.CategoryId == 0" class="invalid-feedback">
                   <div *ngIf="products1.CategoryId == 0">Product Name is required</div>

@@ -36,6 +36,7 @@ export class SaleProdGroupComponent implements OnInit {
   isSearchAndAdd: any = false;
   newItem = [];
   CategoryId = 0;
+  SaleProdId: number = 0;
   all: string = "All";
   sourceId = 0;
   searchAndAddObj = [];
@@ -89,7 +90,7 @@ export class SaleProdGroupComponent implements OnInit {
     });
   }
   setSaleProductId(saleProductId) {
-    this.saleProductId = saleProductId;
+    this.saleProductId = +  saleProductId;
     this.GetChildProds();
   }
   Reset() {
@@ -112,44 +113,26 @@ export class SaleProdGroupComponent implements OnInit {
       }
     });
   }
-  getoptionproduct(action = '') {
+  getoptionproduct() {
     // console.log(this.productText)
-    if (action == 'Search') {
-      this.Auth.getproductsNoptions(this.CompanyId, this.CategoryId, this.productText).subscribe(data => {
-        var response: any = data
+    this.Auth.getproductsNoptions(this.CompanyId, this.CategoryId, this.productText, this.saleProductId).subscribe(data => {
+      var response: any = data
 
-        let prodsNoptions = response.prod;
-        prodsNoptions.push(...response.productOption)
-        this.searchAndAddObj = prodsNoptions;
-        // console.log('op',this.prod.filter(x => !x.Name));
-        this.searchAndAddObj.forEach(val => {
-          val["checked"] = false;
-          if (typeof (val.OptionId) == 'undefined') val["OptionId"] = null;
-        });
-        console.log('op', this.searchAndAddObj);
-
-        if (response.status == 0) {
-          this.errorMsg = response.msg;
-          console.log(dangertoast(this.errorMsg));
-        }
+      let prodsNoptions = response.productOption;
+      // prodsNoptions.push(...response.productOption)
+      this.searchAndAddObj = prodsNoptions;
+      // console.log('op',this.prod.filter(x => !x.Name));
+      this.searchAndAddObj.forEach(val => {
+        val["checked"] = false;
+        if (typeof (val.OptionId) == 'undefined') val["OptionId"] = null;
       });
-    }
-    else {
-      this.Auth.getproductsNoptions(this.CompanyId, null, '').subscribe(data => {
-        console.log('op', data);
-        var response: any = data
+      console.log('op', this.searchAndAddObj);
 
-        let prodsNoptions = response.prod;
-        prodsNoptions.push(...response.productOption)
-        this.prod = prodsNoptions;
-        console.log('op1', this.prod, this.prod.filter(x => !x.Name));
-
-        if (response.status == 0) {
-          this.errorMsg = response.msg;
-          console.log(dangertoast(this.errorMsg));
-        }
-      });
-    }
+      if (response.status == 0) {
+        this.errorMsg = response.msg;
+        console.log(dangertoast(this.errorMsg));
+      }
+    });
   }
   selectEvent(e) {
     if (typeof (e.OptionId) == 'undefined') e.OptionId = null;

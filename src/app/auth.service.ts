@@ -1178,8 +1178,8 @@ export class AuthService {
   getSaleProducts(companyid) {
     return this.http.get(this.base_url + "SaleProductGroup/GetSaleProducts?companyid=" + companyid)
   }
-  getproductsNoptions(companyid, catId, desc) {
-    return this.http.get(this.base_url + `SaleProductGroup/GetProductsNoptions?companyid=${companyid}&catId=${catId}&desc=${desc}`);
+  getproductsNoptions(companyid, catId, desc, saleProductId) {
+    return this.http.get(this.base_url + `SaleProductGroup/GetProductsNoptions?companyid=${companyid}&categoryid=${catId}&desc=${desc}&saleproductid=${saleProductId}`);
   }
   saveSaleProdGroup(formdata) {
     let body = this.toFormData(formdata);
@@ -1235,6 +1235,9 @@ export class AuthService {
     return this.http.get(this.base_url + "OptionGroup/getMapedProducts?CompanyId=" + CompanyId + "&OptionGroupId=" + OptionGroupId);
   }
 
+  getprediction(companyid, storeid, saleproductid) {
+    return this.http.get(this.base_url + "Report/Prediction?companyid=" + companyid + "&storeid=" + storeid + "&saleproductid=" + saleproductid);
+  }
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
   //   var formURL =

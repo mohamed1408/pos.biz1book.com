@@ -1,0 +1,349 @@
+<div class="hk-pg-wrapper">
+  <br>
+  <!-- <nav class="hk-breadcrumb" aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-light bg-transparent">
+      <li class="breadcrumb-item"><a href="javascript:void(0);">Company Management</a></li>
+      <li class="breadcrumb-item active" aria-current="page"> Accept Orders</li>
+    </ol>
+  </nav> -->
+  <div class="container">
+    <!-- Title -->
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title"><span class="pg-title-icon"><span class="feather-icon"><i
+              data-feather="archive"></i></span></span>{{this.forder==0? "Pending Orders":"Accept Orders"}}</h4>
+    </div>
+    <!-- Row -->
+    <section class="hk-sec-wrapper">
+
+      <div class="row">
+        <!-- <div class="col-xl-4 text-right">
+        <input type="text" class="form-control" placeholder="Typing.." >
+      </div>
+      <div class="col-xl-8 mb-10 text-right">
+        <button class="btn btn-success btn-sm mx-10 w-10">Import</button>
+      </div> -->
+        <div class="form-group row">
+          <div class="input-group mx-10 text-right">
+            <input type="text" class="form-control" [(ngModel)]="term" placeholder="#OrderId"
+              aria-label="Recipient's username" aria-describedby="basic-addon2" (keyup.enter)="getorderbyinvoiceno()">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button" (click)="getorderbyinvoiceno()">Submit</button>
+            </div>
+
+            <div class="col-xl-4">
+              <div class="btn-group">
+                <div class="dropdown">
+                  <button aria-expanded="false" data-toggle="dropdown" class="btn btn-light dropdown-toggle "
+                    type="button">Filter Order <span class="caret"></span></button>
+                  <div role="menu" class="dropdown-menu">
+                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#enable_disable"
+                      (click)="filterorder(0)">Pending Order</a>
+                    <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#enable_disable"
+                      (click)="filterorder(1)">Accepted Order</a>
+                    <!-- <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal"
+                              data-target="#enable_disable"  (click)="filterorder(10)"
+                             
+                              >All Order</a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- <div class="col-xl-4 text-left"> -->
+
+
+        </div>
+        <div class="row w-200 mt-3">
+          <div class="col-sm">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <thead>
+                    <tr style="background-color:rgb(217, 226, 250);">
+                      <th><strong>OrderId</strong></th>
+                      <th><strong>StoreID</strong></th>
+                      <!-- <th><strong>Order Type</strong></th> -->
+                      <th><strong>Ordered Date</strong></th>
+                      <th><strong>Delivery Date</strong></th>
+                      <th><strong>Bill Amount</strong></th>
+                      <th><strong>Payment Type</strong></th>
+                      <!-- <th><strong>Paid Amount</strong></th> -->
+                      <!-- <th><strong>Delivery Date</strong></th> -->
+                      <th><strong>Name</strong></th>
+                      <th><strong>Address</strong></th>
+                      <th><strong>Status</strong></th>
+
+
+                      <th><span class="pl-20"><strong>Action</strong></span></th>
+                    </tr>
+                  </thead>
+
+
+                  <tbody *ngFor="let order of orders | filter : term">
+                    <tr class="table-active" *ngIf="order.OrderStatusId==this.forder">
+                      <th scope="active">
+                        <a data-toggle="modal" 
+                        (click)="myoid(order)" 
+                        data-target="#corderModalCenter"
+                        data-dismiss="modal">#{{order.Id}}</a>
+                      </th>
+
+                      <th scope="active" >
+                       {{order.StoreId}}
+                      </th>
+
+                      <!-- <th> <a (click)="getstorename(order.StoreId)" 
+                        data-toggle="modal" 
+                        data-target="#corderModalCenter"
+                        data-dismiss="modal">{{order.StoreId}}</a></th> -->
+
+                      <!-- <th>{{order.OrderTypeId==7?"Delivery":"Others"}}</th> -->
+                      <th>{{order.BillDateTime | date:
+                        'MMM d, y, h:mm a'}}</th>
+                      <th>{{order.OrderedDateTime | date:
+                        'MMM d, y, h:mm a'}}</th>
+                      <th> ₹{{order.BillAmount.toFixed(0)}}.00</th>
+                      <th>{{order.Transactions[0].PaymentTypeId==1 ? "COD" : order.Transactions[0].PaymentTypeId==4 ?
+                        "Online Payment":"others"}}</th>
+                      <th>{{order.CurrentAddresses[0].Name}}</th>
+                      <th>{{order.CurrentAddresses[0].Address}} <br>
+                        
+                        <a data-toggle="modal" (click)="Clocation(order.CurrentAddresses[0].Contact)" *ngIf="order.CurrentAddresses[0].Contact!='undefined_undefined'"
+                          data-target="#orderModalCenter" 
+                          data-dismiss="modal" style="color: blue;">Vist Location</a>
+                      </th>
+
+                      <!-- <th>{{(order.BillAmount).toFixed(2}}</th> -->
+
+                      <!-- <th>Paid Amount</th>  -->
+                      <th>{{order.OrderStatusId==0 ?  "Pending":
+                        order.OrderStatusId==1 ? "Accepted":
+                        order.OrderStatusId==2 ? "Preparing":
+                        order.OrderStatusId==3 ? "Preparing":
+                        order.OrderStatusId==4 ? "Prepared":
+                        order.OrderStatusId==5 ? "Dispatched":
+                        order.OrderStatusId==6 ? "Delivered":
+
+                        "Error" }}</th>
+
+                      <td>
+
+                        <button type="button" class="btn btn-success  btn-xs" style="margin:5px;" data-toggle="modal"
+                          (click)="myoid(order.Id)" data-target="#exampleModalCenter"
+                          data-dismiss="modal">Accept</button>
+
+                        <button type="button" class="btn btn-danger  btn-xs" style="margin: 5px;" data-toggle="modal"
+                          data-target="#exampleModalCenter1" data-dismiss="modal">Cancel</button>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Modal Accept -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Accept</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <br>
+
+            <ng-autocomplete #auto [data]="stores" [searchKeyword]="key" (selected)='selectEvent($event)'
+              placeHolder="Select" [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1"
+              (inputCleared)="focusAutocomplete()">
+            </ng-autocomplete>
+            <ng-template #itemTemplate1 let-item>
+              <a [innerHTML]="item.Name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate1 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <br><br><br><br><br><br>
+
+          </div>
+
+          <p></p>
+
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary" (click)="acceptorder()" data-dismiss="modal">Accept </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal Cancel -->
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cancel</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- Cancel list -->
+          <div class="modal-body">
+            <div class="col-md-12">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio1">item_out_of_stock</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio2">store_closed</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio3" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio3">store_busy</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio4" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio4">rider_not_available</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio5" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio5">out_of_delivery_radius</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio6" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio6">connectivity_issue</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio7" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio7">total_missmatch</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio8" name="customRadio" checked class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio8">invalid_item</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio9" name="customRadio" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio9">option_out_of_stock</label>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" name="customRadio" id="customRadio10" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio10">invalid_option</label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal Map Visible -->
+    <div class="modal fade" id="orderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenter"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Customer Location</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+            <div>
+              <agm-map style="height: 600px; width: 460px;" [latitude]="lat" [longitude]="lng">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Order Visible -->
+    <div class="modal fade" id="corderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenter"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div *ngIf="temporder" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">#{{temporder.Id}} </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" *ngFor="let temporderitem of temporder.OrderItems">
+            <h5><b>{{temporderitem.Name}}</b></h5>
+            <p *ngFor="let tempoptions of temporderitem.Options" style="margin-left: 10px;">*{{tempoptions.Name}}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+      <!-- Modal StoreName Visible
+      <div class="modal fade" id="snorderModalCenter" tabindex="-1" role="dialog" aria-labelledby="orderModalCenter"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div *ngIf="temporder" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Store Name</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <p>dfsdgdsg</p>
+            <p>{{this.sname}}</p>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+</div>

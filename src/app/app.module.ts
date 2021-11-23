@@ -115,6 +115,8 @@ import { DeliveryorderRptComponent } from './deliveryorder-rpt/deliveryorder-rpt
 import { TimePipe } from './pipes/time.pipe';
 import { OptionQtyGroupComponent } from './option-qty-group/option-qty-group.component';
 import { ObjectPipe } from './pipes/object.pipe';
+import { EcommerceComponent } from './ecommerce/ecommerce.component';
+import { PredictionComponent } from './prediction/prediction.component';
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -219,7 +221,9 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     DeliveryorderRptComponent,
     TimePipe,
     OptionQtyGroupComponent,
-    ObjectPipe
+    ObjectPipe,
+    EcommerceComponent,
+    PredictionComponent
 
     
   ],
