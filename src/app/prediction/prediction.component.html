@@ -3,31 +3,139 @@
     <div class="hk-pg-header">
       <h4 class="hk-pg-title">Prediction</h4>
     </div>
+    <section class="hk-sec-wrapper">
+      <div class="row col-xl-12">
+        <div class="col-xl-4">
+          <select class="form-control custom-select" [(ngModel)]="storeId">
+            <option value="0" selected>All</option>
+            <option value="{{item.Id}}" *ngFor="let item of stores">{{item.Name}}</option>
+          </select>
+        </div>
+        <div class="col-xl-4">
+          <select class="form-control custom-select" [(ngModel)]="saleProductId">
+            <option value="0" selected>All</option>
+            <option value="{{item.Id}}" *ngFor="let item of saleproductgroups">{{item.Name}}</option>
+          </select>
+        </div>
+        <div class="col-xl-4">
+          <button class="btn btn-success" (click)="submit()">
+            Submit
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table prediction">
+          <thead>
+            <tr>
+              <th></th>
+              <!-- <th>
+                <select class="form-control custom-select form-control custom-select-sm w-120p"
+                  [(ngModel)]="customDuration" (change)="submit()">
+                  <option value="120" selected>Last 2 Hour</option>
+                  <option value="60" selected>Last Hour</option>
+                  <option value="45" selected>Last 45 mins</option>
+                  <option value="30" selected>Last 30 mins</option>
+                  <option value="15" selected>Last 15 mins</option>
+                </select>
+              </th> -->
+              <th>Today</th>
+              <th>YesterDay</th>
+              <th>1 week before</th>
+              <th>2 week before</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row">
+                <input type="time" [(ngModel)]="from" class="form-control form-control-sm col-xl-6">
+                <span class="col-xl-6">before {{time}}</span>
+              </td>
+              <!-- <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'before', secondName: 'custom hour', date: today, from: customhour, to: raw_time }}">
+                {{beforenow.lasthour}}</td> -->
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'before', secondName: 'today', date: today, from: from, to: raw_time }}">
+                {{beforenow.today}}</td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'before', secondName: 'yesterday', date: yesterday, from: from, to: raw_time }}">
+                {{beforenow.yesterday}}</td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'before', secondName: 'oneweek', date: oneweek, from: from, to: raw_time }}">
+                {{beforenow.oneweek}}</td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'before', secondName: 'twoweek', date: twoweek, from: from, to: raw_time }}">
+                {{beforenow.twoweek}}</td>
+            </tr>
+            <tr>
+              <td class="row">
+                <span class="col-xl-6">after {{time}}</span>
+                <input type="time" [(ngModel)]="to" class="form-control form-control-sm col-xl-6">
+              </td>
+              <!-- <td style="cursor: not-allowed;">-</td> -->
+              <td style="cursor: pointer;" class="text-success">
+                <span data-toggle="tooltip" data-placement="right" title="Predicted value">
+                  {{today_prediction}}
+                </span>
+                <!-- <span>(predicted value)</span> -->
+              </td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'after', secondName: 'yesterday', date: yesterday, from: raw_time, to: to }}">
+                {{afternow.yesterday}}</td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'after', secondName: 'oneweek', date: oneweek, from: raw_time, to: to }}">
+                {{afternow.oneweek}}</td>
+              <td class="draggable-cell"
+                [bizDraggable]="{data: { firstName: 'after', secondName: 'twoweek', date: twoweek, from: raw_time, to: to }}">
+                {{afternow.twoweek}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="hk-sec-wrapper">
+      <!-- <div [bizDraggable]="{data: 'Draggable A'}" class="draggable">Draggable A</div>
+      <div [bizDraggable]="{data: 'Draggable B'}" class="draggable">Draggable B</div>
+      <div [bizDropTarget]="{zone:'another'}" class="drop-target">Can't drop here</div> -->
+      <div class="row col-xl-12">
+        <div class="col-xl-6">
+          <div bizDropTarget (bizDrop)="onDrop($event, 'left')" class="border border-secondary panel">
+            <h2 class="px-10 pt-10">{{leftPanelName}}</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of leftPanelArray">
+                  <td>{{item.Product}}</td>
+                  <td>{{item.Quantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div bizDropTarget (bizDrop)="onDrop($event, 'right')" class="border border-secondary panel">
+            <h2 class="pl-10 pt-10">{{rightPanelName}}</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of rightPanelArray">
+                  <td>{{item.Product}}</td>
+                  <td>{{item.Quantity}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
-  <section class="hk-sec-wrapper">
-    <div class="row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Duration</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>YesterDay</td>
-            <td>{{beforenow.yesterday_qty}}</td>
-          </tr>
-          <tr>
-            <td>Last Week</td>
-            <td>{{beforenow.last_week}}</td>
-          </tr>
-          <tr>
-            <td>Last Week Avg</td>
-            <td>{{beforenow.last_week_avg}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
 </div>

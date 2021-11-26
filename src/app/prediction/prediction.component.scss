@@ -1,0 +1,15 @@
+// table.prediction tbody tr td {
+//     cursor: move;
+// }
+
+.draggable-cell {
+    cursor: move;
+}
+
+.draggable-cell:hover {
+    border: 0.5px dashed;
+}
+
+.panel {
+    min-height: 200px;
+}

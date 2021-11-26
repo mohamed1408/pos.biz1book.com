@@ -117,6 +117,8 @@ import { OptionQtyGroupComponent } from './option-qty-group/option-qty-group.com
 import { ObjectPipe } from './pipes/object.pipe';
 import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import { PredictionComponent } from './prediction/prediction.component';
+import { BizDraggableDirective } from './directives/bizDraggable/biz-draggable.directive';
+import { BizDropTargetDirective } from './directives/bizDropTarget/biz-drop-target.directive';
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -223,9 +225,11 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     OptionQtyGroupComponent,
     ObjectPipe,
     EcommerceComponent,
-    PredictionComponent
+    PredictionComponent,
+    BizDraggableDirective,
+    BizDropTargetDirective
 
-    
+
   ],
   exports: [CommonModule],
 
@@ -343,14 +347,15 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
       { path: "denomination", component: DenominationsComponent, canActivate: [RoleGuard] },
       { path: "deliveryorder-rpt", component: DeliveryorderRptComponent, canActivate: [RoleGuard] },
       { path: "option-qty-groups", component: OptionQtyGroupComponent, canActivate: [RoleGuard] },
+      { path: "prediction", component: PredictionComponent, canActivate: [RoleGuard] },
 
 
 
 
 
 
-      
-      
+
+
 
       /*
       /*

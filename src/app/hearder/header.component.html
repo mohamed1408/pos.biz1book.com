@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-xl navbar-dark fixed-top hk-navbar">
-    <a id="navbar_toggle_btn" (click)="navbartoggle()" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
+    <a id="navbar_toggle_btn" (click)="navbartoggle()" class="navbar-toggle-btn nav-link-hover"
+        href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
     <a class="navbar-brand" href="dashboard.html">
         <img class="brand-img d-inline-block" src="assets/dist/img/logo-dark.png" alt="brand" />
     </a>
     <ul class="navbar-nav hk-navbar-content">
         <li class="nav-item dropdown dropdown-authentication">
-            <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
                 <div class="media">
                     <div class="media-img-wrap">
                         <div class="avatar">
@@ -162,10 +164,12 @@
                 </div>
             </li> -->
         <li>
-            <a class="nav-link nav-link-hover" href="javascript:void(0);" data-toggle="modal" data-target="#lock"><span><i class="glyphicon glyphicon-lock"></i></span></a>
+            <a class="nav-link nav-link-hover" href="javascript:void(0);" data-toggle="modal"
+                data-target="#lock"><span><i class="glyphicon glyphicon-lock"></i></span></a>
         </li>
         <li>
-            <a class="nav-link nav-link-hover" href="javascript:void(0);" data-toggle="modal" data-target="#logout"><span><i class="dropdown-icon zmdi zmdi-power"></i></span></a>
+            <a class="nav-link nav-link-hover" href="javascript:void(0);" data-toggle="modal"
+                data-target="#logout"><span><i class="dropdown-icon zmdi zmdi-power"></i></span></a>
         </li>
     </ul>
 </nav>
@@ -198,34 +202,42 @@
                         <span class="feather-icon"><i data-feather="activity" style="width: 18px;"
                                 [class.text-bold]="router.url === '/dashboard'"></i></span>
 
-                        <span class="nav-link-text font-13" [class.text-bold]="router.url === '/dashboard'">Dashboard</span>
+                        <span class="nav-link-text font-13"
+                            [class.text-bold]="router.url === '/dashboard'">Dashboard</span>
                     </a>
                 </li>
 
             </ul>
             <ul class="navbar-nav flex-column">
                 <li class="nav-item" *ngIf="loginInfo.RoleId == 1">
-                    <a class="nav-link pointer" href="javascript:void(0);" data-toggle="collapse" data-target="#Company_drp">
-                        <i class="fa fa-users" aria-hidden="true" style="width: 18px;" [class.text-bold]="router.url == '/company' || router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' || router.url == '/urban' || router.url == 'screenrule' || router.url == 'salebypayment' 
+                    <a class="nav-link pointer" href="javascript:void(0);" data-toggle="collapse"
+                        data-target="#Company_drp">
+                        <i class="fa fa-users" aria-hidden="true" style="width: 18px;"
+                            [class.text-bold]="router.url == '/company' || router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' || router.url == '/urban' || router.url == 'screenrule' || router.url == 'salebypayment' 
                             || router.url == 'multicompanies' || router.url == 'cancelorder'|| router.url === '/denomination' "></i>
-                        <span class="nav-link-text font-13 " [class.text-bold]="router.url == '/company' || router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' 
+                        <span class="nav-link-text font-13 "
+                            [class.text-bold]="router.url == '/company' || router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' 
                             || router.url == '/urban' || router.url == 'screenrule'|| router.url == 'salebypayment' || router.url == 'multicompanies'|| router.url == 'cancelorder'||router.url === '/denomination'">Company
                             Management</span>
                     </a>
-                    <ul id="Company_drp" class="nav flex-column collapse collapse-level-1" [class.show]="router.url == '/company' || router.url == '/customer' ||  router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' || router.url == '/urban' || router.url == 'salebypayment'
+                    <ul id="Company_drp" class="nav flex-column collapse collapse-level-1"
+                        [class.show]="router.url == '/company' || router.url == '/customer' ||  router.url == '/outlet' || router.url == '/preference' || router.url == '/users' || router.url == '/diningarea' || router.url == '/urban' || router.url == 'salebypayment'
                         || router.url == 'multicompanies'|| router.url == 'cancelorder'||router.url === '/denomination'">
                         <li class="nav-item">
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="company">
                                         <i class="fab fa-btc" [class.text-bold]="router.url === '/company'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/company'">Company</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/company'">Company</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="customer">
-                                        <i class="material-icons" style="width: 12px;" [class.text-bold]="router.url === '/customer'">&#xe7fb;</i>
-                                        <span class="nav-link-text font-13" [class.text-bold]="router.url === '/customer'">Customers</span>
+                                        <i class="material-icons" style="width: 12px;"
+                                            [class.text-bold]="router.url === '/customer'">&#xe7fb;</i>
+                                        <span class="nav-link-text font-13"
+                                            [class.text-bold]="router.url === '/customer'">Customers</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -237,7 +249,8 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="preference">
-                                        <i class="fa fa-cog" style="width: 12px;" aria-hidden="true" [class.text-bold]="router.url === '/preference'"></i>
+                                        <i class="fa fa-cog" style="width: 12px;" aria-hidden="true"
+                                            [class.text-bold]="router.url === '/preference'"></i>
                                         <span class="nav-link-text" [class.text-bold]="router.url === '/preference'">
                                             Preferences</span>
                                     </a>
@@ -245,55 +258,68 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="users">
                                         <i class="fas fa-user" [class.text-bold]="router.url === '/users'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/users'">Users</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/users'">Users</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="urban">
-                                        <span class="fas fa-book" [class.text-bold]="router.url === '/urban'"></span><i></i>
+                                        <span class="fas fa-book"
+                                            [class.text-bold]="router.url === '/urban'"></span><i></i>
                                         <span class="nav-link-text" [class.text-bold]="router.url === '/urban'"> Urban
                                             Piper</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="screenrule">
-                                        <span class="fas fa-users-cog" [class.text-bold]="router.url === '/screenrule'"></span><i></i>
+                                        <span class="fas fa-users-cog"
+                                            [class.text-bold]="router.url === '/screenrule'"></span><i></i>
                                         <span class="nav-link-text" [class.text-bold]="router.url === '/urban'"> Screen
                                             Rules</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="paymentypes">
-                                        <span class="fas fa-users-cog" [class.text-bold]="router.url === '/paymentypes'"></span><i></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/paymentypes'">Payment
+                                        <span class="fas fa-users-cog"
+                                            [class.text-bold]="router.url === '/paymentypes'"></span><i></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/paymentypes'">Payment
                                             Types</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="salebypayment">
-                                        <span class="fas fa-money" [class.text-bold]="router.url === '/salebypayment'"></span><i></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/salebypayment'">SalesByPayment
+                                        <span class="fas fa-money"
+                                            [class.text-bold]="router.url === '/salebypayment'"></span><i></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/salebypayment'">SalesByPayment
                                         </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="multicompanies">
-                                        <span class="fas fa-users" [class.text-bold]="router.url === '/multicompanies'"></span><i></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/multicompanies'">Multi Companies
+                                        <span class="fas fa-users"
+                                            [class.text-bold]="router.url === '/multicompanies'"></span><i></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/multicompanies'">Multi Companies
                                         </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="cancelorder">
-                                        <span class="fas fa-window-close" [class.text-bold]="router.url === '/cancelorder'"></span><i></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/cancelorder'">Cancel Order
+                                        <span class="fas fa-window-close"
+                                            [class.text-bold]="router.url === '/cancelorder'"></span><i></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/cancelorder'">Cancel Order
                                         </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="denomination">
-                                        <span class="fas fa-users-cog" [class.text-bold]="router.url === '/denomination'"></span><i></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/denomination'">Denomination
+                                        <span class="fas fa-users-cog"
+                                            [class.text-bold]="router.url === '/denomination'"></span><i></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/denomination'">Denomination
                                             Entries</span>
                                     </a>
                                 </li>
@@ -305,45 +331,56 @@
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#Menu_drp">
 
-                        <i class="fas fa-tasks" style="width: 18px;" [class.text-bold]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup' || router.url === '/sale-prod-group'">
+                        <i class="fas fa-tasks" style="width: 18px;"
+                            [class.text-bold]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup' || router.url === '/sale-prod-group'">
                         </i>
-                        <span class="nav-link-text font-13" [class.text-bold]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup'|| router.url === '/sale-prod-group'">
+                        <span class="nav-link-text font-13"
+                            [class.text-bold]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup'|| router.url === '/sale-prod-group'">
                             Menu Management</span>
                     </a>
-                    <ul id="Menu_drp" class="nav flex-column collapse collapse-level-1" [class.show]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup'|| router.url === '/sale-prod-group'">
+                    <ul id="Menu_drp" class="nav flex-column collapse collapse-level-1"
+                        [class.show]="router.url == '/product' || router.url == '/addtnchrgs' || router.url == '/category' || router.url == '/discountrule' || router.url == '/kotgroup' || router.url == '/options'  || router.url == '/taxgroup'|| router.url === '/sale-prod-group'">
 
                         <li class="nav-item">
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="product">
                                         <i class="fas fa-cart-plus" [class.text-bold]="router.url === '/product'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/product'">Product</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/product'">Product</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="product-tag">
-                                        <i class="fas fa-cart-plus" [class.text-bold]="router.url === '/product-tag'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/product-tag'">Product Tag</span>
+                                        <i class="fas fa-cart-plus"
+                                            [class.text-bold]="router.url === '/product-tag'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/product-tag'">Product Tag</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="addtnchrgs">
                                         <span class="feather-icon"><i data-feather="file-plus"
                                                 [class.text-bold]="router.url === '/addtnchrgs'"></i></span>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/addtnchrgs'">AdditionalCharges</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/addtnchrgs'">AdditionalCharges</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="diningarea">
-                                        <i class="fas fa-utensils" aria-hidden="true" [class.text-bold]="router.url === '/diningarea'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/diningarea'">Dining Area</span>
+                                        <i class="fas fa-utensils" aria-hidden="true"
+                                            [class.text-bold]="router.url === '/diningarea'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/diningarea'">Dining Area</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="sale-prod-group">
-                                        <i class="fas fa-cart-plus" [class.text-bold]="router.url === '/sale-prod-group'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/sale-prod-group'">Sale Prod Group</span>
+                                        <i class="fas fa-cart-plus"
+                                            [class.text-bold]="router.url === '/sale-prod-group'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/sale-prod-group'">Sale Prod Group</span>
                                     </a>
                                 </li>
 
@@ -363,33 +400,38 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="category">
                                         <i class="fa fa-bars" [class.text-bold]="router.url === '/category'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/category'">Category</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/category'">Category</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="discountrule">
                                         <i class="fa fa-percent" [class.text-bold]="router.url === '/discountrule'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/discountrule'">DiscountRule</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/discountrule'">DiscountRule</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="kotgroup">
                                         <span class="feather-icon"><i data-feather="server"
                                                 [class.text-bold]="router.url === '/kotgroup'"></i></span>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/kotgroup'">KOTGroup</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/kotgroup'">KOTGroup</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="options">
                                         <i class="fas fa-wrench" [class.text-bold]="router.url === '/options'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/options'">Options</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/options'">Options</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="taxgroup">
                                         <i class="fas fa-file-alt" [class.text-bold]="router.url === '/taxgroup'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/taxgroup'">TaxGroup</span>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/taxgroup'">TaxGroup</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -417,14 +459,17 @@
                         <span class="nav-link-text font-13" [class.text-bold]="router.url == '/customerlist' ">
                             User Management</span>
                     </a>
-                    <ul id="User_drp" class="nav flex-column collapse collapse-level-1" [class.show]="router.url == '/customerlist'">
+                    <ul id="User_drp" class="nav flex-column collapse collapse-level-1"
+                        [class.show]="router.url == '/customerlist'">
 
                         <li class="nav-item">
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="customerlist">
-                                        <i class="fas fa-cart-plus" [class.text-bold]="router.url === '/customerlist'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/customerlist'">User</span>
+                                        <i class="fas fa-cart-plus"
+                                            [class.text-bold]="router.url === '/customerlist'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/customerlist'">User</span>
                                     </a>
                                 </li>
                             </ul>
@@ -434,18 +479,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#order_drp">
 
-                        <i class="fas  fa-file-text" style="width: 18px;" [class.text-bold]="router.url == '/orders'  || router.url == '/orders/all'   || router.url == '/orders/placed'   || router.url == '/orders/delivered'  || router.url == '/orders/out' || router.url == '/orders/cancelled'">
+                        <i class="fas  fa-file-text" style="width: 18px;"
+                            [class.text-bold]="router.url == '/orders'  || router.url == '/orders/all'   || router.url == '/orders/placed'   || router.url == '/orders/delivered'  || router.url == '/orders/out' || router.url == '/orders/cancelled'">
                         </i>
-                        <span class="nav-link-text font-13" [class.text-bold]="router.url == '/orders'  || router.url == '/orders/all'   || router.url == '/orders/placed'   || router.url == '/orders/delivered'  || router.url == '/orders/out' || router.url == '/orders/cancelled'">
+                        <span class="nav-link-text font-13"
+                            [class.text-bold]="router.url == '/orders'  || router.url == '/orders/all'   || router.url == '/orders/placed'   || router.url == '/orders/delivered'  || router.url == '/orders/out' || router.url == '/orders/cancelled'">
                             Orders</span>
                     </a>
-                    <ul id="order_drp" class="nav flex-column collapse collapse-level-1" [class.show]="router.url == '/orders'">
+                    <ul id="order_drp" class="nav flex-column collapse collapse-level-1"
+                        [class.show]="router.url == '/orders'">
 
                         <li class="nav-item">
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="orders/all">
-                                        <i class="fas fa-shopping-cart w-25p" [class.text-bold]="router.url === '/orders/all'"></i>
+                                        <i class="fas fa-shopping-cart w-25p"
+                                            [class.text-bold]="router.url === '/orders/all'"></i>
                                         <span class="nav-link-text" [class.text-bold]="router.url === '/orders/all'">All
                                             Orders</span>
                                     </a>
@@ -456,8 +505,10 @@
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="orders/placed">
-                                        <i class="fas fa-clock-o w-25p" [class.text-bold]="router.url === '/orders/placed'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/orders/placed'">Placed</span>
+                                        <i class="fas fa-clock-o w-25p"
+                                            [class.text-bold]="router.url === '/orders/placed'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/orders/placed'">Placed</span>
                                     </a>
                                 </li>
                             </ul>
@@ -466,8 +517,10 @@
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="orders/delivered">
-                                        <i class="fas fa-truck w-25p" [class.text-bold]="router.url === '/orders/delivered'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/orders/delivered'">Delivered</span>
+                                        <i class="fas fa-truck w-25p"
+                                            [class.text-bold]="router.url === '/orders/delivered'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/orders/delivered'">Delivered</span>
                                     </a>
                                 </li>
                             </ul>
@@ -476,7 +529,8 @@
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="orders/out">
-                                        <i class="fas  fa-motorcycle w-25p" [class.text-bold]="router.url === '/orders/out'"></i>
+                                        <i class="fas  fa-motorcycle w-25p"
+                                            [class.text-bold]="router.url === '/orders/out'"></i>
                                         <span class="nav-link-text" [class.text-bold]="router.url === '/orders/out'">Out
                                             For Delivery</span>
                                     </a>
@@ -487,8 +541,10 @@
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="orders/cancelled">
-                                        <i class="fas fa-times w-25p" [class.text-bold]="router.url === '/orders/cancelled'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/orders/cancelled'">Cancelled</span>
+                                        <i class="fas fa-times w-25p"
+                                            [class.text-bold]="router.url === '/orders/cancelled'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/orders/cancelled'">Cancelled</span>
                                     </a>
                                 </li>
                             </ul>
@@ -497,109 +553,151 @@
                 </li>
                 <li class="nav-item" *ngIf="loginInfo.RoleId == 1">
                     <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#Reports_drp">
-                        <i class="fas fa-sticky-note" style="width: 18px;" [class.text-bold]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
+                        <i class="fas fa-sticky-note" style="width: 18px;"
+                            [class.text-bold]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
                         router.url == '/storerpt' ||  router.url == '/timewiserpt' ||   router.url == '/monthwiseprodsales' ||  router.url == '/cancelordreport' || router.url == '/upprdrpt'|| router.url == '/option-report' || router.url === '/saleprodgroupwiserpt'|| router.url === '/deliveryorder-rpt'">
                         </i>
-                        <span class="nav-link-text font-13" [class.text-bold]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
+                        <span class="nav-link-text font-13"
+                            [class.text-bold]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
                         router.url == '/storerpt' ||  router.url == '/timewiserpt' ||   router.url == '/monthwiseprodsales' ||  router.url == '/cancelordreport' || router.url == '/upprdrpt'|| router.url == '/option-report' || router.url === '/saleprodgroupwiserpt'|| router.url === '/deliveryorder-rpt'">
                             Reports</span>
                     </a>
-                    <ul id="Reports_drp" class="nav flex-column collapse collapse-level-1" [class.show]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
+                    <ul id="Reports_drp" class="nav flex-column collapse collapse-level-1"
+                        [class.show]="router.url == '/daywiserpt' || router.url == '/orderwiserpt' || router.url == '/productwiserpt' || router.url == '/transactionrpt' || router.url == '/categorywiserpt' || router.url == '/storewiserpt' ||
                     router.url == '/storerpt' ||  router.url == '/timewiserpt' ||   router.url == '/monthwiseprodsales' ||  router.url == '/cancelordreport' || router.url == '/upprdrpt'|| router.url == '/option-report' || router.url === '/saleprodgroupwiserpt'|| router.url === '/deliveryorder-rpt'">
                         <li class="nav-item">
                             <ul class="navbar-nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link" href="daywiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/daywiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/daywiserpt'">DayWiseSales</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/daywiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/daywiserpt'">DayWiseSales</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="orderwiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/orderwiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/orderwiserpt'">OrderWiseSales</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/orderwiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/orderwiserpt'">OrderWiseSales</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="productwiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/productwiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/productwiserpt'">ProductWiseSales</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/productwiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/productwiserpt'">ProductWiseSales</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="transactionrpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/transactionrpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/transactionrpt'">Transaction</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/transactionrpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/transactionrpt'">Transaction</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="categorywiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/categorywiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/categorywiserpt'">Categorywise</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/categorywiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/categorywiserpt'">Categorywise</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="storewiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/storewiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/storewiserpt'">StorewiseProduct</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/storewiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/storewiserpt'">StorewiseProduct</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="storerpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/storerpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/storerpt'">Storewise</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/storerpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/storerpt'">Storewise</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="timewiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/timewiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/timewiserpt'">TimeWise</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/timewiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/timewiserpt'">TimeWise</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="monthwiseprodsales">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/monthwiseprodsales'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/monthwiseprodsales'">MonthWiseSales</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/monthwiseprodsales'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/monthwiseprodsales'">MonthWiseSales</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="cancelordreport">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/cancelordreport'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/cancelordreport'">CancelOrder</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/cancelordreport'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/cancelordreport'">CancelOrder</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="upprdrpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/upprdrpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/upprdrpt'">UPProdStock</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/upprdrpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/upprdrpt'">UPProdStock</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="option-report">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/option-report'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/option-report'">OptionWise</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/option-report'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/option-report'">OptionWise</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="ordertypereport">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/ordertypereport'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/ordertypereport'">OrderTypeWiseReport</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/ordertypereport'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/ordertypereport'">OrderTypeWiseReport</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="saleprodgroupwiserpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/saleprodgroupwiserpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/saleprodgroupwiserpt'">SaleProductGroupwise</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/saleprodgroupwiserpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/saleprodgroupwiserpt'">SaleProductGroupwise</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="deliveryorder-rpt">
-                                        <i class="fas fa-long-arrow-alt-right" [class.text-bold]="router.url === '/deliveryorder-rpt'"></i>
-                                        <span class="nav-link-text" [class.text-bold]="router.url === '/deliveryorder-rpt'">DeliveryOrderReport</span>
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/deliveryorder-rpt'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/deliveryorder-rpt'">DeliveryOrderReport</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="prediction">
+                                        <i class="fas fa-long-arrow-alt-right"
+                                            [class.text-bold]="router.url === '/prediction'"></i>
+                                        <span class="nav-link-text"
+                                            [class.text-bold]="router.url === '/prediction'">Production
+                                            Prediction</span>
                                     </a>
                                 </li>
                             </ul>
@@ -801,7 +899,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Warning</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close('Save click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -809,8 +908,10 @@
                     <p>Do you wanna Logout?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="logout();modal.close('Save click')">Logout</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="modal.close('Save click')">Cancel</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="logout();modal.close('Save click')">Logout</button>
                 </div>
             </div>
         </div>
@@ -822,7 +923,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Warning</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.close('Save click')">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="modal.close('Save click')">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -830,8 +932,10 @@
                     <p>Do you wanna Lock?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.close('Save click')">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="lockAcc();modal.close('Save click')">Lock</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="modal.close('Save click')">Cancel</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="lockAcc();modal.close('Save click')">Lock</button>
                 </div>
             </div>
         </div>
@@ -851,7 +955,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm mx-10 w-20" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal" (click)="logout()">Logout</button>
+                <button type="button" class="btn btn-danger btn-sm mx-10 w-20" data-dismiss="modal"
+                    (click)="logout()">Logout</button>
             </div>
         </div>
     </div>

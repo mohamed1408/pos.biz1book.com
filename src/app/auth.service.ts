@@ -1235,8 +1235,12 @@ export class AuthService {
     return this.http.get(this.base_url + "OptionGroup/getMapedProducts?CompanyId=" + CompanyId + "&OptionGroupId=" + OptionGroupId);
   }
 
-  getprediction(companyid, storeid, saleproductid) {
-    return this.http.get(this.base_url + "Report/Prediction?companyid=" + companyid + "&storeid=" + storeid + "&saleproductid=" + saleproductid);
+  getprediction(companyid, storeid, saleproductid, customduration, from, to) {
+    return this.http.get(this.base_url1 + "Report/Prediction?companyid=" + companyid + "&storeid=" + storeid + "&saleproductid=" + saleproductid + "&customduration=" + customduration + "&from=" + from + "&to=" + to);
+  }
+
+  getpredictionitems(companyid, storeid, date, from, to, saleproductid) {
+    return this.http.get(this.base_url1 + "Report/PredictionItems?companyid=" + companyid + "&storeid=" + storeid + "&saleproductid=" + saleproductid + "&searchdate=" + date + "&from=" + from + "&to=" + to);
   }
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
