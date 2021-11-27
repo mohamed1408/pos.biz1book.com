@@ -17,9 +17,14 @@
             <option value="{{item.Id}}" *ngFor="let item of saleproductgroups">{{item.Name}}</option>
           </select>
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-2">
           <button class="btn btn-success" (click)="submit()">
             Submit
+          </button>
+        </div>
+        <div class="col-xl-2">
+          <button class="btn btn-success" (click)="submit_with_time()">
+            Submit with time
           </button>
         </div>
       </div>
@@ -87,6 +92,13 @@
               <td class="draggable-cell"
                 [bizDraggable]="{data: { firstName: 'after', secondName: 'twoweek', date: twoweek, from: raw_time, to: to }}">
                 {{afternow.twoweek}}</td>
+            </tr>
+            <tr>
+              <td>Prediction</td>
+              <td>{{today_prediction}}</td>
+              <td>{{yesterday_prediction}}</td>
+              <td>{{oneweek_prediction}}</td>
+              <td>{{twoweek_prediction}}</td>
             </tr>
           </tbody>
         </table>

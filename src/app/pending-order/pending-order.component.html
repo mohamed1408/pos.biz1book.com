@@ -1,0 +1,165 @@
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">Pending Orders</h4>
+    </div>
+    <div class="row">
+      <div class="col-xl-4 text-right">
+        <!-- <input type="number" name="q-5" class="form-control left multiselect-search" placeholder="Search..."
+          [(ngModel)]="CompanyId"> <br>
+        <button (click)="Getpendingorder()">Save</button> -->
+        <input type="text" class="form-control" placeholder="Search Invoice..."  [(ngModel)]="term">
+      </div>
+
+    </div> <br>
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-sm">
+            <form>
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <table class="table table-sm mb-0">
+                    <thead>
+                      <tr style="background-color:rgb(217, 226, 250);">
+                        <th> <strong><a class="font-12">InvoiceNo</a></strong></th>                      
+                        <th> <strong><a class="font-12">StoreName</a></strong></th>
+                        <th> <strong><a class="font-12">Orderstatus</a></strong></th>
+                        <th> <strong><a class="font-12">Bill Amount</a></strong></th>
+                        <th> <strong><a class="font-12">Paid Amount</a></strong></th>
+                        <th> <strong><a class="font-12">DeliveryDateTime</a></strong></th>
+                        <th> <strong><a class="font-12">DeliveredDateTime</a></strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr (click)="getOrderItems(order.Id, contentdetail1);" *ngFor="let order of orders | filter:term;">
+                        <td class="font-12">{{order.InvoiceNo}}</td>                    
+                        <td class="font-12">{{order.Name}}</td>
+                        <td class="font-12">{{order.StatusName}}</td>
+                        <td class="font-12">{{order.BillAmount}}</td>
+                        <td class="font-12">{{order.PaidAmount}}</td>
+                        <td class="font-12">{{order.DeliveryDateTime}}</td>
+                        <td class="font-12">{{order.DeliveredDateTime}}</td>
+                      </tr>
+                      <br>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+  <ul class="nav nav-tabs active" id="myTab" role="tablist">
+      <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#Selling" role="tab" aria-controls="Selling" id="Sellingtab">
+      OrderItems </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link " data-toggle="tab" href="#Permission" role="tab" aria-controls="Permission" id="Permissiontab">Transaction</a>
+      </li>
+  </ul>
+  <div class="tab-content active" id="myTabContent">
+      <div class="mt-4 mb-4 tab-pane active" id="Selling" role="tabpanel">
+          <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+              <div class="modal-dialog ma-0" role="document">
+                  <div class="modal-content">
+                      <div class="modal-body">
+                          <table class="table table-sm mb-0">
+                              <thead>
+                                <tr>
+                                  <td>Item</td>
+                                  <td>Quantity</td>                
+                                  <td>Price</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let Items of orderItems">
+                                  <td>{{Items.Description}}</td>
+                                  <td>{{Items.Quantity}}</td>
+                                  <td>&#8377;{{Items.TotalAmount | number: ".2"}}</td>               
+                                  
+                                </tr>                                 
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="mt-4 mb-4 tab-pane  " id="Permission" role="tabpanel">
+          <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+              <div class="modal-dialog ma-0" role="document">
+                  <div class="modal-content">
+                      <div class="modal-body">
+                          <table class="table table-sm mb-0">
+                              <thead>
+                                <tr>                                
+                                  <td>Amount</td>                
+                                  <td>PaymentType</td>
+                                  <td>TransDate</td>                                 
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let transaction of transactions">                               
+                                  <td>{{transaction.Amount}}</td> 
+                                  <td>{{transaction.Description}}</td>
+                                  <td>{{transaction.TransDateTime}}</td>                                     
+                              
+                                </tr>  
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</ng-template>
+
+<!-- <ng-template #contentdetail1 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-body" style="width:100%">
+          <table class="table table-sm mb-0" style="width:100%">
+            <thead>
+              <tr>
+                <td>Item</td>
+                <td>Quantity</td>                
+                <td>Price</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let Items of orderItems">
+                <td>{{Items.Description}}</td>
+                <td>{{Items.Quantity}}</td>              
+                <td></td>
+                <td></td>
+              </tr>                      
+            
+            </tbody>
+          </table>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="modal.close()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template> -->

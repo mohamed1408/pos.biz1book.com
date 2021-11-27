@@ -119,6 +119,8 @@ import { EcommerceComponent } from './ecommerce/ecommerce.component';
 import { PredictionComponent } from './prediction/prediction.component';
 import { BizDraggableDirective } from './directives/bizDraggable/biz-draggable.directive';
 import { BizDropTargetDirective } from './directives/bizDropTarget/biz-drop-target.directive';
+import { PendingOrderComponent } from "./pending-order/pending-order.component";
+import { KotinspectComponent } from "./kotinspect/kotinspect.component";
 
 // import { DataTablesModule } from 'angular-datatables';
 // import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -227,9 +229,9 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     EcommerceComponent,
     PredictionComponent,
     BizDraggableDirective,
-    BizDropTargetDirective
-
-
+    BizDropTargetDirective,
+    PendingOrderComponent,
+    KotinspectComponent,
   ],
   exports: [CommonModule],
 
@@ -348,6 +350,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
       { path: "deliveryorder-rpt", component: DeliveryorderRptComponent, canActivate: [RoleGuard] },
       { path: "option-qty-groups", component: OptionQtyGroupComponent, canActivate: [RoleGuard] },
       { path: "prediction", component: PredictionComponent, canActivate: [RoleGuard] },
+      { path: "PendingOrder", component: PendingOrderComponent, canActivate: [RoleGuard] },
+      { path: "KOT Inspect", component: KotinspectComponent, canActivate: [RoleGuard] },
 
 
 

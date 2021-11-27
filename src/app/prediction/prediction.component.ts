@@ -13,6 +13,8 @@ export class PredictionComponent implements OnInit {
   saleProductId: number = 0
   beforenow: any = {}
   afternow: any = {}
+  beforenow_wt: any = {}
+  afternow_wt: any = {}
   time: string = ''
   raw_time: string = ''
   customDuration: number = 60
@@ -65,7 +67,7 @@ export class PredictionComponent implements OnInit {
       alert("select a sale product group")
       return
     }
-    this.auth.getprediction(this.companyId, this.storeId, this.saleProductId, this.customDuration, this.from, this.to).subscribe(data => {
+    this.auth.getprediction(this.companyId, this.storeId, this.saleProductId, this.customDuration, '', '').subscribe(data => {
       this.time = data["dateinfo"][0]["time"]
       this.today = data["dateinfo"][0]["today"]
       this.yesterday = data["dateinfo"][0]["yesterday"]
@@ -85,6 +87,10 @@ export class PredictionComponent implements OnInit {
     })
   }
   today_prediction: number = 0
+  yesterday_prediction: number = 0
+  oneweek_prediction: number = 0
+  twoweek_prediction: number = 0
+
   iszero(val) {
     if (val == 0) return 1
     else if (val > 0 || val < 0) return val
@@ -99,6 +105,9 @@ export class PredictionComponent implements OnInit {
     console.log(average_ratio)
     console.log(this.iszero(this.beforenow.today) / average_ratio)
     this.today_prediction = +(this.iszero(this.beforenow.today) / average_ratio).toFixed(0)
+    this.twoweek_prediction = +(this.iszero(this.beforenow.today) / _2week_ratio).toFixed(0)
+    this.oneweek_prediction = +(this.iszero(this.beforenow.today) / _1week_ratio).toFixed(0)
+    this.yesterday_prediction = +(this.iszero(this.beforenow.today) / yesterday_ratio).toFixed(0)
   }
 
   onDrop(drop_data: any, panel: string) {
@@ -116,5 +125,16 @@ export class PredictionComponent implements OnInit {
     // alert(`dropped: ${data}`);
   }
 
+  submit_with_time() {
+    this.auth.getprediction(this.companyId, this.storeId, this.saleProductId, this.customDuration, this.from, this.to).subscribe(data => {
+      this.afternow_wt = data["afterNow"][0]
+      this.beforenow_wt = data["beforeNow"][0]
 
+      // this.leftPanelArray = []
+      // this.rightPanelArray = []
+      // this.leftPanelName = ''
+      // this.rightPanelName = ''
+      // this.predict()
+    })
+  }
 }

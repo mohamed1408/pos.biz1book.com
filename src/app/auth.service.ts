@@ -1242,6 +1242,24 @@ export class AuthService {
   getpredictionitems(companyid, storeid, date, from, to, saleproductid) {
     return this.http.get(this.base_url1 + "Report/PredictionItems?companyid=" + companyid + "&storeid=" + storeid + "&saleproductid=" + saleproductid + "&searchdate=" + date + "&from=" + from + "&to=" + to);
   }
+
+
+  getKotInspect(storeId, CompanyId, MinQty, RemainingHrs) {
+    return this.http.get(this.base_url1 + "POSOrder/GetKotInspect?storeId=" + storeId + "&CompanyId=" + CompanyId + "&MinQty=" + MinQty + "&RemainingHrs=" + RemainingHrs);
+  }
+  GetKOTInspectdetail(orderid) {
+    return this.http.get(this.base_url1 + "POSOrder/GetKOTInspectdetail?orderid=" + orderid);
+  }
+  getpendingorder(CompanyId) {
+    return this.http.get(this.base_url1 + "POSOrder/Getpendingorder?CompanyId=" + CompanyId);
+  }
+  getOrderId(orderid) {
+    return this.http.get(this.base_url1 + "POSOrder/GetOrderId?orderid=" + orderid);
+  }
+  getTransactionId(orderid) {
+    return this.http.get(this.base_url1 + "POSOrder/GetTransactionId?orderid=" + orderid);
+  }
+
   // GetproductRpt(Id, frmdate, todate, compId, categoryId, sourceId) {
   //   var formURL = this.base_url;
   //   var formURL =

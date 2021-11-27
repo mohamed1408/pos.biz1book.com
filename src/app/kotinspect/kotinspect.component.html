@@ -1,0 +1,123 @@
+<div class="hk-pg-wrapper">
+  <div class="container">
+    <div class="hk-pg-header">
+      <h4 class="hk-pg-title">KOT Inspect</h4>
+    </div>
+    <div class="row">
+      <div class="col-xl-4">
+        <label for="cars">Choose a Store: </label>
+        <div>
+          <ng-template class="w-100" #rt let-r="result" let-t="term">
+            <ngb-highlight [result]="r.Name" [term]="t"></ngb-highlight>
+          </ng-template>
+          <div style="height: 84%; position: relative;">
+            <input id="typeahead-template" style="height: 100%;" #instance="ngbTypeahead" type="text" autocomplete="off"
+              class="form-control" [(ngModel)]="smodel" placeholder="Search Store..." [ngbTypeahead]="search"
+              [resultTemplate]="rt" [inputFormatter]="formatter" (selectItem)="selectedItem($event.item)" />
+            <span *ngIf="smodel != ''" class="search-clear" aria-hidden="true"
+              (click)="smodel = '';storeid = 0">×</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-2">
+        <label for="cars">Minutes: </label>
+        <input type="number" name="q-5" class="form-control left multiselect-search" placeholder="Hrs..."
+          autocomplete="off" [(ngModel)]="RemainingHrs">
+      </div>
+      <!-- <div class="col-xl-2">
+        <label for="cars">Minutes: </label>
+        <input type="number" name="q-5" class="form-control left multiselect-search" placeholder="Min..."
+          autocomplete="off" >
+      </div> -->
+
+    
+      <div class="col-xl-2 ">
+        <label for="cars">Quantity: </label>
+        <input type="number" name="q-5" class="form-control left multiselect-search" placeholder="MinQty..."
+          autocomplete="off" [(ngModel)]="MinQty">
+      </div><br>
+      <button class="btn btn-success  btn-sm mx-10 w-10 " style="height: min-content;margin-top: 37px;"
+        (click)="getkotinspect()">Save</button>
+
+    </div> <br>
+    <div class="col-xl-12 pl-0 pr-0">
+      <section class="hk-sec-wrapper">
+        <div class="row">
+          <div class="col-sm">
+            <form>
+              <div class="table-wrap">
+                <div class="table-responsive">
+                  <table class="table table-sm mb-0">
+                    <thead>
+                      <tr style="background-color:rgb(217, 226, 250);">
+                        <th> <strong><a class="font-12">InvoiceNo</a></strong></th>
+                        <!-- <th> <strong><a class="font-12">Id</a></strong></th> -->
+                        <!-- <th> <strong><a class="font-12">OrderNo</a></strong></th> -->
+                        <th> <strong><a class="font-12">StoreId</a></strong></th>
+                        <th> <strong><a class="font-12">Orderstatus</a></strong></th>
+                        <th> <strong><a class="font-12">Bill Amount</a></strong></th>
+                        <th> <strong><a class="font-12">Paid Amount</a></strong></th>
+                        <th> <strong><a class="font-12">DeliveryDateTime</a></strong></th>
+                        <th> <strong><a class="font-12">DeliveredDateTime</a></strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr (click)="getKotdetail(order.Id, contentdetail1);" *ngFor="let order of Kotinspect">
+                        <td class="font-12">{{order.InvoiceNo}}</td>
+                        <!-- <td class="font-12">{{order.Id}}</td> -->
+                        <!-- <td class="font-12">{{order.OrderNo}}</td> -->
+                        <td class="font-12">{{order.Name}}</td>
+                        <td class="font-12">{{order.StatusName}}</td>
+                        <td class="font-12">{{order.BillAmount}}</td>
+                        <td class="font-12">{{order.PaidAmount}}</td>
+                        <td class="font-12">{{order.DeliveryDateTime}}</td>
+                        <td class="font-12">{{order.DeliveredDateTime}}</td>
+                      </tr>
+                      <br>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<ng-template #contentdetail1 let-modal>
+  <div class="modal d-block position-static overflow-show" tabindex="-1" role="dialog">
+    <div class="modal-dialog ma-0" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div *ngFor="let kot of kotdetail">
+            <strong>#{{kot.KOTNo}}</strong><br>
+            <label for="">Status</label> 
+            <strong>#{{kot.StatusName}}</strong>
+            <table class="table table-sm mb-0">
+              <!-- <thead>
+                <tr>
+                  <td>Name</td>
+                  <td>Quantity</td>
+                  <td>Price</td>
+                </tr>
+              </thead> -->
+              <tbody>
+                <tr *ngFor="let item of kot.Items">
+                  <td>{{item.Name}}</td>
+                  <td>{{item.Quantity}}</td>
+                  <td>{{item.StatusName}}</td>
+                  <td>&#8377;{{item.TotalAmount}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
